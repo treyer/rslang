@@ -4,11 +4,54 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  width: 100%;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.nav-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 40px;
+}
+
+.nav-bar a {
+  margin-right: 30px;
+}
+
+.nav-bar a {
+  position: relative;
+  display: block;
+  font-size: 20px;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: .3s;
+}
+
+.App-main {
+  background-color: #6c89c2;
+  min-height: 100vh;
+}
+
+.App-games {
+  background-color: #6cc2c2;
+  min-height: 100vh;
+}
+
+.App-textbook {
+  background-color: #6cc282;
+  min-height: 100vh;
+}
+
+.App-statistics {
+  background-color: #836cc2;
+  min-height: 100vh;
 }
