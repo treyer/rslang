@@ -1,23 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Sections } from '../../General/constants';
 
 const Header = () => {
   return (
     <div className="App-header">
       <nav className="nav-bar">
-        <Link to="/">
-          {' '}
-          <p>Главная</p>
-        </Link>
-        <nav>
-          <Link to="/games">Мини-игры</Link>
-        </nav>
-        <nav>
-          <Link to="/textbook">Учебник</Link>
-        </nav>
-        <nav>
-          <Link to="/statistics">Статистика</Link>
-        </nav>
+        {Sections.map((el) => (
+          <nav>
+            <Link className="" to={el.routePath}>
+              <span className="Section-Title">{el.title}</span>
+            </Link>
+          </nav>
+        ))}
       </nav>
     </div>
   );
