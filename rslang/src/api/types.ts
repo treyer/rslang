@@ -55,7 +55,7 @@ export type TStatistic = {
 export type TOptionalStatistic = {
   savannah?: string;
   sprint?: string;
-}
+};
 
 export type TSetting = {
   wordsPerDay: number;
