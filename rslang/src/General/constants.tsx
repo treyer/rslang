@@ -1,4 +1,3 @@
-import React from 'react';
 import Games from '../pages/games/games';
 import Main from '../pages/main/main';
 import Statistics from '../pages/statistics/statistics';
