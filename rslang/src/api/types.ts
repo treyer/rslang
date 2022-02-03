@@ -36,13 +36,26 @@ export type TAuth = {
 
 export type TUserWord = {
   difficulty: string;
-  optional: object;
+  optional: TOptionalUserWord;
+};
+
+export type TOptionalUserWord = {
+  deleted?: boolean;
+  failCounter?: number;
+  group?: number;
+  page?: number;
+  successCounter?: number;
 };
 
 export type TStatistic = {
   learnedWords: number;
-  optional: object;
+  optional: TOptionalStatistic;
 };
+
+export type TOptionalStatistic = {
+  savannah?: string;
+  sprint?: string;
+}
 
 export type TSetting = {
   wordsPerDay: number;
