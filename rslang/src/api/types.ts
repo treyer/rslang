@@ -39,7 +39,7 @@ export type TAuth = {
 
 export type TUserWord = {
   difficulty: string;
-  optional: TOptionalUserWord;
+  optional?: TOptionalUserWord;
 };
 
 export type TOptionalUserWord = {

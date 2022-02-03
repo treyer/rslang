@@ -23,7 +23,7 @@ export class UsersApi {
 
   getUser(userId: string, getUserCb: (data: TUser) => void) {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkxOTgyMywiZXhwIjoxNjQzOTM0MjIzfQ.uTapGo6ffMLPAy96G1Qn5OS_5si_pIDjVLZYFMdMPzM';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkyNDM0MSwiZXhwIjoxNjQzOTM4NzQxfQ.hhjsuz8p4HFMFd5P6Dgo3vvA4LG6a0ljdT5JaDmvuiY';
 
     const promise = fetch(`${this.url}/users/${userId}`, {
       headers: {
@@ -51,7 +51,7 @@ export class UsersApi {
     updateUserCb: (data: TUser) => void,
   ) {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkxOTgyMywiZXhwIjoxNjQzOTM0MjIzfQ.uTapGo6ffMLPAy96G1Qn5OS_5si_pIDjVLZYFMdMPzM';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkyNDM0MSwiZXhwIjoxNjQzOTM4NzQxfQ.hhjsuz8p4HFMFd5P6Dgo3vvA4LG6a0ljdT5JaDmvuiY';
 
     const promise = fetch(`${this.url}/users/${userId}`, {
       method: 'PUT',
@@ -67,7 +67,7 @@ export class UsersApi {
 
   deleteUser(userId: string, deleteUserCb: (id: string) => void) {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkxOTgyMywiZXhwIjoxNjQzOTM0MjIzfQ.uTapGo6ffMLPAy96G1Qn5OS_5si_pIDjVLZYFMdMPzM';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkyNDM0MSwiZXhwIjoxNjQzOTM4NzQxfQ.hhjsuz8p4HFMFd5P6Dgo3vvA4LG6a0ljdT5JaDmvuiY';
 
     const promise = fetch(`${this.url}/users/${userId}`, {
       method: 'DELETE',
@@ -90,7 +90,7 @@ export class UsersApi {
 
   getNewUserToken(userId: string, getNewUserTokenCb: (data: TAuth) => void) {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkxOTgyMywiZXhwIjoxNjQzOTM0MjIzfQ.uTapGo6ffMLPAy96G1Qn5OS_5si_pIDjVLZYFMdMPzM';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkyNDM0MSwiZXhwIjoxNjQzOTM4NzQxfQ.hhjsuz8p4HFMFd5P6Dgo3vvA4LG6a0ljdT5JaDmvuiY';
 
     const promise = fetch(`${this.url}/users/${userId}/tokens`, {
       headers: {

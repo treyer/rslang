@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { TAuth, TUser, TUserBase, TWord } from './api/types';
+import { TAuth, TUser, TUserBase, TUserWord, TWord } from './api/types';
 import WordsApi from './api/wordsApi';
 import UsersApi from './api/usersApi';
+import UserWordsApi from './api/userWordsApi';
 import { Sections } from './General/constants';
 import Header from './Components/header/header';
 
@@ -12,9 +13,7 @@ import './App.css';
 function App() {
   useEffect(() => {
     WordsApi.getWords(2, 2, (data: TWord[]) => console.log(data));
-  }, []);
 
-  useEffect(() => {
     WordsApi.getWord('5e9f5ee35eb9e72bc21af714', (data: TWord) =>
       console.log(data),
     );
@@ -29,9 +28,7 @@ function App() {
       },
       (dataUser: TUser) => console.log(dataUser),
     );
-  }, []);
 
-  useEffect(() => {
     UsersApi.loginUser(
       {
         email: 'stringggg@mail.ru',
@@ -39,14 +36,12 @@ function App() {
       },
       (data: TUserBase) => console.log(data),
     );
-  }, []);
 
-  useEffect(() => {
     UsersApi.getUser('61fc2decfe9b7f001659d47a', (data: TUser) =>
       console.log('user: ', data),
     );
 
-    UsersApi.updateUser(
+    /*  UsersApi.updateUser(
       '61fc2decfe9b7f001659d47a',
       {
         name: 'stringgg',
@@ -54,7 +49,7 @@ function App() {
         password: 'string123',
       },
       (data: TUser) => console.log('user: ', data),
-    );
+    );  */
 
     /*  UsersApi.deleteUser('61fc033a4f8a8900160e3159', () =>
       console.log('The user has been deleted'),
@@ -62,6 +57,12 @@ function App() {
 
     UsersApi.getNewUserToken('61fc2decfe9b7f001659d47a', (data: TAuth) =>
       console.log('token: ', data),
+    );
+  }, []);
+
+  useEffect(() => {
+    UserWordsApi.getUserWords('61fc2decfe9b7f001659d47a', (data: TUserWord[]) =>
+      console.log(data),
     );
   }, []);
 
