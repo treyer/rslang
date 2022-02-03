@@ -4,7 +4,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 10vh;
+  min-height: 70px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -38,7 +38,7 @@
 
 .App-main {
   background-color: #6c89c2;
-  min-height: 100vh;
+  min-height: calc(100vh - 140px);
 }
 
 .App-games {
@@ -54,4 +54,55 @@
 .App-statistics {
   background-color: #836cc2;
   min-height: 100vh;
+}
+
+.App-footer {
+  background-color: #121C1E;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1600px;
+  height: 70px;
+}
+
+.footer-data {
+  display: flex;
+  align-items: center;
+  margin-left: 2%;
+}
+
+.footer-data p {
+  color: #fff;
+}
+
+.copyright {
+  padding-right: 20px;
+}
+
+.github-username {
+  color: #fff;
+  text-decoration: none;
+  padding: 0 20px;
+  transition: .3s;
+}
+
+.github-username:hover {
+  color: #278D9F;
+}
+
+.rss-logo {
+  width: 70px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: .3s;
+  margin-right: 2%;
+}
+
+.rss-logo:hover {
+  filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg) brightness(89%) contrast(90%);
 }

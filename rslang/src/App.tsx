@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { Sections } from './General/constants';
 import Header from './Components/header/header';
+import Footer from './Components/footer/footer';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route key={el.id} path={el.routePath} element={el.element} />
         ))}
       </Routes>
+      <Footer />
     </div>
   );
 }
