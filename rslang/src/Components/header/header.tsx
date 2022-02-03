@@ -6,7 +6,7 @@ const Header = () => {
     <div className="App-header">
       <nav className="nav-bar">
         {Sections.map((el) => (
-          <nav>
+          <nav key={el.id}>
             <Link className="" to={el.routePath}>
               <span className="Section-Title">{el.title}</span>
             </Link>

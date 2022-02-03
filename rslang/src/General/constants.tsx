@@ -5,8 +5,13 @@ import Textbook from '../pages/textbook/textbook';
 import { TPath } from './types';
 
 export const Sections: TPath[] = [
-  { routePath: '/', title: 'Главная', element: <Main /> },
-  { routePath: '/games', title: 'Мини-игры', element: <Games /> },
-  { routePath: '/textbook', title: 'Учебник', element: <Textbook /> },
-  { routePath: '/statistics', title: 'Статистика', element: <Statistics /> },
+  { id: 1, routePath: '/', title: 'Главная', element: <Main /> },
+  { id: 2, routePath: '/games', title: 'Мини-игры', element: <Games /> },
+  { id: 3, routePath: '/textbook', title: 'Учебник', element: <Textbook /> },
+  {
+    id: 4,
+    routePath: '/statistics',
+    title: 'Статистика',
+    element: <Statistics />,
+  },
 ];

@@ -9,7 +9,7 @@ function App() {
       <Header />
       <Routes>
         {Sections.map((el) => (
-          <Route path={el.routePath} element={el.element} />
+          <Route key={el.id} path={el.routePath} element={el.element} />
         ))}
       </Routes>
     </div>
