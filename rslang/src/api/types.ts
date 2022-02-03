@@ -15,11 +15,14 @@ export type TWord = {
   textExampleTranslate: string;
 };
 
-export type TUser = {
-  name: string;
+export type TUser = TUserBase & {
+  name: string; 
+};
+
+export type TUserBase = {
   email: string;
   password: string;
-};
+}
 
 export type TLoginRequest = {
   email: string;
