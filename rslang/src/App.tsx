@@ -7,6 +7,7 @@ import UsersApi from './api/usersApi';
 import UserWordsApi from './api/userWordsApi';
 import { Sections } from './General/constants';
 import Header from './Components/header/header';
+import Footer from './Components/footer/footer';
 
 import './App.css';
 
@@ -108,6 +109,7 @@ function App() {
           <Route key={el.id} path={el.routePath} element={el.element} />
         ))}
       </Routes>
+      <Footer />
     </div>
   );
 }

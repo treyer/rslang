@@ -1,0 +1,118 @@
+$main-white: #ffffff;
+$hover-blue: #278d9f;
+$bg-header: #282c34;
+$bg-main: #6c89c2;
+$bg-games: #6cc2c2;
+$bg-textbook: #6cc282;
+$bg-stats: #836cc2;
+$bg-footer: #121c1e;
+
+$logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
+  brightness(89%) contrast(90%);
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: $bg-header;
+  min-height: 70px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: calc(10px + 2vmin);
+  color: $main-white;
+}
+
+.nav-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 40px;
+
+  a {
+    position: relative;
+    display: block;
+    font-size: 20px;
+    color: $main-white;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: 0.3s;
+    margin-right: 30px;
+    cursor: pointer;
+  }
+}
+
+.App-main {
+  background-color: $bg-main;
+  min-height: calc(100vh - 140px);
+}
+
+.App-games {
+  background-color: $bg-games;
+  min-height: 100vh;
+}
+
+.App-textbook {
+  background-color: $bg-textbook;
+  min-height: 100vh;
+}
+
+.App-statistics {
+  background-color: $bg-stats;
+  min-height: 100vh;
+}
+
+.App-footer {
+  background-color: $bg-footer;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1600px;
+  height: 70px;
+}
+
+.footer-data {
+  display: flex;
+  align-items: center;
+  margin-left: 2%;
+
+  p {
+    color: $main-white;
+  }
+
+  .copyright {
+    padding-right: 20px;
+  }
+
+  .github-username {
+    color: $main-white;
+    text-decoration: none;
+    padding: 0 20px;
+    transition: 0.3s;
+
+    &:hover {
+      color: $hover-blue;
+    }
+  }
+}
+
+.rss-logo {
+  width: 70px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: 0.3s;
+  margin-right: 2%;
+
+  &:hover {
+    filter: $logo-filter;
+  }
+}
