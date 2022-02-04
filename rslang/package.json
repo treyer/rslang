@@ -25,6 +25,7 @@
     "eject": "react-scripts eject",
     "lint": "node_modules/.bin/eslint --config ./.eslintrc.json  --ignore-path ./.eslintignore --ext .js,.ts,.tsx src",
     "lint:fix": "yarn lint --fix",
+    "prettier": "prettier --config ./prettier.config.js --write src/*",
     "check:types": "yarn tsc --project ./tsconfig.json --noEmit",
     "check:build": "yarn check:types && yarn lint"
   },
@@ -42,7 +43,8 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "yarn lint"
+      "yarn prettier",
+      "yarn lint:fix"
     ]
   },
   "browserslist": {
@@ -69,7 +71,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4",
-    "husky": "^7.0.4",
+    "husky": "4",
     "lint-staged": "^12.3.3",
     "prettier": "^2.5.1",
     "sass": "^1.49.7"
