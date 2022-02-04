@@ -23,7 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "lint": "node_modules/.bin/eslint --config ./.eslintrc.json  --ignore-path ./.eslintignore --ext .js,.ts,.tsx src",
+    "lint": "yarn eslint --config ./.eslintrc.json  --ignore-path ./.eslintignore --ext .js,.ts,.tsx src",
     "lint:fix": "yarn lint --fix",
     "prettier": "prettier --config ./prettier.config.js --write src/*",
     "check:types": "yarn tsc --project ./tsconfig.json --noEmit",
