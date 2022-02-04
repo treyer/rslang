@@ -9,8 +9,8 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        {Sections.map((el) => (
-          <Route key={el.id} path={el.routePath} element={el.element} />
+        {Sections.map((el, index) => (
+          <Route key={index} path={el.routePath} element={el.element} />
         ))}
       </Routes>
       <Footer />
@@ -18,4 +18,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
