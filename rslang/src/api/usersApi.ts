@@ -21,10 +21,7 @@ export class UsersApi {
       .then((newUser) => createNewUserCb(newUser));
   }
 
-  getUser(userId: string, getUserCb: (data: TUser) => void) {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkyNDM0MSwiZXhwIjoxNjQzOTM4NzQxfQ.hhjsuz8p4HFMFd5P6Dgo3vvA4LG6a0ljdT5JaDmvuiY';
-
+  getUser(userId: string, token: string, getUserCb: (data: TUser) => void) {
     const promise = fetch(`${this.url}/users/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -47,12 +44,10 @@ export class UsersApi {
 
   updateUser(
     userId: string,
+    token: string,
     dataUser: TUser,
     updateUserCb: (data: TUser) => void,
   ) {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkyNDM0MSwiZXhwIjoxNjQzOTM4NzQxfQ.hhjsuz8p4HFMFd5P6Dgo3vvA4LG6a0ljdT5JaDmvuiY';
-
     const promise = fetch(`${this.url}/users/${userId}`, {
       method: 'PUT',
       headers: {
@@ -65,10 +60,11 @@ export class UsersApi {
       .then((result) => updateUserCb(result));
   }
 
-  deleteUser(userId: string, deleteUserCb: (id: string) => void) {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkyNDM0MSwiZXhwIjoxNjQzOTM4NzQxfQ.hhjsuz8p4HFMFd5P6Dgo3vvA4LG6a0ljdT5JaDmvuiY';
-
+  deleteUser(
+    userId: string,
+    token: string,
+    deleteUserCb: (id: string) => void,
+  ) {
     const promise = fetch(`${this.url}/users/${userId}`, {
       method: 'DELETE',
       headers: {
@@ -88,18 +84,29 @@ export class UsersApi {
       });
   }
 
-  getNewUserToken(userId: string, getNewUserTokenCb: (data: TAuth) => void) {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0MzkyNDM0MSwiZXhwIjoxNjQzOTM4NzQxfQ.hhjsuz8p4HFMFd5P6Dgo3vvA4LG6a0ljdT5JaDmvuiY';
-
+  getNewUserToken(
+    userId: string,
+    token: string,
+    getNewUserTokenCb: (dataToken: TAuth) => void,
+  ) {
     const promise = fetch(`${this.url}/users/${userId}/tokens`, {
       headers: {
+        Accept: 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });
     promise
-      .then((result) => result.json())
-      .then((result) => getNewUserTokenCb(result));
+      .then((result) => {
+        //  @todo use status code from http status code from package
+        if (!result.ok && result.status === 401) {
+          throw new Error();
+        }
+        return result.json();
+      })
+      .then((result) => getNewUserTokenCb(result))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
 

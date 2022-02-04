@@ -10,9 +10,15 @@ import Header from './Components/header/header';
 
 import './App.css';
 
+const refreshToken = '';
+const token =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0Mzk3ODU1NCwiZXhwIjoxNjQzOTkyOTU0fQ.BE-9t04UTt0b_B7yDkv0gqjFPt8mLyqnfIhnbaO5k2s';
+const userId = '61fc2decfe9b7f001659d47a';
+const wordId = '5e9f5ee35eb9e72bc21af66d';
+
 function App() {
-  useEffect(() => {
-    WordsApi.getWords(2, 2, (data: TWord[]) => console.log(data));
+  /*  useEffect(() => {    
+  WordsApi.getWords(2, 2, (data: TWord[]) => console.log(data));
 
     WordsApi.getWord('5e9f5ee35eb9e72bc21af714', (data: TWord) =>
       console.log(data),
@@ -20,16 +26,16 @@ function App() {
   }, []);
 
   useEffect(() => {
-    UsersApi.createUser(
+    /*  UsersApi.createUser(
       {
         name: 'string',
         email: 'stringggg@mail.ru',
         password: 'string123',
       },
       (dataUser: TUser) => console.log(dataUser),
-    );
+    );  */
 
-    UsersApi.loginUser(
+  /*  UsersApi.loginUser(
       {
         email: 'stringggg@mail.ru',
         password: 'string123',
@@ -37,12 +43,13 @@ function App() {
       (data: TUserBase) => console.log(data),
     );
 
-    UsersApi.getUser('61fc2decfe9b7f001659d47a', (data: TUser) =>
+    UsersApi.getUser(userId, token, (data: TUser) =>
       console.log('user: ', data),
     );
 
     /*  UsersApi.updateUser(
       '61fc2decfe9b7f001659d47a',
+      token,
       {
         name: 'stringgg',
         email: 'stringggg@mail.ru',
@@ -51,19 +58,46 @@ function App() {
       (data: TUser) => console.log('user: ', data),
     );  */
 
-    /*  UsersApi.deleteUser('61fc033a4f8a8900160e3159', () =>
+  /*  UsersApi.deleteUser(userId, token, () =>
       console.log('The user has been deleted'),
-    );  */
+    );
 
-    UsersApi.getNewUserToken('61fc2decfe9b7f001659d47a', (data: TAuth) =>
+    UsersApi.getNewUserToken(userId, refreshToken, (data: TAuth) =>
       console.log('token: ', data),
     );
-  }, []);
+  }, []);  */
 
   useEffect(() => {
-    UserWordsApi.getUserWords('61fc2decfe9b7f001659d47a', (data: TUserWord[]) =>
+    /*  UserWordsApi.getUserWords(userId, token, (data: TUserWord[]) =>
+      console.log(data),
+    );  */
+    /* UserWordsApi.createUserWord(
+      userId,
+      wordId,
+      token,
+      {
+        difficulty: 'hard',
+        optional: {},
+      },
+      (data: TUserWord) => console.log('createdWord: ', data),
+    );
+
+    UserWordsApi.getUserWord(userId, wordId, token, (data: TUserWord) =>
       console.log(data),
     );
+    /*  UserWordsApi.updateUserWord(
+      userId,
+      token,
+      wordId,
+      {
+        difficulty: 'hard',
+        optional: {},
+      },
+      (data: TUserWord) => console.log('updatedWord: ', data),
+    );  */
+    /*  UserWordsApi.deleteUserWord(userId, wordId, token, () =>
+      console.log('The word has been deleted'),
+    );  */
   }, []);
 
   return (
