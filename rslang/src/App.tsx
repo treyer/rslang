@@ -2,32 +2,32 @@ import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { TAuth, TUser, TUserBase, TUserWord, TWord } from './api/types';
-import WordsApi from './api/wordsApi';
-import UsersApi from './api/usersApi';
-import UserWordsApi from './api/userWordsApi';
+import WordsAPI from './api/wordsAPI';
+import UsersAPI from './api/usersAPI';
+import UserWordsAPI from './api/userWordsAPI';
 import { Sections } from './General/constants';
 import Header from './Components/header/header';
 import Footer from './Components/footer/footer';
 
-import './App.css';
+import './App.scss';
 
 const refreshToken = '';
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmMyZGVjZmU5YjdmMDAxNjU5ZDQ3YSIsImlhdCI6MTY0Mzk3ODU1NCwiZXhwIjoxNjQzOTkyOTU0fQ.BE-9t04UTt0b_B7yDkv0gqjFPt8mLyqnfIhnbaO5k2s';
-const userId = '61fc2decfe9b7f001659d47a';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmQ3YjlhZDgyMjdjMDAxNmVjZjQ4OSIsImlhdCI6MTY0NDAwMjIwOCwiZXhwIjoxNjQ0MDE2NjA4fQ.hib2QlUqKd4C9gGcMgUnSyp_uDOx9ot-kwwDQc3T4Oc';
+const userId = '61fd7b9ad8227c0016ecf489';
 const wordId = '5e9f5ee35eb9e72bc21af66d';
 
 function App() {
   /*  useEffect(() => {    
-  WordsApi.getWords(2, 2, (data: TWord[]) => console.log(data));
+  WordsAPI.getWords(2, 2, (data: TWord[]) => console.log('words: ', data));
 
-    WordsApi.getWord('5e9f5ee35eb9e72bc21af714', (data: TWord) =>
-      console.log(data),
+    WordsAPI.getWord('5e9f5ee35eb9e72bc21af714', (data: TWord) =>
+      console.log('word: ', data),
     );
-  }, []);
+  }, []);  */
 
   useEffect(() => {
-    /*  UsersApi.createUser(
+    /*  UsersAPI.createUser(
       {
         name: 'string',
         email: 'stringggg@mail.ru',
@@ -35,20 +35,17 @@ function App() {
       },
       (dataUser: TUser) => console.log(dataUser),
     );  */
-
-  /*  UsersApi.loginUser(
+    /*  UsersAPI.loginUser(
       {
         email: 'stringggg@mail.ru',
         password: 'string123',
       },
       (data: TUserBase) => console.log(data),
-    );
-
-    UsersApi.getUser(userId, token, (data: TUser) =>
+    );  */
+    /*  UsersAPI.getUser(userId, token, (data: TUser) =>
       console.log('user: ', data),
-    );
-
-    /*  UsersApi.updateUser(
+    );  */
+    /*  UsersAPI.updateUser(
       '61fc2decfe9b7f001659d47a',
       token,
       {
@@ -58,21 +55,20 @@ function App() {
       },
       (data: TUser) => console.log('user: ', data),
     );  */
-
-  /*  UsersApi.deleteUser(userId, token, () =>
+    /*  UsersAPI.deleteUser(userId, token, () =>
       console.log('The user has been deleted'),
     );
 
-    UsersApi.getNewUserToken(userId, refreshToken, (data: TAuth) =>
+    UsersAPI.getNewUserToken(userId, refreshToken, (data: TAuth) =>
       console.log('token: ', data),
-    );
-  }, []);  */
+    );  */
+  }, []);
 
   useEffect(() => {
-    /*  UserWordsApi.getUserWords(userId, token, (data: TUserWord[]) =>
+    /*  UserWordsAPI.getUserWords(userId, token, (data: TUserWord[]) =>
       console.log(data),
     );  */
-    /* UserWordsApi.createUserWord(
+    /*  UserWordsAPI.createUserWord(
       userId,
       wordId,
       token,
@@ -81,12 +77,11 @@ function App() {
         optional: {},
       },
       (data: TUserWord) => console.log('createdWord: ', data),
-    );
-
-    UserWordsApi.getUserWord(userId, wordId, token, (data: TUserWord) =>
+    );  */
+    /*  UserWordsAPI.getUserWord(userId, wordId, token, (data: TUserWord) =>
       console.log(data),
-    );
-    /*  UserWordsApi.updateUserWord(
+    );  */
+    /*  UserWordsAPI.updateUserWord(
       userId,
       token,
       wordId,
@@ -96,7 +91,7 @@ function App() {
       },
       (data: TUserWord) => console.log('updatedWord: ', data),
     );  */
-    /*  UserWordsApi.deleteUserWord(userId, wordId, token, () =>
+    /*  UserWordsAPI.deleteUserWord(userId, wordId, token, () =>
       console.log('The word has been deleted'),
     );  */
   }, []);
