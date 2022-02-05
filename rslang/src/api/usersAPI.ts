@@ -1,25 +1,46 @@
+import { StatusCodes } from 'http-status-codes';
+
 import { BaseAPI } from './baseAPI';
 import { TAuth, TUser, TUserBase } from './types';
+import { USERS_API_ERRORS } from './errors';
 
 export class UsersAPI extends BaseAPI {
   createUser(dataUser: TUser, createNewUserCb: (data: TUser) => void) {
     this.post('users', dataUser)
-      .then((result) => result.json())
-      .then((newUser) => createNewUserCb(newUser));
+      .then((result) => {
+        BaseAPI.handleError(result, USERS_API_ERRORS);
+        return result.json();
+      })
+      .then((newUser) => createNewUserCb(newUser))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
-  getUser(userId: string, token: string, getUserCb: (data: TUser) => void) {    
+  getUser(userId: string, token: string, getUserCb: (data: TUser) => void) {
     this.get(`users/${userId}`, {
       Authorization: `Bearer ${token}`,
     })
-      .then((result) => result.json())
-      .then((result) => getUserCb(result));
+      .then((result) => {
+        BaseAPI.handleError(result, USERS_API_ERRORS);
+        return result.json();
+      })
+      .then((result) => getUserCb(result))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   loginUser(dataLogin: TUserBase, loginUserCb: (data: TUserBase) => void) {
     this.post('signin', dataLogin)
-      .then((result) => result.json())
-      .then((data) => loginUserCb(data));
+      .then((result) => {
+        BaseAPI.handleError(result, USERS_API_ERRORS);
+        return result.json();
+      })
+      .then((data) => loginUserCb(data))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   updateUser(
@@ -31,23 +52,26 @@ export class UsersAPI extends BaseAPI {
     this.put(`users/${userId}`, dataUser, {
       Authorization: `Bearer ${token}`,
     })
-      .then((result) => result.json())
-      .then((result) => updateUserCb(result));
+      .then((result) => {
+        BaseAPI.handleError(result, USERS_API_ERRORS);
+        return result.json();
+      })
+      .then((result) => updateUserCb(result))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   deleteUser(
     userId: string,
     token: string,
     deleteUserCb: (id: string) => void,
-  ) {    
+  ) {
     this.delete(`users/${userId}`, {
       Authorization: `Bearer ${token}`,
     })
       .then((result) => {
-        //  @todo use status code from http status code from package
-        if (!result.ok && result.status !== 204) {
-          throw new Error();
-        }
+        BaseAPI.handleError(result, USERS_API_ERRORS);
       })
       .then(() => deleteUserCb(userId))
       .catch((error) => {
@@ -59,15 +83,12 @@ export class UsersAPI extends BaseAPI {
     userId: string,
     token: string,
     getNewUserTokenCb: (dataToken: TAuth) => void,
-  ) {    
+  ) {
     this.get(`users/${userId}/tokens`, {
       Authorization: `Bearer ${token}`,
     })
       .then((result) => {
-        //  @todo use status code from http status code from package
-        if (!result.ok && result.status === 401) {
-          throw new Error();
-        }
+        BaseAPI.handleError(result, USERS_API_ERRORS);
         return result.json();
       })
       .then((result) => getNewUserTokenCb(result))
