@@ -1,5 +1,3 @@
-import { StatusCodes } from 'http-status-codes';
-
 import { BaseAPI } from './baseAPI';
 import { TAuth, TUser, TUserBase } from './types';
 import { USERS_API_ERRORS } from './errors';
