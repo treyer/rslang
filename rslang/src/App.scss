@@ -5,6 +5,7 @@ $bg-main: #6c89c2;
 $bg-games: #6cc2c2;
 $bg-textbook: #6cc282;
 $bg-stats: #836cc2;
+$bg-team: #ecd9e5;
 $bg-footer: #121c1e;
 
 $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
@@ -64,6 +65,14 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
 .App-statistics {
   background-color: $bg-stats;
   min-height: 100vh;
+}
+
+.App-team {
+  background-color: $bg-team;
+  min-height: calc(100vh - 140px);
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-y: auto;
 }
 
 .App-footer {
