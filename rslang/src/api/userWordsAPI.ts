@@ -1,5 +1,6 @@
 import { BaseAPI } from './baseAPI';
 import { TUserWord } from './types';
+import { USER_WORDS_API_ERRORS } from './errors';
 
 export class UserWordsAPI extends BaseAPI {
   getUserWords(
@@ -8,8 +9,14 @@ export class UserWordsAPI extends BaseAPI {
     getUserWordsCb: (data: TUserWord[]) => void,
   ) {
     this.get(`users/${userId}/words`, { Authorization: `Bearer ${token}` })
-      .then((result) => result.json())
-      .then((result) => getUserWordsCb(result));
+      .then((result) => {
+        BaseAPI.handleError(result, USER_WORDS_API_ERRORS);
+        return result.json();
+      })
+      .then((result) => getUserWordsCb(result))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   createUserWord(
@@ -18,12 +25,18 @@ export class UserWordsAPI extends BaseAPI {
     token: string,
     dataWord: TUserWord,
     createUserWordCb: (data: TUserWord) => void,
-  ) {   
+  ) {
     this.post(`users/${userId}/words/${wordId}`, dataWord, {
       Authorization: `Bearer ${token}`,
     })
-      .then((result) => result.json())
-      .then((data) => createUserWordCb(data));
+      .then((result) => {
+        BaseAPI.handleError(result, USER_WORDS_API_ERRORS);
+        return result.json();
+      })
+      .then((data) => createUserWordCb(data))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   getUserWord(
@@ -31,12 +44,18 @@ export class UserWordsAPI extends BaseAPI {
     wordId: string,
     token: string,
     getUserWordCb: (data: TUserWord) => void,
-  ) {   
+  ) {
     this.get(`users/${userId}/words/${wordId}`, {
       Authorization: `Bearer ${token}`,
     })
-      .then((result) => result.json())
-      .then((result) => getUserWordCb(result));
+      .then((result) => {
+        BaseAPI.handleError(result, USER_WORDS_API_ERRORS);
+        return result.json();
+      })
+      .then((result) => getUserWordCb(result))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   updateUserWord(
@@ -45,12 +64,18 @@ export class UserWordsAPI extends BaseAPI {
     wordId: string,
     dataWord: TUserWord,
     updateUserWordCb: (data: TUserWord) => void,
-  ) {    
+  ) {
     this.put(`users/${userId}/words/${wordId}`, dataWord, {
       Authorization: `Bearer ${token}`,
     })
-      .then((result) => result.json())
-      .then((result) => updateUserWordCb(result));
+      .then((result) => {
+        BaseAPI.handleError(result, USER_WORDS_API_ERRORS);
+        return result.json();
+      })
+      .then((result) => updateUserWordCb(result))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   deleteUserWord(
@@ -58,15 +83,12 @@ export class UserWordsAPI extends BaseAPI {
     wordId: string,
     token: string,
     deleteUserWordCb: (id: string) => void,
-  ) {    
+  ) {
     this.delete(`users/${userId}/words/${wordId}`, {
       Authorization: `Bearer ${token}`,
     })
       .then((result) => {
-        //  @todo use status code from http status code from package
-        if (!result.ok && result.status !== 204) {
-          throw new Error();
-        }
+        BaseAPI.handleError(result, USER_WORDS_API_ERRORS);
       })
       .then(() => deleteUserWordCb(wordId))
       .catch((error) => {

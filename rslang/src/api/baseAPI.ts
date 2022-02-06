@@ -1,4 +1,5 @@
 import { SERVER_URL } from '../consts';
+import { TAPIErrorsMap } from './types';
 
 export class BaseAPI {
   url: string;
@@ -53,5 +54,13 @@ export class BaseAPI {
         ...headers,
       },
     });
+  }
+
+  static handleError(result: Response, errorsMap: TAPIErrorsMap) {
+    if (result.ok) {
+      return;
+    }
+    const { status } = result;
+    throw new Error(errorsMap[status] || 'Unknown error!');
   }
 }

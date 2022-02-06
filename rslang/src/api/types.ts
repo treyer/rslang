@@ -1,3 +1,7 @@
+export type TAPIErrorsMap = {
+  [key: number]: string;
+};
+
 export type TWord = {
   id: string;
   group: number;
@@ -16,13 +20,13 @@ export type TWord = {
 };
 
 export type TUser = TUserBase & {
-  name: string; 
+  name: string;
 };
 
 export type TUserBase = {
   email: string;
   password: string;
-}
+};
 
 export type TLoginRequest = {
   email: string;
