@@ -18,15 +18,15 @@ $bg-btn5: #00acc1;
     display: flex;
     flex-direction: column;
     min-width: 400px;
-    
-    .textbook_btn{
+
+    .textbook_btn {
       display: flex;
       justify-content: flex-start;
       margin-top: 15px;
     }
 
     .textbook_button-0 {
-      background-color: $bg-btn0;      
+      background-color: $bg-btn0;
     }
 
     .textbook_button-1 {
@@ -51,12 +51,24 @@ $bg-btn5: #00acc1;
 
     .textbook_code-title {
       font-size: 3rem;
-      padding-right: 10px;      
+      padding-right: 10px;
     }
 
     .textbook_level-title {
       font-size: 1.5rem;
-      text-align: justify;      
+      text-align: justify;
+    }
+  }
+
+  .textbook_level-list-section-inform {
+    .textbook_img {
+      max-width: 400px;
+    }
+
+    .textbook_level-list-text {
+      font-size: 1.3rem;
+      text-align: justify;
+      padding-left: 10%;
     }
   }
 }
