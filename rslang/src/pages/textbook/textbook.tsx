@@ -36,7 +36,7 @@ const Textbook = () => {
         </section>
         <section className="textbook_level-list-section-inform">
           <img
-            src="/assets/png/elementary.png"
+            src={ENGLISH_LEVELS[activeLevel].img}
             alt="Elementary"
             className="textbook_img"
           />

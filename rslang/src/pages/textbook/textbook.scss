@@ -5,6 +5,10 @@ $bg-btn3: #26c6da;
 $bg-btn4: #00bcd4;
 $bg-btn5: #00acc1;
 
+.css-gepadz-MuiTypography-root {
+  padding: 50px 0;
+}
+
 .textbook_levels-list {
   display: flex;
   flex-direction: row;
@@ -62,13 +66,13 @@ $bg-btn5: #00acc1;
 
   .textbook_level-list-section-inform {
     .textbook_img {
-      max-width: 400px;
+      max-width: 500px;
     }
 
     .textbook_level-list-text {
       font-size: 1.3rem;
       text-align: justify;
-      padding-left: 10%;
+      padding: 0 10%;
     }
   }
 }
