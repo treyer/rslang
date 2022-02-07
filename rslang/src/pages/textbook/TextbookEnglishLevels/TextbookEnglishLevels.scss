@@ -6,7 +6,7 @@ $bg-btn4: #00bcd4;
 $bg-btn5: #00acc1;
 
 .css-gepadz-MuiTypography-root {
-  padding: 50px 0;
+  padding: 30px 0;
 }
 
 .textbook_levels-list {
@@ -14,9 +14,7 @@ $bg-btn5: #00acc1;
   flex-direction: row;
   margin: 0 auto;
   max-width: 1600px;
-  padding-top: 75px;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding: 50px 20px;
 
   .textbook_level-list-section-button {
     display: flex;
