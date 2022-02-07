@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import WordsAPI from './api/wordsAPI';
 import UsersAPI from './api/usersAPI';
 import UserWordsAPI from './api/userWordsAPI';  */
-import { Sections } from './General/constants';
+import { ROUTES } from './General/constants';
 import Header from './Components/header/header';
 import Footer from './Components/footer/footer';
 
@@ -98,7 +98,7 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        {Sections.map((el) => (
+        {ROUTES.map((el) => (
           <Route key={el.id} path={el.routePath} element={el.element} />
         ))}
       </Routes>
