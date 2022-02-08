@@ -36,7 +36,7 @@ export const ROUTES: TPath[] = [
   },
 ];
 
-const ROUTES_IN_NAV = [1, 2, 3, 5];
+const ROUTES_IN_NAV = [1, 2, 3, 5, 6];
 
 export const Sections = ROUTES.filter((route) =>
   ROUTES_IN_NAV.includes(route.id),
