@@ -1,26 +1,26 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { MouseEvent, useCallback, useState } from 'react';
 import { Typography } from '@mui/material';
 
 import { ENGLISH_LEVELS } from '../consts';
-import { EnglishLevelButton } from '../components/EnglishLevelButton/EnglishLevelButton';
+import EnglishLevelButton from '../components/EnglishLevelButton/EnglishLevelButton';
+
+import TextbookLevelInformation from '../components/TextbookLevelInfomation/TextbookLevelInformation';
 
 import './TextbookEnglishLevels.scss';
-import { TextbookLevelInformation } from '../components/TextbookLevelInfomation/TextbookLevelInformation';
 
 type TLevelId = keyof typeof ENGLISH_LEVELS;
 
 const TextbookEnglishLevels = () => {
-  const [activeLevel, satActiveLevel] = useState<TLevelId>(0);
+  const [activeLevelId, satActiveLevelId] = useState<TLevelId>(0);
 
-  const handleLevelHover = (e: MouseEvent) => {
+  const handleLevelHover = useCallback((e: MouseEvent) => {
     const target = e.target as HTMLElement;
     if (!target) {
       return;
     }
-    const activeLevelId = target.id as unknown as TLevelId;
-    satActiveLevel(activeLevelId);
-    console.error(e);
-  };
+    const activeId = target.id as unknown as TLevelId;
+    satActiveLevelId(activeId);
+  }, []);
 
   return (
     <div className="App-textbook">
@@ -37,10 +37,12 @@ const TextbookEnglishLevels = () => {
             />
           ))}
         </section>
-        <TextbookLevelInformation
-          img={ENGLISH_LEVELS[activeLevel].img}
-          text={ENGLISH_LEVELS[activeLevel].text}
-        />
+        {ENGLISH_LEVELS[activeLevelId] && (
+          <TextbookLevelInformation
+            img={ENGLISH_LEVELS[activeLevelId].img}
+            text={ENGLISH_LEVELS[activeLevelId].text}
+          />
+        )}
       </div>
     </div>
   );

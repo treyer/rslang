@@ -29,7 +29,7 @@ export const ROUTES: TPath[] = [
     element: <Statistics />,
   },
   {
-    id: 5,
+    id: 6,
     routePath: '/team',
     title: 'О команде',
     element: <Team />,

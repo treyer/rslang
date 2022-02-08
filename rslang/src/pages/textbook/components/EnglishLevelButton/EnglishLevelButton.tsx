@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { memo, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 
@@ -9,7 +9,7 @@ type TEnglishLevelButtonProps = {
   onHover: (e: MouseEvent) => void;
 };
 
-export const EnglishLevelButton = ({
+const EnglishLevelButton = ({
   id,
   code,
   level,
@@ -28,3 +28,5 @@ export const EnglishLevelButton = ({
     <span className="textbook_level-title">{level}</span>
   </Button>
 );
+
+export default memo(EnglishLevelButton);
