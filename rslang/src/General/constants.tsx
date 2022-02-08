@@ -3,6 +3,8 @@ import Main from '../pages/main/main';
 import Statistics from '../pages/statistics/statistics';
 import TextbookEnglishLevels from '../pages/textbook/TextbookEnglishLevels/TextbookEnglishLevels';
 import TextbookWords from '../pages/textbook/TextbookWords/TextbookWords';
+import Team from '../pages/team/team';
+
 import { TPath } from './types';
 
 export const ROUTES: TPath[] = [
@@ -25,6 +27,12 @@ export const ROUTES: TPath[] = [
     routePath: '/statistics',
     title: 'Статистика',
     element: <Statistics />,
+  },
+  {
+    id: 5,
+    routePath: '/team',
+    title: 'О команде',
+    element: <Team />,
   },
 ];
 
