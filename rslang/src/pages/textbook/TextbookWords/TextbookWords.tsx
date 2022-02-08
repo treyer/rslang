@@ -6,6 +6,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
+import { SERVER_URL } from '../../../consts';
 import './TextbookWords.scss';
 
 const TextbookWords = () => {
@@ -17,7 +18,7 @@ const TextbookWords = () => {
             <CardMedia
               component="img"
               height="300"
-              image="/assets/img/pre-intermediate.jpg"
+              image={`${SERVER_URL}/files/01_0001.jpg`}
               alt=""
             />
             <CardContent>
