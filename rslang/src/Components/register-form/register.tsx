@@ -94,7 +94,7 @@ const Register = () => {
                 <label htmlFor="password">пароль</label>
                 <Input
                   id="password"
-                  type="text"
+                  type="password"
                   className="form-control"
                   name="password"
                   value={password}

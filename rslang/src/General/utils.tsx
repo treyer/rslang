@@ -34,10 +34,10 @@ export const validUsername = (value: string) => {
 };
 
 export const validPassword = (value: string) => {
-  if (value.length < 6 || value.length > 16) {
+  if (value.length < 8 || value.length > 16) {
     return (
       <div className="alert alert-danger" role="alert">
-        Пароль должен содержать от 6 до 15 символов
+        Пароль должен содержать от 8 до 15 символов
       </div>
     );
   }
