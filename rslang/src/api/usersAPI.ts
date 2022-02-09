@@ -30,15 +30,18 @@ export class UsersAPI extends BaseAPI {
       });
   }
 
-  loginUser(dataLogin: TUserBase, loginUserCb: (data: TUserBase) => void) {
+  loginUser(
+    dataLogin: TUserBase,
+    loginUserCb: (error: string | null, data?: TAuth) => void,
+  ) {
     this.post('signin', dataLogin)
       .then((result) => {
         BaseAPI.handleError(result, USERS_API_ERRORS);
         return result.json();
       })
-      .then((data) => loginUserCb(data))
+      .then((data) => loginUserCb(null, data))
       .catch((error) => {
-        console.error(error);
+        loginUserCb(error.message);
       });
   }
 
