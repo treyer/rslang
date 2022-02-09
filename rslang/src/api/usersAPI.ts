@@ -3,16 +3,17 @@ import { TAuth, TUser, TUserBase } from './types';
 import { USERS_API_ERRORS } from './errors';
 
 export class UsersAPI extends BaseAPI {
-  createUser(dataUser: TUser, createNewUserCb: (data: TUser) => void) {
+  createUser(
+    dataUser: TUser,
+    createNewUserCb: (error: string | null, data?: TUser) => void,
+  ) {
     this.post('users', dataUser)
       .then((result) => {
         BaseAPI.handleError(result, USERS_API_ERRORS);
         return result.json();
       })
-      .then((newUser) => createNewUserCb(newUser))
-      .catch((error) => {
-        console.error(error);
-      });
+      .then((newUser) => createNewUserCb(null, newUser))
+      .catch((error) => createNewUserCb(error.message));
   }
 
   getUser(userId: string, token: string, getUserCb: (data: TUser) => void) {
