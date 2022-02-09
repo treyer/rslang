@@ -2,52 +2,16 @@ import { useState, useRef } from 'react';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
-import { isEmail } from 'validator';
 
 import UsersAPI from '../../api/usersAPI';
+import {
+  required,
+  validEmail,
+  validUsername,
+  validPassword,
+} from '../../General/utils';
 
 import './register.scss';
-
-const required = (value: string) => {
-  if (!value.trim()) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Поле обязательно для заполнения
-      </div>
-    );
-  }
-  return '';
-};
-const validEmail = (value: string) => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Email не валиден
-      </div>
-    );
-  }
-  return '';
-};
-const validUsername = (value: string) => {
-  if (value.length < 3 || value.length > 16) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Имя пользователя должно содержать от 3 до 15 символов
-      </div>
-    );
-  }
-  return '';
-};
-const validPassword = (value: string) => {
-  if (value.length < 6 || value.length > 16) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Пароль должен содержать от 6 до 15 символов
-      </div>
-    );
-  }
-  return '';
-};
 
 const Register = () => {
   const [username, setUsername] = useState('');
