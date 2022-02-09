@@ -11,7 +11,7 @@ import './TextbookEnglishLevels.scss';
 type TLevelId = keyof typeof ENGLISH_LEVELS;
 
 const TextbookEnglishLevels = () => {
-  const [activeLevelId, satActiveLevelId] = useState<TLevelId>(0);
+  const [activeLevelId, setActiveLevelId] = useState<TLevelId>(0);
 
   const handleLevelHover = useCallback((e: MouseEvent) => {
     const target = e.target as HTMLElement;
@@ -19,7 +19,7 @@ const TextbookEnglishLevels = () => {
       return;
     }
     const activeId = target.id as unknown as TLevelId;
-    satActiveLevelId(activeId);
+    setActiveLevelId(activeId);
   }, []);
 
   return (
