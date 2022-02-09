@@ -24,7 +24,9 @@ const TextbookEnglishLevels = () => {
 
   return (
     <div className="App-textbook">
-      <Typography variant="h3">Выбери уровень для изучения</Typography>
+      <Typography variant="h3" className="textbook_level-title">
+        Выбери уровень для изучения
+      </Typography>
       <div className="textbook_levels-list">
         <section className="textbook_level-list-section-button">
           {Object.values(ENGLISH_LEVELS).map(({ id, code, level }) => (
