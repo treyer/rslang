@@ -54,7 +54,19 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
 
 .App-games {
   background-color: $bg-games;
-  min-height: 100vh;
+  min-height: calc(100vh - 140px);
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-y: auto;
+
+  .games-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    margin: 50px;
+  }
 }
 
 .App-textbook {
