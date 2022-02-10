@@ -10,4 +10,11 @@ $bg: #b2ebf2;
   padding: 50px;
   flex-wrap: wrap;
   background-color: $bg;
+
+  .textbook_word-card {
+    transition: 0.2s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 }
