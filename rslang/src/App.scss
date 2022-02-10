@@ -85,6 +85,15 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
     .team-card {
       transition: 0.2s;
 
+      .team-img_static {
+        position:absolute;
+        background: white;
+
+        &:hover {
+          opacity:0;
+        }
+      }
+
       .team-text {
         text-align: left;
       }
