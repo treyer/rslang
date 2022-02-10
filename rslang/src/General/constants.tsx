@@ -6,6 +6,10 @@ import TextbookWords from '../pages/textbook/TextbookWords/TextbookWords';
 import Team from '../pages/team/team';
 
 import { TPath } from './types';
+import GameSprint from '../pages/games/GameSprint/GameSprint';
+import GameAudio from '../pages/games/GameAudio/GameAudio';
+import GameSprintLevel from '../pages/games/GameSprint/GameSprintLevel/GameSprintLevel';
+import GameAudioLevel from '../pages/games/GameAudio/GameAudioLevel/GameAudioLevel';
 
 export const ROUTES: TPath[] = [
   { id: 1, routePath: '/', title: 'Главная', element: <Main /> },
@@ -33,6 +37,30 @@ export const ROUTES: TPath[] = [
     routePath: '/team',
     title: 'О команде',
     element: <Team />,
+  },
+  {
+    id: 7,
+    routePath: '/games/sprint',
+    title: 'Мини-игры',
+    element: <GameSprint />,
+  },
+  {
+    id: 8,
+    routePath: '/games/audio',
+    title: 'Мини-игры',
+    element: <GameAudio />,
+  },
+  {
+    id: 9,
+    routePath: '/games/sprint/:id',
+    title: 'Мини-игры',
+    element: <GameSprintLevel />,
+  },
+  {
+    id: 10,
+    routePath: '/games/audio/:id',
+    title: 'Мини-игры',
+    element: <GameAudioLevel />,
   },
 ];
 

@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 
 const Games = () => {
   return (
@@ -27,13 +28,14 @@ const Games = () => {
             </Typography>
           </CardContent>
           <CardActions>
-            Выберите сложность:
-            <Button size="small">1</Button>
-            <Button size="small">2</Button>
-            <Button size="small">3</Button>
-            <Button size="small">4</Button>
-            <Button size="small">5</Button>
-            <Button size="small">6</Button>
+            <Button
+              size="small"
+              component={Link}
+              to="/games/sprint"
+              variant="contained"
+            >
+              Играть
+            </Button>
           </CardActions>
         </Card>
         <Card sx={{ maxWidth: 500, height: 500 }}>
@@ -53,13 +55,14 @@ const Games = () => {
             </Typography>
           </CardContent>
           <CardActions>
-            Выберите сложность:
-            <Button size="small">1</Button>
-            <Button size="small">2</Button>
-            <Button size="small">3</Button>
-            <Button size="small">4</Button>
-            <Button size="small">5</Button>
-            <Button size="small">6</Button>
+            <Button
+              size="small"
+              component={Link}
+              to="/games/audio"
+              variant="contained"
+            >
+              Играть
+            </Button>
           </CardActions>
         </Card>
       </div>
