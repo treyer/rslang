@@ -13,69 +13,69 @@ $bg-btn5: #00acc1;
   background-attachment: fixed;
   overflow-y: auto;
 
-.audio_level-title {
-  padding: 30px 0;
-}
+  .audio_level-title {
+    padding: 30px 0;
+  }
 
-.audio_level-title-control {
-  padding: 10px 0;
-  line-height: 1rem;
-  margin-top: 50px;
-}
+  .audio_level-title-control {
+    padding: 10px 0;
+    line-height: 1rem;
+    margin-top: 50px;
+  }
 
-.audio_levels-list {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  max-width: 1600px;
-  gap: 20px;
-
-  .audio_level-list-section-button {
+  .audio_levels-list {
     display: flex;
-    justify-content: center;
-    flex-direction: row;
-    min-width: 50px;
-    gap: 10px;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 1600px;
+    gap: 20px;
 
-
-    .game_btn {
+    .audio_level-list-section-button {
       display: flex;
-      justify-content: flex-start;
-    }
+      justify-content: center;
+      flex-direction: row;
+      min-width: 50px;
+      gap: 10px;
 
-    .game_button-0 {
-      background-color: $bg-btn0;
-    }
 
-    .game_button-1 {
-      background-color: $bg-btn1;
-    }
+      .textbook_btn {
+        display: flex;
+        justify-content: flex-start;
+      }
 
-    .game_button-2 {
-      background-color: $bg-btn2;
-    }
+      .textbook_button-0 {
+        background-color: $bg-btn0;
+      }
 
-    .game_button-3 {
-      background-color: $bg-btn3;
-    }
+      .textbook_button-1 {
+        background-color: $bg-btn1;
+      }
 
-    .game_button-4 {
-      background-color: $bg-btn4;
-    }
+      .textbook_button-2 {
+        background-color: $bg-btn2;
+      }
 
-    .game_button-5 {
-      background-color: $bg-btn5;
-    }
+      .textbook_button-3 {
+        background-color: $bg-btn3;
+      }
 
-    .game_code-title {
-      font-size: 3rem;
-      padding-right: 10px;
-    }
+      .textbook_button-4 {
+        background-color: $bg-btn4;
+      }
 
-    .game_level-title {
-      font-size: 1.5rem;
-      text-align: justify;
+      .textbook_button-5 {
+        background-color: $bg-btn5;
+      }
+
+      .textbook_code-title {
+        font-size: 3rem;
+        padding-right: 10px;
+      }
+
+      .game_level-title {
+        font-size: 1.5rem;
+        text-align: justify;
+      }
     }
   }
-}
 }

@@ -1,6 +1,6 @@
 import { MouseEvent, useCallback, useState } from 'react';
 import { Typography } from '@mui/material';
-import LevelSprintButton from './LevelSprintButton/LevelSprintButton';
+import EnglishLevelButton from '../../textbook/components/EnglishLevelButton/EnglishLevelButton';
 import { ENGLISH_LEVELS } from '../../textbook/consts';
 import './GameSprint.scss';
 
@@ -9,7 +9,7 @@ type TGameId = keyof typeof ENGLISH_LEVELS;
 const GameSprint = () => {
   const [activeGameId, setActiveGameId] = useState<TGameId>(0);
 
-  const handleGameMini = useCallback(
+  const handleGameLevel = useCallback(
     (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target) {
@@ -29,11 +29,13 @@ const GameSprint = () => {
       <div className="sprint_levels-list">
         <section className="sprint_level-list-section-button">
           {Object.values(ENGLISH_LEVELS).map(({ id, code }) => (
-            <LevelSprintButton
+            <EnglishLevelButton
+              path="/games/sprint/"
               key={id}
               id={id}
               code={code}
-              onHover={handleGameMini}
+              level=""
+              onHover={handleGameLevel}
             />
           ))}
         </section>

@@ -1,11 +1,8 @@
 import React, { MouseEvent, useCallback, useState } from 'react';
 import { Typography } from '@mui/material';
-
 import { ENGLISH_LEVELS } from '../consts';
 import EnglishLevelButton from '../components/EnglishLevelButton/EnglishLevelButton';
-
 import TextbookLevelInformation from '../components/TextbookLevelInfomation/TextbookLevelInformation';
-
 import './TextbookEnglishLevels.scss';
 
 type TLevelId = keyof typeof ENGLISH_LEVELS;
@@ -31,6 +28,7 @@ const TextbookEnglishLevels = () => {
         <section className="textbook_level-list-section-button">
           {Object.values(ENGLISH_LEVELS).map(({ id, code, level }) => (
             <EnglishLevelButton
+              path="/textbook/words/"
               key={id}
               id={id}
               code={code}

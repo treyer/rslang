@@ -1,15 +1,15 @@
 import { MouseEvent, useCallback, useState } from 'react';
 import { Typography } from '@mui/material';
 import { ENGLISH_LEVELS } from '../../textbook/consts';
+import EnglishLevelButton from '../../textbook/components/EnglishLevelButton/EnglishLevelButton';
 import './GameAudio.scss';
-import LevelAudioButton from './LevelAudioButton/LevelAudioButton';
 
 type TGameId = keyof typeof ENGLISH_LEVELS;
 
 const GameAudio = () => {
   const [activeGameId, setActiveGameId] = useState<TGameId>(0);
 
-  const handleGameMini = useCallback(
+  const handleGameLevel = useCallback(
     (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target) {
@@ -29,11 +29,13 @@ const GameAudio = () => {
       <div className="audio_levels-list">
         <section className="audio_level-list-section-button">
           {Object.values(ENGLISH_LEVELS).map(({ id, code }) => (
-            <LevelAudioButton
+            <EnglishLevelButton
+              path="/games/audio/"
               key={id}
               id={id}
               code={code}
-              onHover={handleGameMini}
+              level=""
+              onHover={handleGameLevel}
             />
           ))}
         </section>
