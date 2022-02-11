@@ -43,3 +43,19 @@ export const validPassword = (value: string) => {
   }
   return '';
 };
+
+export const setUserLoginToLocalStorage = (
+  token: string,
+  refreshToken: string,
+  userId: string,
+) => {
+  localStorage.setItem('token', token);
+  localStorage.setItem('refreshToken', refreshToken);
+  localStorage.setItem('userId', userId);
+};
+
+export const clearUserLoginInLocalStorage = () => {
+  localStorage.setItem('token', '');
+  localStorage.setItem('refreshToken', '');
+  localStorage.setItem('userId', '');
+};

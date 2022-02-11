@@ -1,10 +1,16 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 
 import UsersAPI from '../../api/usersAPI';
-import { required, validEmail, validPassword } from '../../General/utils';
+import {
+  required,
+  setUserLoginToLocalStorage,
+  validEmail,
+  validPassword,
+} from '../../General/utils';
+import { LoginContext } from '../../Context/login-context';
 
 import './login.scss';
 
@@ -16,6 +22,7 @@ const Login = () => {
   const [submitBtnState, setSubmitBtnState] = useState(false);
   const form = useRef<HTMLFormElement>();
   const checkBtn = useRef<HTMLFormElement>();
+  const { userLoginData, setUserLogin } = useContext(LoginContext);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail((e.target as HTMLInputElement).value);
@@ -41,7 +48,20 @@ const Login = () => {
           } else {
             setMessage(`Пользователь вошёл`);
             setIsSuccess(true);
-            console.error(data);
+            if (data) {
+              console.error(`data ${data.token}`);
+              setUserLogin({
+                isLogined: true,
+                token: data.token,
+                refreshToken: data.refreshToken,
+                userId: data.userId,
+              });
+              setUserLoginToLocalStorage(
+                data.token,
+                data.refreshToken,
+                data.userId,
+              );
+            }
           }
         });
       }

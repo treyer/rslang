@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 /*  import { TAuth, TUser, TUserBase, TUserWord, TWord } from './api/types';
@@ -8,6 +8,7 @@ import UserWordsAPI from './api/userWordsAPI';  */
 import { ROUTES } from './General/constants';
 import Header from './Components/header/header';
 import Footer from './Components/footer/footer';
+import { LoginContext } from './Context/login-context';
 
 import './App.scss';
 
@@ -18,6 +19,31 @@ const userId = '61fd7b9ad8227c0016ecf489';
 const wordId = '5e9f5ee35eb9e72bc21af66d';  */
 
 function App() {
+  const [userLoginData, setUserLogin] = useState({
+    isLogined: false,
+    token: '',
+    refreshToken: '',
+    userId: '',
+  });
+  const value = { userLoginData, setUserLogin };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
+    const userId = localStorage.getItem('userId');
+
+    if (token && refreshToken && userId) {
+      setUserLogin({
+        isLogined: true,
+        token,
+        refreshToken,
+        userId,
+      });
+    }
+  }, []);
+
+  // TODO: add initial receive token by refreshToken
+
   useEffect(() => {
     /*  WordsAPI.getWords(2, 2, (data: TWord[]) => console.log('words: ', data));
 
@@ -96,13 +122,15 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Routes>
-        {ROUTES.map((el) => (
-          <Route key={el.id} path={el.routePath} element={el.element} />
-        ))}
-      </Routes>
-      <Footer />
+      <LoginContext.Provider value={value}>
+        <Header />
+        <Routes>
+          {ROUTES.map((el) => (
+            <Route key={el.id} path={el.routePath} element={el.element} />
+          ))}
+        </Routes>
+        <Footer />
+      </LoginContext.Provider>
     </div>
   );
 }
