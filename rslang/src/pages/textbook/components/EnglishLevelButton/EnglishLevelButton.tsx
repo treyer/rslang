@@ -6,6 +6,7 @@ type TEnglishLevelButtonProps = {
   id: string;
   code: string;
   level: string;
+  path: string;
   onHover: (e: MouseEvent) => void;
 };
 
@@ -13,11 +14,12 @@ const EnglishLevelButton = ({
   id,
   code,
   level,
+  path,
   onHover,
 }: TEnglishLevelButtonProps) => (
   <Button
     component={Link}
-    to={`/textbook/words/${id}`}
+    to={`${path}${id}`}
     id={id}
     key={id}
     variant="contained"
