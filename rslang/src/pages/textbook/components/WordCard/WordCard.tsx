@@ -1,4 +1,7 @@
-import { memo, MouseEvent } from 'react';
+import { memo, MouseEvent, useCallback, useState } from 'react';
+
+import classNames from 'classnames';
+
 import {
   Card,
   CardMedia,
@@ -37,55 +40,71 @@ const WordCard = ({
   textMeaningTranslate,
   textExampleTranslate,
   onPlayWord,
-}: TWordCardProps) => (
-  <Card sx={{ maxWidth: 345 }} className="textbook_word-card">
-    <CardMedia
-      component="img"
-      height="170"
-      image={`${SERVER_URL}/${image}`}
-      alt={word}
-    />
-    <CardContent>
-      <Typography
-        gutterBottom
-        variant="h4"
-        textAlign="right"
-        component="div"
-        display="flex"
-        alignItems="center"
-      >
-        <span>{word}</span>
-        <CardActions>
-          <IconButton aria-label="volume" onClick={onPlayWord} id={id}>
-            <VolumeUpIcon />
-          </IconButton>
-        </CardActions>
-        <CardActions>
-          <IconButton aria-label="add">
-            <AddCircleOutlineIcon />
-          </IconButton>
-          <IconButton aria-label="remove">
-            <RemoveCircleOutlineIcon />
-          </IconButton>
-        </CardActions>
-      </Typography>
-      <Typography variant="subtitle1" textAlign="right">
-        {wordTranslate} {transcription}
-      </Typography>
-      <Typography variant="body2" color="text.secondary" textAlign="right">
-        {textMeaning}
-      </Typography>
-      <Typography variant="body2" textAlign="right">
-        {textExample}
-      </Typography>
-      <Typography variant="body2" color="text.secondary" textAlign="right">
-        {textMeaningTranslate}
-      </Typography>
-      <Typography variant="body2" textAlign="right">
-        {textExampleTranslate}
-      </Typography>
-    </CardContent>
-  </Card>
-);
+}: TWordCardProps) => {
+  const [selected, setSelected] = useState(false);
+
+  const handleSelectCard = useCallback(() => {
+    setSelected(true);
+  }, []);
+
+  const handleUnSelectCard = useCallback(() => {
+    setSelected(false);
+  }, []);
+
+  return (
+    <Card
+      sx={{ maxWidth: 345 }}
+      className={classNames('textbook_word-card', { 'is-selected': selected })}
+      id={`word-${id}`}
+    >
+      <CardMedia
+        component="img"
+        height="170"
+        image={`${SERVER_URL}/${image}`}
+        alt={word}
+      />
+      <CardContent>
+        <Typography
+          gutterBottom
+          variant="h4"
+          textAlign="right"
+          component="div"
+          display="flex"
+          alignItems="center"
+        >
+          <span>{word}</span>
+          <CardActions>
+            <IconButton aria-label="volume" onClick={onPlayWord} id={id}>
+              <VolumeUpIcon />
+            </IconButton>
+          </CardActions>
+          <CardActions>
+            <IconButton aria-label="add" onClick={handleSelectCard}>
+              <AddCircleOutlineIcon />
+            </IconButton>
+            <IconButton aria-label="remove" onClick={handleUnSelectCard}>
+              <RemoveCircleOutlineIcon />
+            </IconButton>
+          </CardActions>
+        </Typography>
+        <Typography variant="subtitle1" textAlign="right">
+          {wordTranslate} {transcription}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" textAlign="right">
+          {textMeaning}
+        </Typography>
+        <Typography variant="body2" textAlign="right">
+          {textExample}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" textAlign="right">
+          {textMeaningTranslate}
+        </Typography>
+        <Typography variant="body2" textAlign="right">
+          {textExampleTranslate}
+        </Typography>
+      </CardContent>
+    </Card>
+  );
+};
 
 export default memo(WordCard);

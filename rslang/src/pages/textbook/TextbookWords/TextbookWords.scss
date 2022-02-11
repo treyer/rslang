@@ -1,4 +1,5 @@
-$bg: #b2ebf2;
+$bg-container: #b2ebf2;
+$bg-selected-card: #fffde2;
 
 .textbook_words-container {
   display: flex;
@@ -9,12 +10,15 @@ $bg: #b2ebf2;
   gap: 50px;
   padding: 50px;
   flex-wrap: wrap;
-  background-color: $bg;
+  background-color: $bg-container;
 
   .textbook_word-card {
     transition: 0.2s;
     &:hover {
       transform: scale(1.1);
     }
+  }
+  .is-selected {
+    background-color: $bg-selected-card;
   }
 }

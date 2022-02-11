@@ -1,4 +1,4 @@
-import { useCallback, MouseEvent, useState, useMemo, useEffect } from 'react';
+import { useCallback, useState, useMemo, useEffect } from 'react';
 
 import { SERVER_URL } from '../../../consts';
 import WordCard from '../components/WordCard/WordCard';
@@ -36,24 +36,21 @@ const TextbookWords = () => {
     const a = new Audio(playList[currentTrack]);
     return a;
   }, [currentTrack]);
-  const playTextbookWord = useCallback(
-    (e: MouseEvent) => {
-      if (isPlaying) {
-        audio.pause();
-        setIsPlaying(false);
-        return undefined;
-      }
-
-      if (!isPlaying) {
-        audio.play();
-        setIsPlaying(true);
-        return undefined;
-      }
-
+  const playTextbookWord = useCallback(() => {
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
       return undefined;
-    },
-    [isPlaying, audio],
-  );
+    }
+
+    if (!isPlaying) {
+      audio.play();
+      setIsPlaying(true);
+      return undefined;
+    }
+
+    return undefined;
+  }, [isPlaying, audio]);
 
   useEffect(() => {
     audio.addEventListener('ended', () => {
