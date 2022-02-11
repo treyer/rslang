@@ -11,6 +11,11 @@ import Footer from './Components/footer/footer';
 import { LoginContext } from './Context/login-context';
 
 import './App.scss';
+import UsersAPI from './api/usersAPI';
+import {
+  clearUserLoginInLocalStorage,
+  setUserLoginToLocalStorage,
+} from './General/utils';
 
 /*  const refreshToken = '';
 const token =
@@ -33,11 +38,19 @@ function App() {
     const userId = localStorage.getItem('userId');
 
     if (token && refreshToken && userId) {
-      setUserLogin({
-        isLogined: true,
-        token,
-        refreshToken,
-        userId,
+      UsersAPI.getNewUserToken(userId, refreshToken, (errorMess, data) => {
+        if (errorMess) {
+          clearUserLoginInLocalStorage();
+        } else if (data) {
+          console.error(JSON.stringify(data.userId));
+          setUserLogin({
+            isLogined: true,
+            token: data.token,
+            refreshToken: data.refreshToken,
+            userId: data.userId,
+          });
+          setUserLoginToLocalStorage(data.token, data.refreshToken, userId);
+        }
       });
     }
   }, []);

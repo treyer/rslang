@@ -22,7 +22,7 @@ const Login = () => {
   const [submitBtnState, setSubmitBtnState] = useState(false);
   const form = useRef<HTMLFormElement>();
   const checkBtn = useRef<HTMLFormElement>();
-  const { userLoginData, setUserLogin } = useContext(LoginContext);
+  const { setUserLogin } = useContext(LoginContext);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail((e.target as HTMLInputElement).value);
@@ -49,7 +49,6 @@ const Login = () => {
             setMessage(`Пользователь вошёл`);
             setIsSuccess(true);
             if (data) {
-              console.error(`data ${data.token}`);
               setUserLogin({
                 isLogined: true,
                 token: data.token,
