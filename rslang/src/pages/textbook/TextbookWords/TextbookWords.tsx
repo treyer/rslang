@@ -1,4 +1,6 @@
 import { useCallback, useState, useMemo, useEffect } from 'react';
+import { TWord } from '../../../api/types';
+import WordsAPI from '../../../api/wordsAPI';
 
 import { SERVER_URL } from '../../../consts';
 import WordCard from '../components/WordCard/WordCard';
@@ -27,6 +29,7 @@ const obj = {
 const TextbookWords = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
+  const [words, setWords] = useState<TWord[]>([]);
   const playList = [
     `${SERVER_URL}/${obj.audio}`,
     `${SERVER_URL}/${obj.audioMeaning}`,
@@ -60,21 +63,39 @@ const TextbookWords = () => {
     });
   }, [audio]);
 
+  useEffect(() => {
+    WordsAPI.getWords(0, 1, (data: TWord[]) => setWords(data));
+  }, []);
+
   return (
     <div className="textbook_page">
       <div className="textbook_words-container">
-        <WordCard
-          id={obj.id}
-          word={obj.word}
-          image={obj.image}
-          textMeaning={obj.textMeaning.replace(/<\/?[a-zA-Z]+>/gi, '')}
-          textExample={obj.textExample.replace(/<\/?[a-zA-Z]+>/gi, '')}
-          transcription={obj.transcription}
-          wordTranslate={obj.wordTranslate}
-          textMeaningTranslate={obj.textMeaningTranslate}
-          textExampleTranslate={obj.textExampleTranslate}
-          onPlayWord={playTextbookWord}
-        />
+        {words.map(
+          ({
+            id,
+            word,
+            image,
+            textMeaning,
+            textExample,
+            transcription,
+            wordTranslate,
+            textMeaningTranslate,
+            textExampleTranslate,
+          }) => (
+            <WordCard
+              id={id}
+              word={word}
+              image={image}
+              textMeaning={textMeaning}
+              textExample={textExample}
+              transcription={transcription}
+              wordTranslate={wordTranslate}
+              textMeaningTranslate={textMeaningTranslate}
+              textExampleTranslate={textExampleTranslate}
+              onPlayWord={playTextbookWord}
+            />
+          ),
+        )}
       </div>
     </div>
   );

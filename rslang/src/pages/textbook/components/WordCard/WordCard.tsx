@@ -91,10 +91,10 @@ const WordCard = ({
           {wordTranslate} {transcription}
         </Typography>
         <Typography variant="body2" color="text.secondary" textAlign="right">
-          {textMeaning}
+          {textMeaning.replace(/<\/?[a-zA-Z]+>/gi, '')}
         </Typography>
         <Typography variant="body2" textAlign="right">
-          {textExample}
+          {textExample.replace(/<\/?[a-zA-Z]+>/gi, '')}
         </Typography>
         <Typography variant="body2" color="text.secondary" textAlign="right">
           {textMeaningTranslate}
