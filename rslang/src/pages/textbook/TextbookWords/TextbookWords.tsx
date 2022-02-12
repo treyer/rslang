@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, useEffect } from 'react';
+import { useCallback, useState, useMemo, useEffect, MouseEvent } from 'react';
 import { TWord } from '../../../api/types';
 import WordsAPI from '../../../api/wordsAPI';
 
@@ -7,65 +7,79 @@ import WordCard from '../components/WordCard/WordCard';
 
 import './TextbookWords.scss';
 
-const obj = {
-  id: '5e9f5ee35eb9e72bc21af500',
-  group: '0',
-  page: '4',
-  word: 'kilometer',
-  image: 'files/05_0097.jpg',
-  audio: 'files/05_0097.mp3',
-  audioMeaning: 'files/05_0097_meaning.mp3',
-  audioExample: 'files/05_0097_example.mp3',
-  textMeaning:
-    'A <i>kilometer</i> is a unit of measurement that is 1,000 meters.',
-  textExample: 'A marathon is 42.2 <b>kilometers</b>.',
-  transcription: '[kilάmətər]',
-  textExampleTranslate: 'Марафон 42,2 километра',
-  textMeaningTranslate:
-    'Километр - это единица измерения, которая составляет 1000 метров',
-  wordTranslate: 'километ',
+export type TPlayListCollection = {
+  [key: string]: string[];
 };
 
 const TextbookWords = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [words, setWords] = useState<TWord[]>([]);
-  const playList = [
-    `${SERVER_URL}/${obj.audio}`,
-    `${SERVER_URL}/${obj.audioMeaning}`,
-    `${SERVER_URL}/${obj.audioExample}`,
-  ];
-  const audio = useMemo(() => {
-    const a = new Audio(playList[currentTrack]);
-    return a;
-  }, [currentTrack]);
+  const [playList, setPlayList] = useState<TPlayListCollection>({});
+  const [playedWordId, setPlayedWordId] = useState('');
+
+  const playedAudio = useMemo(() => {
+    const track = playList[playedWordId]?.[currentTrack];
+    return track ? new Audio(track) : null;
+  }, [currentTrack, playedWordId]);
+
+  const handleCardHover = useCallback((e: MouseEvent) => {
+    const target = e.currentTarget as HTMLElement;
+    if (!target) {
+      return;
+    }
+
+    setPlayedWordId(target.id);
+    setCurrentTrack(0);
+  }, []);
+
   const playTextbookWord = useCallback(() => {
+    if (!playedAudio) {
+      return;
+    }
+
     if (isPlaying) {
-      audio.pause();
+      playedAudio.pause();
       setIsPlaying(false);
-      return undefined;
+      return;
     }
 
     if (!isPlaying) {
-      audio.play();
+      playedAudio.play();
       setIsPlaying(true);
-      return undefined;
     }
-
-    return undefined;
-  }, [isPlaying, audio]);
+  }, [isPlaying, playedAudio]);
 
   useEffect(() => {
-    audio.addEventListener('ended', () => {
-      const nextTrack = playList[currentTrack + 1] ? currentTrack + 1 : 0;
-      setIsPlaying(false);
-      setCurrentTrack(nextTrack);
-    });
-  }, [audio]);
+    if (playedAudio) {
+      playedAudio.addEventListener('ended', () => {
+        const nextTrack = playList[playedWordId]?.[currentTrack + 1]
+          ? currentTrack + 1
+          : 0;
+        setIsPlaying(false);
+        setCurrentTrack(nextTrack);
+      });
+    }
+  }, [playedAudio, playedWordId]);
 
   useEffect(() => {
     WordsAPI.getWords(0, 1, (data: TWord[]) => setWords(data));
   }, []);
+
+  useEffect(() => {
+    const newPlayList = words.reduce(
+      (acc, { id, audio, audioMeaning, audioExample }) => {
+        acc[id] = [
+          `${SERVER_URL}/${audio}`,
+          `${SERVER_URL}/${audioMeaning}`,
+          `${SERVER_URL}/${audioExample}`,
+        ];
+        return acc;
+      },
+      {} as TPlayListCollection,
+    );
+    setPlayList(newPlayList);
+  }, [words]);
 
   return (
     <div className="textbook_page">
@@ -83,6 +97,7 @@ const TextbookWords = () => {
             textExampleTranslate,
           }) => (
             <WordCard
+              key={id}
               id={id}
               word={word}
               image={image}
@@ -93,6 +108,7 @@ const TextbookWords = () => {
               textMeaningTranslate={textMeaningTranslate}
               textExampleTranslate={textExampleTranslate}
               onPlayWord={playTextbookWord}
+              onHover={handleCardHover}
             />
           ),
         )}
