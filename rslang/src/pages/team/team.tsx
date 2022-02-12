@@ -1,6 +1,5 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 
@@ -10,11 +9,19 @@ const Team = () => {
       <div className="team-container">
         <Card sx={{ maxWidth: 400 }} className="team-card">
           <CardActionArea>
-            <CardMedia
-              component="img"
-              height="300"
-              image="./assets/img/andrey.jpg"
-              alt="andrey"
+            <img
+              className="team-img_static"
+              src="./assets/img/2GU.jpg"
+              alt=""
+              width={400}
+              height={400}
+            />
+            <img
+              className="team-img_active"
+              src="./assets/gif/2GU.gif"
+              alt=""
+              width={400}
+              height={400}
             />
             <CardContent>
               <Typography
@@ -57,12 +64,19 @@ const Team = () => {
         </Card>
         <Card sx={{ maxWidth: 400 }} className="team-card">
           <CardActionArea>
-            <CardMedia
-              className="ggg"
-              component="img"
-              height="300"
-              image="./assets/img/marina.jpg"
-              alt="marina"
+            <img
+              className="team-img_static"
+              src="./assets/img/Ao.jpg"
+              alt=""
+              width={400}
+              height={400}
+            />
+            <img
+              className="team-img_active"
+              src="./assets/gif/Ao.gif"
+              alt=""
+              width={400}
+              height={400}
             />
             <CardContent>
               <Typography
@@ -105,11 +119,19 @@ const Team = () => {
         </Card>
         <Card sx={{ maxWidth: 400 }} className="team-card">
           <CardActionArea>
-            <CardMedia
-              component="img"
-              height="300"
-              image="./assets/img/vika.jpg"
-              alt="viktoria"
+            <img
+              className="team-img_static"
+              src="./assets/img/KHO.jpg"
+              alt=""
+              width={400}
+              height={400}
+            />
+            <img
+              className="team-img_active"
+              src="./assets/gif/KHO.gif"
+              alt=""
+              width={400}
+              height={400}
             />
             <CardContent>
               <Typography
