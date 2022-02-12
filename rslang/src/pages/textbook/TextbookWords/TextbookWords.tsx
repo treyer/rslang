@@ -1,4 +1,5 @@
 import { useCallback, useState, useMemo, useEffect, MouseEvent } from 'react';
+import { useLocation } from 'react-router-dom';
 import { TWord } from '../../../api/types';
 import WordsAPI from '../../../api/wordsAPI';
 
@@ -62,8 +63,12 @@ const TextbookWords = () => {
     }
   }, [playedAudio, playedWordId]);
 
+  const location = useLocation();
+
   useEffect(() => {
-    WordsAPI.getWords(0, 1, (data: TWord[]) => setWords(data));
+    const lengthLocation = location.pathname.split('/').length;
+    const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
+    WordsAPI.getWords(groupLevel, 1, (data: TWord[]) => setWords(data));
   }, []);
 
   useEffect(() => {
