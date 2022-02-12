@@ -1,4 +1,13 @@
-import { useCallback, useState, useMemo, useEffect, MouseEvent } from 'react';
+import { Pagination } from '@mui/material';
+
+import {
+  useCallback,
+  useState,
+  useMemo,
+  useEffect,
+  MouseEvent,
+  ChangeEvent,
+} from 'react';
 import { useLocation } from 'react-router-dom';
 import { TWord } from '../../../api/types';
 import WordsAPI from '../../../api/wordsAPI';
@@ -13,16 +22,19 @@ export type TPlayListCollection = {
 };
 
 const TextbookWords = () => {
+  const location = useLocation();
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [words, setWords] = useState<TWord[]>([]);
   const [playList, setPlayList] = useState<TPlayListCollection>({});
   const [playedWordId, setPlayedWordId] = useState('');
+  const [currPage, setPage] = useState(1);
 
   const playedAudio = useMemo(() => {
     const track = playList[playedWordId]?.[currentTrack];
     return track ? new Audio(track) : null;
-  }, [currentTrack, playedWordId]);
+  }, [currentTrack, playedWordId, playList]);
 
   const handleCardHover = useCallback((e: MouseEvent) => {
     const target = e.currentTarget as HTMLElement;
@@ -61,15 +73,23 @@ const TextbookWords = () => {
         setCurrentTrack(nextTrack);
       });
     }
-  }, [playedAudio, playedWordId]);
+  }, [playedAudio, playedWordId, currentTrack, playList]);
 
-  const location = useLocation();
+  const handleChangePage = (event: ChangeEvent<unknown>, pageNum: number) => {
+    if (!event.target) {
+      return;
+    }
+    if (pageNum !== null) {
+      setPage(pageNum);
+    }
+  };
 
   useEffect(() => {
     const lengthLocation = location.pathname.split('/').length;
     const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
-    WordsAPI.getWords(groupLevel, 1, (data: TWord[]) => setWords(data));
-  }, []);
+    const page = currPage - 1;
+    WordsAPI.getWords(page, groupLevel, (data: TWord[]) => setWords(data));
+  }, [currPage, location.pathname]);
 
   useEffect(() => {
     const newPlayList = words.reduce(
@@ -117,6 +137,13 @@ const TextbookWords = () => {
             />
           ),
         )}
+        <Pagination
+          count={30}
+          variant="outlined"
+          color="primary"
+          defaultPage={1}
+          onChange={handleChangePage}
+        />
       </div>
     </div>
   );
