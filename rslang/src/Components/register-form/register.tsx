@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
+import { CardContent, Avatar, Button } from '@mui/material';
 
 import UsersAPI from '../../api/usersAPI';
 import {
@@ -63,70 +64,86 @@ const Register = () => {
   return (
     <div className="register-form-wrapper">
       <div className="card card-container">
-        <Form onSubmit={handleRegister} ref={form}>
-          {!isSuccess && (
-            <div>
-              <div className="form-group">
-                <label htmlFor="username">имя</label>
-                <Input
-                  id="username"
-                  type="text"
-                  className="form-control"
-                  name="username"
-                  value={username}
-                  onChange={handleUsernameChange}
-                  validations={[required, validUsername]}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">email</label>
-                <Input
-                  id="email"
-                  type="text"
-                  className="form-control"
-                  name="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  validations={[required, validEmail]}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">пароль</label>
-                <Input
-                  id="password"
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  validations={[required, validPassword]}
-                />
-              </div>
-              <div className="form-group">
-                <button
+        {!isSuccess && (
+          <Avatar
+            alt="Register user"
+            src="./assets/img/user-add.png"
+            sx={{ width: 90, height: 90 }}
+            style={{ margin: '10px auto 0' }}
+          />
+        )}
+        {isSuccess && (
+          <Avatar
+            alt="User registered"
+            src="./assets/img/user-added-logined.png"
+            sx={{ width: 90, height: 90 }}
+            style={{ margin: '10px auto 0' }}
+          />
+        )}
+        <CardContent>
+          <Form onSubmit={handleRegister} ref={form}>
+            {!isSuccess && (
+              <div>
+                <div className="form-group">
+                  <label htmlFor="username">имя</label>
+                  <Input
+                    id="username"
+                    type="text"
+                    className="form-control"
+                    name="username"
+                    value={username}
+                    onChange={handleUsernameChange}
+                    validations={[required, validUsername]}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email">email</label>
+                  <Input
+                    id="email"
+                    type="text"
+                    className="form-control"
+                    name="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    validations={[required, validEmail]}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password">пароль</label>
+                  <Input
+                    id="password"
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    validations={[required, validPassword]}
+                  />
+                </div>
+                <Button
                   type="submit"
-                  className="btn btn-primary btn-block"
+                  variant="contained"
                   disabled={submitBtnState}
                 >
                   Зарегистрироваться
-                </button>
+                </Button>
               </div>
-            </div>
-          )}
-          {message && (
-            <div className="form-group">
-              <div
-                className={
-                  isSuccess ? 'alert alert-success' : 'alert alert-danger'
-                }
-                role="alert"
-              >
-                {message}
+            )}
+            {message && (
+              <div className="form-group">
+                <div
+                  className={
+                    isSuccess ? 'alert alert-success' : 'alert alert-danger'
+                  }
+                  role="alert"
+                >
+                  {message}
+                </div>
               </div>
-            </div>
-          )}
-          <CheckButton style={{ display: 'none' }} ref={checkBtn} />
-        </Form>
+            )}
+            <CheckButton style={{ display: 'none' }} ref={checkBtn} />
+          </Form>
+        </CardContent>
       </div>
     </div>
   );

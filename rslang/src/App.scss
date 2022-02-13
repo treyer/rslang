@@ -51,6 +51,10 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
 .header-buttons {
   margin-right: 30px;
   position: relative;
+
+  .register-modal-btn {
+    margin-right: 20px;
+  }
 }
 
 .modal-background {

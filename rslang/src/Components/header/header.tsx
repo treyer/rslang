@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-
 import { Link } from 'react-router-dom';
+import { Card, Button } from '@mui/material';
+
 import { Sections } from '../../General/constants';
 import { LoginContext } from '../../Context/login-context';
 import Register from '../register-form/register';
@@ -25,7 +26,7 @@ const Header = () => {
     });
   };
 
-  const handleBackgroundOnClick = () => {
+  const handleCloseModals = () => {
     setUserLogin({
       ...userLoginData,
       isLoginOpen: false,
@@ -46,31 +47,53 @@ const Header = () => {
       </nav>
       <div className="header-buttons">
         {!userLoginData.isLogined && (
-          <button type="button" onClick={handleRegisterOnClick}>
+          <Button
+            variant="contained"
+            onClick={handleRegisterOnClick}
+            className="register-modal-btn"
+          >
             Регистрация
-          </button>
+          </Button>
         )}
         <div
           className={`register-wrapper ${
             userLoginData.isRegisterOpen && 'active'
           }`}
         >
-          <Register />
+          <Button
+            variant="outlined"
+            className="close-modal-register-btn"
+            onClick={handleCloseModals}
+          >
+            x
+          </Button>
+          <Card className="card-register">
+            <Register />
+          </Card>
         </div>
-        <button type="button" onClick={handleLoginOnClick}>
+        <Button variant="contained" onClick={handleLoginOnClick}>
           {userLoginData.isLogined ? 'Выход' : 'Вход'}
-        </button>
+        </Button>
         <div
           className={`login-wrapper ${userLoginData.isLoginOpen && 'active'}`}
         >
-          <Login />
+          <Button
+            variant="outlined"
+            className="close-modal-login-btn"
+            onClick={handleCloseModals}
+          >
+            x
+          </Button>
+          <Card className="card-login">
+            <Login />
+          </Card>
         </div>
         <div
           className={`modal-background ${
             (userLoginData.isLoginOpen || userLoginData.isRegisterOpen) &&
             'active'
           }`}
-          onClick={handleBackgroundOnClick}
+          onClick={handleCloseModals}
         />
       </div>
     </div>

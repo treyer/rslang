@@ -2,6 +2,7 @@ import { useState, useRef, useContext } from 'react';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
+import { CardContent, Avatar, Button } from '@mui/material';
 
 import UsersAPI from '../../api/usersAPI';
 import {
@@ -88,64 +89,82 @@ const Login = () => {
     <div className="login-form-wrapper">
       <div className="card card-container">
         {!userLoginData.isLogined && (
-          <Form onSubmit={handleRegister} ref={form}>
-            {!isSuccess && (
-              <div>
-                <div className="form-group">
-                  <label htmlFor="login-email">email</label>
-                  <Input
-                    id="login-email"
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                    validations={[required, validEmail]}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="login-password">пароль</label>
-                  <Input
-                    id="login-password"
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    validations={[required, validPassword]}
-                  />
-                </div>
-                <div className="form-group">
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-block"
-                    disabled={submitBtnState}
-                  >
-                    Войти
-                  </button>
-                </div>
-              </div>
-            )}
-            {message && (
-              <div className="form-group">
-                <div
-                  className={
-                    isSuccess ? 'alert alert-success' : 'alert alert-danger'
-                  }
-                  role="alert"
-                >
-                  {message}
-                </div>
-              </div>
-            )}
-            <CheckButton style={{ display: 'none' }} ref={checkBtn} />
-          </Form>
+          <Avatar
+            alt="Register user"
+            src="./assets/img/user-login.png"
+            sx={{ width: 90, height: 90 }}
+            style={{ margin: '10px auto 0' }}
+          />
         )}
         {userLoginData.isLogined && (
-          <button onClick={handleLogout} type="button">
-            Выйти
-          </button>
+          <Avatar
+            alt="Register user"
+            src="./assets/img/user-added-logined.png"
+            sx={{ width: 90, height: 90 }}
+            style={{ margin: '10px auto 0' }}
+          />
         )}
+        <CardContent>
+          {!userLoginData.isLogined && (
+            <Form onSubmit={handleRegister} ref={form}>
+              {!isSuccess && (
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="login-email">email</label>
+                    <Input
+                      id="login-email"
+                      type="text"
+                      className="form-control"
+                      name="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      validations={[required, validEmail]}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="login-password">пароль</label>
+                    <Input
+                      id="login-password"
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      value={password}
+                      onChange={handlePasswordChange}
+                      validations={[required, validPassword]}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      disabled={submitBtnState}
+                    >
+                      Войти
+                    </Button>
+                  </div>
+                </div>
+              )}
+              {message && (
+                <div className="form-group">
+                  <div
+                    className={
+                      isSuccess ? 'alert alert-success' : 'alert alert-danger'
+                    }
+                    role="alert"
+                  >
+                    {message}
+                  </div>
+                </div>
+              )}
+              <CheckButton style={{ display: 'none' }} ref={checkBtn} />
+            </Form>
+          )}
+          {userLoginData.isLogined && (
+            <Button variant="contained" onClick={handleLogout}>
+              Выход
+            </Button>
+          )}
+        </CardContent>
       </div>
     </div>
   );
