@@ -54,6 +54,8 @@ const Login = () => {
                 token: data.token,
                 refreshToken: data.refreshToken,
                 userId: data.userId,
+                isLoginOpen: true,
+                isRegisterOpen: false,
               });
               setUserLoginToLocalStorage(
                 data.token,

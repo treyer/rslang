@@ -10,6 +10,8 @@ export type TUserLogin = {
   token: string;
   refreshToken: string;
   userId: string;
+  isLoginOpen: boolean;
+  isRegisterOpen: boolean;
 };
 
 export type TAppState = {

@@ -2,3 +2,11 @@
   margin: 0 auto;
   width: 300px;
 }
+
+.register-wrapper {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}

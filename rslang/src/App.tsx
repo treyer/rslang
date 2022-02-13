@@ -29,6 +29,8 @@ function App() {
     token: '',
     refreshToken: '',
     userId: '',
+    isLoginOpen: false,
+    isRegisterOpen: false,
   });
   const value = { userLoginData, setUserLogin };
 
@@ -48,6 +50,8 @@ function App() {
             token: data.token,
             refreshToken: data.refreshToken,
             userId: data.userId,
+            isLoginOpen: false,
+            isRegisterOpen: false,
           });
           setUserLoginToLocalStorage(data.token, data.refreshToken, userId);
         }
