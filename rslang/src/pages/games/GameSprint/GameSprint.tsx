@@ -1,7 +1,7 @@
 import { MouseEvent, useCallback, useState } from 'react';
 import { Typography } from '@mui/material';
-import EnglishLevelButton from '../../textbook/components/EnglishLevelButton/EnglishLevelButton';
-import { ENGLISH_LEVELS } from '../../textbook/consts';
+import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
+import { ENGLISH_LEVELS } from '../../../General/constants';
 import './GameSprint.scss';
 
 type TGameId = keyof typeof ENGLISH_LEVELS;
