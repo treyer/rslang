@@ -1,5 +1,5 @@
 $bg-container: #b2ebf2;
-$bg-selected-card: #fffde2;
+$bg-selected: #fffde2;
 $bg-btn0: #b2ebf2;
 $bg-btn1: #80deea;
 $bg-btn2: #4dd0e1;
@@ -8,7 +8,6 @@ $bg-btn4: #00bcd4;
 $bg-btn5: #00acc1;
 
 .textbook_page {
-
   .textbook_section-button {
     display: flex;
     justify-content: center;
@@ -17,13 +16,12 @@ $bg-btn5: #00acc1;
     gap: 10px;
     padding-top: 20px;
 
-    .active-nav-link {
-      background-color: black;
-    }
-
     .textbook_btn {
       display: flex;
       justify-content: flex-start;
+      &:focus {
+        color: #000000;
+      }
     }
 
     .textbook_button-0 {
@@ -100,7 +98,7 @@ $bg-btn5: #00acc1;
     }
 
     .is-selected {
-      background-color: $bg-selected-card;
+      background-color: $bg-selected;
     }
   }
 }
