@@ -7,6 +7,7 @@ export const LoginContext = createContext<TAppState>({
     token: '',
     refreshToken: '',
     userId: '',
+    userName: '',
     isLoginOpen: false,
     isRegisterOpen: false,
   },

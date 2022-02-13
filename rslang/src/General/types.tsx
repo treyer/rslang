@@ -10,6 +10,7 @@ export type TUserLogin = {
   token: string;
   refreshToken: string;
   userId: string;
+  userName: string;
   isLoginOpen: boolean;
   isRegisterOpen: boolean;
 };

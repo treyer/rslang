@@ -29,6 +29,7 @@ function App() {
     token: '',
     refreshToken: '',
     userId: '',
+    userName: '',
     isLoginOpen: false,
     isRegisterOpen: false,
   });
@@ -49,6 +50,7 @@ function App() {
             token: data.token,
             refreshToken: data.refreshToken,
             userId: data.userId,
+            userName: data.name,
             isLoginOpen: false,
             isRegisterOpen: false,
           });

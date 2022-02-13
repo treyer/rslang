@@ -2,7 +2,7 @@ import { useState, useRef, useContext } from 'react';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
-import { CardContent, Avatar, Button } from '@mui/material';
+import { CardContent, Avatar, Button, Typography } from '@mui/material';
 
 import UsersAPI from '../../api/usersAPI';
 import {
@@ -56,6 +56,7 @@ const Login = () => {
                 token: data.token,
                 refreshToken: data.refreshToken,
                 userId: data.userId,
+                userName: data.name,
                 isLoginOpen: true,
                 isRegisterOpen: false,
               });
@@ -158,6 +159,9 @@ const Login = () => {
               )}
               <CheckButton style={{ display: 'none' }} ref={checkBtn} />
             </Form>
+          )}
+          {userLoginData.isLogined && (
+            <Typography>Вы вошли как {userLoginData.userName}</Typography>
           )}
           {userLoginData.isLogined && (
             <Button variant="contained" onClick={handleLogout}>
