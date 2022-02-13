@@ -98,11 +98,11 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
       transition: 0.2s;
 
       .team-img_static {
-        position:absolute;
+        position: absolute;
         background: white;
 
         &:hover {
-          opacity:0;
+          opacity: 0;
         }
       }
 
