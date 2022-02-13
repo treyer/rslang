@@ -7,6 +7,7 @@ $bg-textbook: #ffffff;
 $bg-stats: #836cc2;
 $bg-team: #ecd9e5;
 $bg-footer: #121c1e;
+$bg-black: #000000;
 
 $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
   brightness(89%) contrast(90%);
@@ -44,6 +45,31 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
     transition: 0.3s;
     margin-right: 30px;
     cursor: pointer;
+  }
+}
+
+.header-buttons {
+  margin-right: 30px;
+  position: relative;
+
+  .register-modal-btn {
+    margin-right: 20px;
+  }
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $bg-black;
+  opacity: 0.5;
+  z-index: 10;
+  display: none;
+
+  &.active {
+    display: block;
   }
 }
 
