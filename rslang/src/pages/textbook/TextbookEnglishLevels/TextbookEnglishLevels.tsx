@@ -1,7 +1,7 @@
 import React, { MouseEvent, useCallback, useState } from 'react';
 import { Typography } from '@mui/material';
-import { ENGLISH_LEVELS } from '../consts';
-import EnglishLevelButton from '../components/EnglishLevelButton/EnglishLevelButton';
+import { ENGLISH_LEVELS } from '../../../General/constants';
+import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
 import TextbookLevelInformation from '../components/TextbookLevelInfomation/TextbookLevelInformation';
 import './TextbookEnglishLevels.scss';
 
