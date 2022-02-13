@@ -48,14 +48,17 @@ export const setUserLoginToLocalStorage = (
   token: string,
   refreshToken: string,
   userId: string,
+  userName: string | null,
 ) => {
   localStorage.setItem('token', token);
   localStorage.setItem('refreshToken', refreshToken);
   localStorage.setItem('userId', userId);
+  localStorage.setItem('userName', String(userName));
 };
 
 export const clearUserLoginInLocalStorage = () => {
   localStorage.setItem('token', '');
   localStorage.setItem('refreshToken', '');
   localStorage.setItem('userId', '');
+  localStorage.setItem('userName', '');
 };

@@ -64,6 +64,7 @@ const Login = () => {
                 data.token,
                 data.refreshToken,
                 data.userId,
+                data.name,
               );
             }
           }

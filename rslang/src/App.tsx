@@ -39,8 +39,9 @@ function App() {
     const token = localStorage.getItem('token');
     const refreshToken = localStorage.getItem('refreshToken');
     const userId = localStorage.getItem('userId');
+    const userName = localStorage.getItem('userName');
 
-    if (token && refreshToken && userId) {
+    if (token && refreshToken && userId && userName) {
       UsersAPI.getNewUserToken(userId, refreshToken, (errorMess, data) => {
         if (errorMess) {
           clearUserLoginInLocalStorage();
@@ -50,17 +51,20 @@ function App() {
             token: data.token,
             refreshToken: data.refreshToken,
             userId: data.userId,
-            userName: data.name,
+            userName,
             isLoginOpen: false,
             isRegisterOpen: false,
           });
-          setUserLoginToLocalStorage(data.token, data.refreshToken, userId);
+          setUserLoginToLocalStorage(
+            data.token,
+            data.refreshToken,
+            userId,
+            userName,
+          );
         }
       });
     }
   }, []);
-
-  // TODO: add initial receive token by refreshToken
 
   useEffect(() => {
     /*  WordsAPI.getWords(2, 2, (data: TWord[]) => console.log('words: ', data));
