@@ -44,7 +44,6 @@ function App() {
         if (errorMess) {
           clearUserLoginInLocalStorage();
         } else if (data) {
-          console.error(JSON.stringify(data.userId));
           setUserLogin({
             isLogined: true,
             token: data.token,

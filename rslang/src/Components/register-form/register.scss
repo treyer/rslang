@@ -4,9 +4,14 @@
 }
 
 .register-wrapper {
-  display: none;
+  position: absolute;
+  top: -300px;
+  right: 50px;
+  transition: top 1s ease-in-out;
+  z-index: 100;
 
   &.active {
+    top: 100px;
     display: block;
   }
 }

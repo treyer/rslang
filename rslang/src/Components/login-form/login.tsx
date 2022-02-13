@@ -5,6 +5,7 @@ import CheckButton from 'react-validation/build/button';
 
 import UsersAPI from '../../api/usersAPI';
 import {
+  clearUserLoginInLocalStorage,
   required,
   setUserLoginToLocalStorage,
   validEmail,
@@ -22,7 +23,7 @@ const Login = () => {
   const [submitBtnState, setSubmitBtnState] = useState(false);
   const form = useRef<HTMLFormElement>();
   const checkBtn = useRef<HTMLFormElement>();
-  const { setUserLogin } = useContext(LoginContext);
+  const { userLoginData, setUserLogin } = useContext(LoginContext);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail((e.target as HTMLInputElement).value);
@@ -69,61 +70,82 @@ const Login = () => {
     }
   };
 
+  const handleLogout = () => {
+    setUserLogin({
+      ...userLoginData,
+      isLogined: false,
+      token: '',
+      refreshToken: '',
+      userId: '',
+    });
+    setMessage('');
+    setIsSuccess(false);
+    setSubmitBtnState(false);
+    clearUserLoginInLocalStorage();
+  };
+
   return (
     <div className="login-form-wrapper">
       <div className="card card-container">
-        <Form onSubmit={handleRegister} ref={form}>
-          {!isSuccess && (
-            <div>
-              <div className="form-group">
-                <label htmlFor="login-email">email</label>
-                <Input
-                  id="login-email"
-                  type="text"
-                  className="form-control"
-                  name="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  validations={[required, validEmail]}
-                />
+        {!userLoginData.isLogined && (
+          <Form onSubmit={handleRegister} ref={form}>
+            {!isSuccess && (
+              <div>
+                <div className="form-group">
+                  <label htmlFor="login-email">email</label>
+                  <Input
+                    id="login-email"
+                    type="text"
+                    className="form-control"
+                    name="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    validations={[required, validEmail]}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="login-password">пароль</label>
+                  <Input
+                    id="login-password"
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    validations={[required, validPassword]}
+                  />
+                </div>
+                <div className="form-group">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-block"
+                    disabled={submitBtnState}
+                  >
+                    Войти
+                  </button>
+                </div>
               </div>
+            )}
+            {message && (
               <div className="form-group">
-                <label htmlFor="login-password">пароль</label>
-                <Input
-                  id="login-password"
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  validations={[required, validPassword]}
-                />
-              </div>
-              <div className="form-group">
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-block"
-                  disabled={submitBtnState}
+                <div
+                  className={
+                    isSuccess ? 'alert alert-success' : 'alert alert-danger'
+                  }
+                  role="alert"
                 >
-                  Войти
-                </button>
+                  {message}
+                </div>
               </div>
-            </div>
-          )}
-          {message && (
-            <div className="form-group">
-              <div
-                className={
-                  isSuccess ? 'alert alert-success' : 'alert alert-danger'
-                }
-                role="alert"
-              >
-                {message}
-              </div>
-            </div>
-          )}
-          <CheckButton style={{ display: 'none' }} ref={checkBtn} />
-        </Form>
+            )}
+            <CheckButton style={{ display: 'none' }} ref={checkBtn} />
+          </Form>
+        )}
+        {userLoginData.isLogined && (
+          <button onClick={handleLogout} type="button">
+            Выйти
+          </button>
+        )}
       </div>
     </div>
   );

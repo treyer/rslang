@@ -3,27 +3,34 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Sections } from '../../General/constants';
 import { LoginContext } from '../../Context/login-context';
-import { clearUserLoginInLocalStorage } from '../../General/utils';
 import Register from '../register-form/register';
 import Login from '../login-form/login';
 
 const Header = () => {
   const { userLoginData, setUserLogin } = useContext(LoginContext);
 
-  const handleOnClick = () => {
-    if (userLoginData.isLogined) {
-      setUserLogin({
-        isLogined: false,
-        token: '',
-        refreshToken: '',
-        userId: '',
-        isLoginOpen: false,
-        isRegisterOpen: false,
-      });
-      clearUserLoginInLocalStorage();
-    } else {
-      // TODO: open register - login pannel
-    }
+  const handleLoginOnClick = () => {
+    setUserLogin({
+      ...userLoginData,
+      isLoginOpen: !userLoginData.isLoginOpen,
+      isRegisterOpen: false,
+    });
+  };
+
+  const handleRegisterOnClick = () => {
+    setUserLogin({
+      ...userLoginData,
+      isLoginOpen: false,
+      isRegisterOpen: !userLoginData.isRegisterOpen,
+    });
+  };
+
+  const handleBackgroundOnClick = () => {
+    setUserLogin({
+      ...userLoginData,
+      isLoginOpen: false,
+      isRegisterOpen: false,
+    });
   };
 
   return (
@@ -37,15 +44,34 @@ const Header = () => {
           </nav>
         ))}
       </nav>
-      <button type="button" onClick={handleOnClick}>
-        {userLoginData.isLogined ? 'Выход' : 'Вход'}
-      </button>
-      <div className="login-wrapper">
-        <Login />
-      </div>
-      <button type="button">Регистрация</button>
-      <div className="register-wrapper">
-        <Register />
+      <div className="header-buttons">
+        {!userLoginData.isLogined && (
+          <button type="button" onClick={handleRegisterOnClick}>
+            Регистрация
+          </button>
+        )}
+        <div
+          className={`register-wrapper ${
+            userLoginData.isRegisterOpen && 'active'
+          }`}
+        >
+          <Register />
+        </div>
+        <button type="button" onClick={handleLoginOnClick}>
+          {userLoginData.isLogined ? 'Выход' : 'Вход'}
+        </button>
+        <div
+          className={`login-wrapper ${userLoginData.isLoginOpen && 'active'}`}
+        >
+          <Login />
+        </div>
+        <div
+          className={`modal-background ${
+            (userLoginData.isLoginOpen || userLoginData.isRegisterOpen) &&
+            'active'
+          }`}
+          onClick={handleBackgroundOnClick}
+        />
       </div>
     </div>
   );
