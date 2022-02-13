@@ -2,7 +2,7 @@ import { BaseAPI } from './baseAPI';
 import { TUserWord } from './types';
 import { USER_WORDS_API_ERRORS } from './errors';
 
-export class UserWordsAPI extends BaseAPI {
+class UserWordsAPI extends BaseAPI {
   getUserWords(
     userId: string,
     token: string,

@@ -2,7 +2,7 @@ import { BaseAPI } from './baseAPI';
 import { TAuth, TUser, TUserBase } from './types';
 import { USERS_API_ERRORS } from './errors';
 
-export class UsersAPI extends BaseAPI {
+class UsersAPI extends BaseAPI {
   createUser(
     dataUser: TUser,
     createNewUserCb: (error: string | null, data?: TUser) => void,

@@ -27,6 +27,7 @@ type TWordCardProps = {
   textMeaningTranslate: string;
   textExampleTranslate: string;
   onPlayWord: (e: MouseEvent) => void;
+  onHover: (e: MouseEvent) => void;
 };
 
 const WordCard = ({
@@ -40,6 +41,7 @@ const WordCard = ({
   textMeaningTranslate,
   textExampleTranslate,
   onPlayWord,
+  onHover,
 }: TWordCardProps) => {
   const [selected, setSelected] = useState(false);
 
@@ -55,7 +57,8 @@ const WordCard = ({
     <Card
       sx={{ maxWidth: 345 }}
       className={classNames('textbook_word-card', { 'is-selected': selected })}
-      id={`word-${id}`}
+      id={id}
+      onMouseEnter={onHover}
     >
       <CardMedia
         component="img"
@@ -91,10 +94,10 @@ const WordCard = ({
           {wordTranslate} {transcription}
         </Typography>
         <Typography variant="body2" color="text.secondary" textAlign="right">
-          {textMeaning}
+          {textMeaning.replace(/<\/?[a-zA-Z]+>/gi, '')}
         </Typography>
         <Typography variant="body2" textAlign="right">
-          {textExample}
+          {textExample.replace(/<\/?[a-zA-Z]+>/gi, '')}
         </Typography>
         <Typography variant="body2" color="text.secondary" textAlign="right">
           {textMeaningTranslate}

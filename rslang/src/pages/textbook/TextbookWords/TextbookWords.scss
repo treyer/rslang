@@ -13,6 +13,8 @@ $bg-selected-card: #fffde2;
   background-color: $bg-container;
 
   .textbook_word-card {
+    width: 350px;
+    height: 470px;
     transition: 0.2s;
     &:hover {
       transform: scale(1.1);
