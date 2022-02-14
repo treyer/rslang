@@ -95,18 +95,18 @@ const Login = () => {
       <div className="card card-container">
         {!userLoginData.isLogined && (
           <Avatar
-            alt="Register user"
-            src="./assets/img/user-login.png"
             sx={{ width: 90, height: 90 }}
             style={{ margin: '10px auto 0' }}
+            src="/assets/img/user-login.png"
+            alt="Register user"
           />
         )}
         {userLoginData.isLogined && (
           <Avatar
-            alt="Register user"
-            src="./assets/img/user-added-logined.png"
             sx={{ width: 90, height: 90 }}
             style={{ margin: '10px auto 0' }}
+            src="/assets/img/user-added-logined.png"
+            alt="Register user"
           />
         )}
         <CardContent>

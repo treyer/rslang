@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
-import { CardContent, Avatar, Button } from '@mui/material';
+import { CardContent, Avatar, Button, Typography } from '@mui/material';
 
 import UsersAPI from '../../api/usersAPI';
 import {
@@ -61,23 +61,32 @@ const Register = () => {
     }
   };
 
+  const handleFormReset = () => {
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setIsSuccess(false);
+    setMessage('');
+    setSubmitBtnState(false);
+  };
+
   return (
     <div className="register-form-wrapper">
       <div className="card card-container">
         {!isSuccess && (
           <Avatar
-            alt="Register user"
-            src="./assets/img/user-add.png"
             sx={{ width: 90, height: 90 }}
             style={{ margin: '10px auto 0' }}
+            src="/assets/img/user-add.png"
+            alt="Register user"
           />
         )}
         {isSuccess && (
           <Avatar
-            alt="User registered"
-            src="./assets/img/user-added-logined.png"
             sx={{ width: 90, height: 90 }}
             style={{ margin: '10px auto 0' }}
+            src="/assets/img/user-added-logined.png"
+            alt="User registered"
           />
         )}
         <CardContent>
@@ -131,14 +140,21 @@ const Register = () => {
             )}
             {message && (
               <div className="form-group">
-                <div
-                  className={
-                    isSuccess ? 'alert alert-success' : 'alert alert-danger'
-                  }
-                  role="alert"
-                >
-                  {message}
-                </div>
+                {isSuccess && (
+                  <Typography variant="body1" style={{ color: 'green' }}>
+                    {message}
+                  </Typography>
+                )}
+                {isSuccess && (
+                  <Button variant="contained" onClick={handleFormReset}>
+                    Зарегистрировать заново
+                  </Button>
+                )}
+                {!isSuccess && (
+                  <Typography variant="body1" style={{ color: 'red' }}>
+                    {message}
+                  </Typography>
+                )}
               </div>
             )}
             <CheckButton style={{ display: 'none' }} ref={checkBtn} />
