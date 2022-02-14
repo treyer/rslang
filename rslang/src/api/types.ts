@@ -60,7 +60,7 @@ export type TStatistic = {
 };
 
 export type TOptionalStatistic = {
-  savannah?: string;
+  audioCall?: string;
   sprint?: string;
 };
 
