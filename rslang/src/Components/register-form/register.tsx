@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
-import { CardContent, Avatar, Button } from '@mui/material';
+import { CardContent, Avatar, Button, Typography } from '@mui/material';
 
 import UsersAPI from '../../api/usersAPI';
 import {
@@ -26,14 +26,17 @@ const Register = () => {
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername((e.target as HTMLInputElement).value);
+    setMessage('');
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail((e.target as HTMLInputElement).value);
+    setMessage('');
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword((e.target as HTMLInputElement).value);
+    setMessage('');
   };
 
   const handleRegister = (e: Event) => {
@@ -61,23 +64,32 @@ const Register = () => {
     }
   };
 
+  const handleFormReset = () => {
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setIsSuccess(false);
+    setMessage('');
+    setSubmitBtnState(false);
+  };
+
   return (
     <div className="register-form-wrapper">
       <div className="card card-container">
         {!isSuccess && (
           <Avatar
-            alt="Register user"
-            src="./assets/img/user-add.png"
             sx={{ width: 90, height: 90 }}
             style={{ margin: '10px auto 0' }}
+            src="/assets/img/user-add.png"
+            alt="Register user"
           />
         )}
         {isSuccess && (
           <Avatar
-            alt="User registered"
-            src="./assets/img/user-added-logined.png"
             sx={{ width: 90, height: 90 }}
             style={{ margin: '10px auto 0' }}
+            src="/assets/img/user-added-logined.png"
+            alt="User registered"
           />
         )}
         <CardContent>
@@ -85,7 +97,16 @@ const Register = () => {
             {!isSuccess && (
               <div>
                 <div className="form-group">
-                  <label htmlFor="username">имя</label>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    имя:
+                  </Typography>
                   <Input
                     id="username"
                     type="text"
@@ -97,7 +118,16 @@ const Register = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">email</label>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    email:
+                  </Typography>
                   <Input
                     id="email"
                     type="text"
@@ -109,7 +139,16 @@ const Register = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="password">пароль</label>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    пароль:
+                  </Typography>
                   <Input
                     id="password"
                     type="password"
@@ -124,6 +163,7 @@ const Register = () => {
                   type="submit"
                   variant="contained"
                   disabled={submitBtnState}
+                  style={{ marginTop: '10px' }}
                 >
                   Зарегистрироваться
                 </Button>
@@ -131,14 +171,21 @@ const Register = () => {
             )}
             {message && (
               <div className="form-group">
-                <div
-                  className={
-                    isSuccess ? 'alert alert-success' : 'alert alert-danger'
-                  }
-                  role="alert"
-                >
-                  {message}
-                </div>
+                {isSuccess && (
+                  <Typography variant="body1" style={{ color: 'green' }}>
+                    {message}
+                  </Typography>
+                )}
+                {isSuccess && (
+                  <Button variant="contained" onClick={handleFormReset}>
+                    Зарегистрировать заново
+                  </Button>
+                )}
+                {!isSuccess && (
+                  <Typography variant="body1" style={{ color: 'red' }}>
+                    {message}
+                  </Typography>
+                )}
               </div>
             )}
             <CheckButton style={{ display: 'none' }} ref={checkBtn} />

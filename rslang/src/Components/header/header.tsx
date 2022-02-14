@@ -37,7 +37,15 @@ const Header = () => {
   return (
     <div className="App-header">
       <nav className="nav-bar">
-        {Sections.map((el) => (
+        {Sections.filter((el) => {
+          if (userLoginData.isLogined) {
+            return true;
+          }
+          if (el.id === 5) {
+            return false;
+          }
+          return true;
+        }).map((el) => (
           <nav key={el.id}>
             <Link className="" to={el.routePath}>
               <span className="Section-Title">{el.title}</span>

@@ -8,7 +8,8 @@ export const USERS_API_ERRORS: TAPIErrorsMap = {
   [StatusCodes.NOT_FOUND]: 'User not found.',
   [StatusCodes.BAD_REQUEST]: 'Bad request.',
   [StatusCodes.FORBIDDEN]: 'Incorrect e-mail or password',
-  [StatusCodes.EXPECTATION_FAILED]: 'This user is already existed.',
+  [StatusCodes.EXPECTATION_FAILED]:
+    'Пользователь с указанным email уже существует.',
   [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
 };
 
