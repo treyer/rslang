@@ -28,6 +28,7 @@ type TWordCardProps = {
   textExampleTranslate: string;
   onPlayWord: (e: MouseEvent) => void;
   onHover: (e: MouseEvent) => void;
+  group: number;
 };
 
 const WordCard = ({
@@ -42,6 +43,7 @@ const WordCard = ({
   textExampleTranslate,
   onPlayWord,
   onHover,
+  group,
 }: TWordCardProps) => {
   const [selected, setSelected] = useState(false);
 
@@ -56,7 +58,11 @@ const WordCard = ({
   return (
     <Card
       sx={{ maxWidth: 345 }}
-      className={classNames('textbook_word-card', { 'is-selected': selected })}
+      className={classNames(
+        'textbook_word-card',
+        `textbook_word-card-${group}`,
+        { 'is-selected': selected },
+      )}
       id={id}
       onMouseEnter={onHover}
     >

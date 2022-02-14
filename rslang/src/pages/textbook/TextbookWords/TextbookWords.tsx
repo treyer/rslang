@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import { Pagination } from '@mui/material';
 
 import {
@@ -8,12 +9,13 @@ import {
   MouseEvent,
   ChangeEvent,
 } from 'react';
-import { useLocation } from 'react-router-dom';
 import { TWord } from '../../../api/types';
 import WordsAPI from '../../../api/wordsAPI';
 
 import { SERVER_URL } from '../../../consts';
 import WordCard from '../components/WordCard/WordCard';
+import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
+import { ENGLISH_LEVELS } from '../../../General/constants';
 
 import './TextbookWords.scss';
 
@@ -23,6 +25,8 @@ export type TPlayListCollection = {
 
 const TextbookWords = () => {
   const location = useLocation();
+  const lengthLocation = location.pathname.split('/').length;
+  const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
@@ -85,11 +89,9 @@ const TextbookWords = () => {
   };
 
   useEffect(() => {
-    const lengthLocation = location.pathname.split('/').length;
-    const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
     const page = currPage - 1;
     WordsAPI.getWords(page, groupLevel, (data: TWord[]) => setWords(data));
-  }, [currPage, location.pathname]);
+  }, [currPage, location.pathname, groupLevel]);
 
   useEffect(() => {
     const newPlayList = words.reduce(
@@ -108,6 +110,16 @@ const TextbookWords = () => {
 
   return (
     <div className="textbook_page">
+      <section className="textbook_section-button">
+        {Object.values(ENGLISH_LEVELS).map(({ id, code }) => (
+          <EnglishLevelButton
+            path="/textbook/words/"
+            key={id}
+            id={id}
+            code={code}
+          />
+        ))}
+      </section>
       <div className="textbook_words-container">
         {words.map(
           ({
@@ -134,6 +146,7 @@ const TextbookWords = () => {
               textExampleTranslate={textExampleTranslate}
               onPlayWord={playTextbookWord}
               onHover={handleCardHover}
+              group={groupLevel}
             />
           ),
         )}
