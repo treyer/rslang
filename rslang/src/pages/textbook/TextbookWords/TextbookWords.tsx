@@ -16,6 +16,7 @@ import { SERVER_URL } from '../../../consts';
 import WordCard from '../components/WordCard/WordCard';
 import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
 import { ENGLISH_LEVELS } from '../../../General/constants';
+import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 
 import './TextbookWords.scss';
 
@@ -110,6 +111,19 @@ const TextbookWords = () => {
 
   return (
     <div className="textbook_page">
+      <div className="textbook_games-button-container">
+        <span className="textbook_games-button-container-title">
+          Закрепи слова при помощи игр.
+        </span>
+        <TextbookGamesButton
+          path={`/games/audio/${groupLevel}/${currPage - 1}`}
+          name="Аудиовызов"
+        />
+        <TextbookGamesButton
+          path={`/games/sprint/${groupLevel}/${currPage - 1}`}
+          name="Спринт"
+        />
+      </div>
       <section className="textbook_section-button">
         {Object.values(ENGLISH_LEVELS).map(({ id, code }) => (
           <EnglishLevelButton
