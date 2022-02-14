@@ -3,6 +3,7 @@ import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 import { CardContent, Avatar, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import UsersAPI from '../../api/usersAPI';
 import {
@@ -25,6 +26,7 @@ const Login = () => {
   const form = useRef<HTMLFormElement>();
   const checkBtn = useRef<HTMLFormElement>();
   const { userLoginData, setUserLogin } = useContext(LoginContext);
+  const navigate = useNavigate();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail((e.target as HTMLInputElement).value);
@@ -85,6 +87,7 @@ const Login = () => {
     setIsSuccess(false);
     setSubmitBtnState(false);
     clearUserLoginInLocalStorage();
+    navigate('/', { replace: true });
   };
 
   return (
