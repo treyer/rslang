@@ -6,8 +6,8 @@ import WordsAPI from './api/wordsAPI';
 import UsersAPI from './api/usersAPI';
 import UserWordsAPI from './api/userWordsAPI';  */
 import { ROUTES } from './General/constants';
-import Header from './Components/header/header';
 import Footer from './Components/footer/footer';
+import Header from './Components/header/header';
 import { LoginContext } from './Context/login-context';
 
 import './App.scss';
