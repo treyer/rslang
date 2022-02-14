@@ -8,11 +8,10 @@ $bg-btn4: #00bcd4;
 $bg-btn5: #00acc1;
 
 .textbook_page {
-
   .textbook_games-button-container-title {
     display: block;
     padding: 20px 0;
-    font-size:1.2rem;
+    font-size: 1.2rem;
     font-weight: inherit;
     text-transform: uppercase;
   }
@@ -20,7 +19,11 @@ $bg-btn5: #00acc1;
   .textbook_games-btn {
     min-width: 150px;
     background-color: $bg-games-btn;
-    margin-right: 15px;
+    margin-right: 15px;    
+  }
+
+  .is-unauthorized {
+    display: none;
   }
 
   .textbook_section-button {
@@ -110,6 +113,10 @@ $bg-btn5: #00acc1;
 
     .textbook_word-card-5 {
       background-color: $bg-btn5;
+    }
+
+    .is-unauthorized {
+      opacity: 0;
     }
 
     .is-selected {

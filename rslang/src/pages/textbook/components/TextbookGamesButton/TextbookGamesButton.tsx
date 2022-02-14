@@ -6,14 +6,19 @@ import { Button } from '@mui/material';
 type TTextbookGamesButtonProps = {
   path: string;
   name: string;
+  className: string;
 };
 
-const TextbookGamesButton = ({ path, name }: TTextbookGamesButtonProps) => (
+const TextbookGamesButton = ({
+  path,
+  name,
+  className,
+}: TTextbookGamesButtonProps) => (
   <Button
     component={Link}
     to={`${path}`}
     variant="contained"
-    className="textbook_games-btn"
+    className={className}
   >
     <span className="textbook_games-button-title">{name}</span>
   </Button>
