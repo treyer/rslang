@@ -26,14 +26,17 @@ const Register = () => {
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername((e.target as HTMLInputElement).value);
+    setMessage('');
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail((e.target as HTMLInputElement).value);
+    setMessage('');
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword((e.target as HTMLInputElement).value);
+    setMessage('');
   };
 
   const handleRegister = (e: Event) => {
@@ -94,7 +97,16 @@ const Register = () => {
             {!isSuccess && (
               <div>
                 <div className="form-group">
-                  <label htmlFor="username">имя</label>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    имя:
+                  </Typography>
                   <Input
                     id="username"
                     type="text"
@@ -106,7 +118,16 @@ const Register = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">email</label>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    email:
+                  </Typography>
                   <Input
                     id="email"
                     type="text"
@@ -118,7 +139,16 @@ const Register = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="password">пароль</label>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    пароль:
+                  </Typography>
                   <Input
                     id="password"
                     type="password"
@@ -133,6 +163,7 @@ const Register = () => {
                   type="submit"
                   variant="contained"
                   disabled={submitBtnState}
+                  style={{ marginTop: '10px' }}
                 >
                   Зарегистрироваться
                 </Button>

@@ -92,88 +92,107 @@ const Login = () => {
 
   return (
     <div className="login-form-wrapper">
-      <div className="card card-container">
+      {!userLoginData.isLogined && (
+        <Avatar
+          sx={{ width: 90, height: 90 }}
+          style={{ margin: '10px auto 0' }}
+          src="/assets/img/user-login.png"
+          alt="Register user"
+        />
+      )}
+      {userLoginData.isLogined && (
+        <Avatar
+          sx={{ width: 90, height: 90 }}
+          style={{ margin: '10px auto 0' }}
+          src="/assets/img/user-added-logined.png"
+          alt="Register user"
+        />
+      )}
+      <CardContent>
         {!userLoginData.isLogined && (
-          <Avatar
-            sx={{ width: 90, height: 90 }}
-            style={{ margin: '10px auto 0' }}
-            src="/assets/img/user-login.png"
-            alt="Register user"
-          />
+          <Form onSubmit={handleRegister} ref={form}>
+            {!isSuccess && (
+              <div>
+                <div className="form-group">
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    email:
+                  </Typography>
+                  <Input
+                    id="login-email"
+                    type="text"
+                    className="form-control"
+                    name="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    validations={[required, validEmail]}
+                  />
+                </div>
+                <div className="form-group">
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    пароль:
+                  </Typography>
+                  <Input
+                    id="login-password"
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    validations={[required, validPassword]}
+                  />
+                </div>
+                <div className="form-group">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    disabled={submitBtnState}
+                    style={{ marginTop: '10px' }}
+                  >
+                    Войти
+                  </Button>
+                </div>
+              </div>
+            )}
+            {message && (
+              <div className="form-group">
+                <div
+                  className={
+                    isSuccess ? 'alert alert-success' : 'alert alert-danger'
+                  }
+                  role="alert"
+                >
+                  {message}
+                </div>
+              </div>
+            )}
+            <CheckButton style={{ display: 'none' }} ref={checkBtn} />
+          </Form>
         )}
         {userLoginData.isLogined && (
-          <Avatar
-            sx={{ width: 90, height: 90 }}
-            style={{ margin: '10px auto 0' }}
-            src="/assets/img/user-added-logined.png"
-            alt="Register user"
-          />
+          <Typography style={{ marginBottom: '10px' }}>
+            Вы вошли как {userLoginData.userName}
+          </Typography>
         )}
-        <CardContent>
-          {!userLoginData.isLogined && (
-            <Form onSubmit={handleRegister} ref={form}>
-              {!isSuccess && (
-                <div>
-                  <div className="form-group">
-                    <label htmlFor="login-email">email</label>
-                    <Input
-                      id="login-email"
-                      type="text"
-                      className="form-control"
-                      name="email"
-                      value={email}
-                      onChange={handleEmailChange}
-                      validations={[required, validEmail]}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="login-password">пароль</label>
-                    <Input
-                      id="login-password"
-                      type="password"
-                      className="form-control"
-                      name="password"
-                      value={password}
-                      onChange={handlePasswordChange}
-                      validations={[required, validPassword]}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      disabled={submitBtnState}
-                    >
-                      Войти
-                    </Button>
-                  </div>
-                </div>
-              )}
-              {message && (
-                <div className="form-group">
-                  <div
-                    className={
-                      isSuccess ? 'alert alert-success' : 'alert alert-danger'
-                    }
-                    role="alert"
-                  >
-                    {message}
-                  </div>
-                </div>
-              )}
-              <CheckButton style={{ display: 'none' }} ref={checkBtn} />
-            </Form>
-          )}
-          {userLoginData.isLogined && (
-            <Typography>Вы вошли как {userLoginData.userName}</Typography>
-          )}
-          {userLoginData.isLogined && (
-            <Button variant="contained" onClick={handleLogout}>
-              Выход
-            </Button>
-          )}
-        </CardContent>
-      </div>
+        {userLoginData.isLogined && (
+          <Button variant="contained" onClick={handleLogout}>
+            Выход
+          </Button>
+        )}
+      </CardContent>
     </div>
   );
 };
