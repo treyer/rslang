@@ -29,3 +29,7 @@ export type TTime = {
 export type TCorrectAnsCount = {
   correctAnswersCount: number;
 };
+
+export type TTickStatus = {
+  status: boolean;
+};

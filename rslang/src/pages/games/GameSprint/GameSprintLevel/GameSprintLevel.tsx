@@ -3,6 +3,7 @@ import { Button } from '@mui/material';
 
 import Timer from './Timer/timer';
 import Parrots from './Parrots/parrots';
+import TickPannel from './TickPannel/tick-pannel';
 
 const GameSprintLevel = () => {
   const [time, setTime] = useState(60);
@@ -44,6 +45,7 @@ const GameSprintLevel = () => {
           Увеличить число ответов
         </Button>
         <Parrots correctAnswersCount={correctAnswersCount} />
+        <TickPannel correctAnswersCount={correctAnswersCount} />
       </div>
     </div>
   );
