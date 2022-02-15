@@ -9,13 +9,13 @@ const Parrots = ({ correctAnswersCount }: TCorrectAnsCount) => {
   const [displayParrot4, setDisplayParrot4] = useState(false);
 
   useEffect(() => {
-    if (correctAnswersCount >= 3) {
+    if (correctAnswersCount >= 4) {
       setDisplayParrot2(true);
     }
-    if (correctAnswersCount >= 6) {
+    if (correctAnswersCount >= 8) {
       setDisplayParrot3(true);
     }
-    if (correctAnswersCount >= 9) {
+    if (correctAnswersCount >= 12) {
       setDisplayParrot4(true);
     }
   }, [correctAnswersCount]);
