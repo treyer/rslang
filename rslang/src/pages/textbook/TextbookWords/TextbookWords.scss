@@ -1,4 +1,4 @@
-$bg-container: #b2ebf2;
+$bg-games-btn: #00bcd4;
 $bg-selected: #fffde2;
 $bg-btn0: #b2ebf2;
 $bg-btn1: #80deea;
@@ -8,6 +8,24 @@ $bg-btn4: #00bcd4;
 $bg-btn5: #00acc1;
 
 .textbook_page {
+  .textbook_games-button-container-title {
+    display: block;
+    padding: 20px 0;
+    font-size: 1.2rem;
+    font-weight: inherit;
+    text-transform: uppercase;
+  }
+
+  .textbook_games-btn {
+    min-width: 150px;
+    background-color: $bg-games-btn;
+    margin-right: 15px;
+  }
+
+  .is-unauthorized {
+    display: none;
+  }
+
   .textbook_section-button {
     display: flex;
     justify-content: center;
@@ -66,7 +84,7 @@ $bg-btn5: #00acc1;
 
     .textbook_word-card {
       width: 350px;
-      height: 470px;
+      height: 500px;
       transition: 0.2s;
       &:hover {
         transform: scale(1.1);
@@ -95,6 +113,10 @@ $bg-btn5: #00acc1;
 
     .textbook_word-card-5 {
       background-color: $bg-btn5;
+    }
+
+    .is-unauthorized {
+      opacity: 0;
     }
 
     .is-selected {

@@ -29,6 +29,7 @@ type TWordCardProps = {
   onPlayWord: (e: MouseEvent) => void;
   onHover: (e: MouseEvent) => void;
   group: number;
+  isAuthorized: boolean;
 };
 
 const WordCard = ({
@@ -44,6 +45,7 @@ const WordCard = ({
   onPlayWord,
   onHover,
   group,
+  isAuthorized,
 }: TWordCardProps) => {
   const [selected, setSelected] = useState(false);
 
@@ -88,10 +90,18 @@ const WordCard = ({
             </IconButton>
           </CardActions>
           <CardActions>
-            <IconButton aria-label="add" onClick={handleSelectCard}>
+            <IconButton
+              aria-label="add"
+              onClick={handleSelectCard}
+              className={classNames({ 'is-unauthorized': !isAuthorized })}
+            >
               <AddCircleOutlineIcon />
             </IconButton>
-            <IconButton aria-label="remove" onClick={handleUnSelectCard}>
+            <IconButton
+              aria-label="remove"
+              onClick={handleUnSelectCard}
+              className={classNames({ 'is-unauthorized': !isAuthorized })}
+            >
               <RemoveCircleOutlineIcon />
             </IconButton>
           </CardActions>

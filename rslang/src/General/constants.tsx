@@ -3,6 +3,7 @@ import Main from '../pages/main/main';
 import Statistics from '../pages/statistics/statistics';
 import TextbookEnglishLevels from '../pages/textbook/TextbookEnglishLevels/TextbookEnglishLevels';
 import TextbookWords from '../pages/textbook/TextbookWords/TextbookWords';
+import Dictionary from '../pages/textbook/Dictionary/Dictionary';
 import Team from '../pages/team/team';
 
 import { TPath } from './types';
@@ -61,6 +62,12 @@ export const ROUTES: TPath[] = [
     routePath: '/games/audio/:id',
     title: 'Мини-игры',
     element: <GameAudioLevel />,
+  },
+  {
+    id: 11,
+    routePath: '/dictionary/',
+    title: 'Словарь',
+    element: <Dictionary />,
   },
 ];
 

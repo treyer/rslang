@@ -48,10 +48,10 @@ export type TUserWord = {
 
 export type TOptionalUserWord = {
   deleted?: boolean;
+  isDifficult?: boolean;
   failCounter?: number;
-  group?: number;
-  page?: number;
   successCounter?: number;
+  correctAnswer?: number;
 };
 
 export type TStatistic = {
@@ -60,7 +60,7 @@ export type TStatistic = {
 };
 
 export type TOptionalStatistic = {
-  savannah?: string;
+  audioCall?: string;
   sprint?: string;
 };
 

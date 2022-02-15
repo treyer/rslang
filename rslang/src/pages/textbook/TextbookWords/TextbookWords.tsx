@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { Pagination } from '@mui/material';
 
 import {
+  useContext,
   useCallback,
   useState,
   useMemo,
@@ -9,6 +10,7 @@ import {
   MouseEvent,
   ChangeEvent,
 } from 'react';
+import classNames from 'classnames';
 import { TWord } from '../../../api/types';
 import WordsAPI from '../../../api/wordsAPI';
 
@@ -16,6 +18,8 @@ import { SERVER_URL } from '../../../consts';
 import WordCard from '../components/WordCard/WordCard';
 import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
 import { ENGLISH_LEVELS } from '../../../General/constants';
+import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
+import { LoginContext } from '../../../Context/login-context';
 
 import './TextbookWords.scss';
 
@@ -34,6 +38,7 @@ const TextbookWords = () => {
   const [playList, setPlayList] = useState<TPlayListCollection>({});
   const [playedWordId, setPlayedWordId] = useState('');
   const [currPage, setPage] = useState(1);
+  const { userLoginData } = useContext(LoginContext);
 
   const playedAudio = useMemo(() => {
     const track = playList[playedWordId]?.[currentTrack];
@@ -110,6 +115,28 @@ const TextbookWords = () => {
 
   return (
     <div className="textbook_page">
+      <div className="textbook_games-button-container">
+        <span className="textbook_games-button-container-title">
+          Закрепи слова при помощи игр.
+        </span>
+        <TextbookGamesButton
+          path={`/games/audio/${groupLevel}/${currPage - 1}`}
+          name="Аудиовызов"
+          className="textbook_games-btn"
+        />
+        <TextbookGamesButton
+          path={`/games/sprint/${groupLevel}/${currPage - 1}`}
+          name="Спринт"
+          className="textbook_games-btn"
+        />
+        <TextbookGamesButton
+          path="/dictionary"
+          name="Словарь"
+          className={classNames('textbook_games-btn', {
+            'is-unauthorized': !userLoginData.isLogined,
+          })}
+        />
+      </div>
       <section className="textbook_section-button">
         {Object.values(ENGLISH_LEVELS).map(({ id, code }) => (
           <EnglishLevelButton
@@ -147,6 +174,7 @@ const TextbookWords = () => {
               onPlayWord={playTextbookWord}
               onHover={handleCardHover}
               group={groupLevel}
+              isAuthorized={userLoginData.isLogined}
             />
           ),
         )}
