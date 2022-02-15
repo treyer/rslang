@@ -1,35 +1,39 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from '@mui/material';
-import { SERVER_URL } from '../../../../consts';
+import { useEffect, useState } from 'react';
+import { Button } from '@mui/material';
+
+import Timer from './Timer/timer';
 
 const GameSprintLevel = () => {
+  const [time, setTime] = useState(60);
+  const [isSound, setIsSound] = useState(true);
+  const [isPlay, setIsPlay] = useState(false);
+
+  useEffect(() => {
+    if (isPlay) {
+      setTimeout(() => {
+        if (time !== 0) setTime((prev) => prev - 1);
+      }, 1000);
+    }
+  }, [time, isPlay]);
+
+  const handlePlay = () => {
+    setIsPlay(true);
+  };
+
+  const handleIsSound = () => {
+    setIsSound(!isSound);
+  };
+
   return (
     <div className="App-games">
       <div className="games-container">
-        <Card sx={{ maxWidth: 500, height: 500 }}>
-          <CardMedia
-            component="img"
-            height="300"
-            image={`${SERVER_URL}/files/01_0001.jpg`}
-            alt=""
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Спринт
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" color="primary">
-              Next
-            </Button>
-          </CardActions>
-        </Card>
+        <Timer time={time} isSound={isSound} isPlay={isPlay} />
+        <Button variant="contained" onClick={handlePlay}>
+          Играть
+        </Button>
+        <Button variant="contained" onClick={handleIsSound}>
+          {isSound ? 'выключить звук' : 'включить звук'}
+        </Button>
       </div>
     </div>
   );

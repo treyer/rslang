@@ -4,3 +4,24 @@ export type TPath = {
   title: string;
   element: JSX.Element;
 };
+
+export type TUserLogin = {
+  isLogined: boolean;
+  token: string;
+  refreshToken: string;
+  userId: string;
+  userName: string;
+  isLoginOpen: boolean;
+  isRegisterOpen: boolean;
+};
+
+export type TAppState = {
+  userLoginData: TUserLogin;
+  setUserLogin: (userLoginData: TUserLogin) => void;
+};
+
+export type TTime = {
+  time: number;
+  isSound: boolean;
+  isPlay: boolean;
+};
