@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 
 import Timer from './Timer/timer';
+import Parrots from './Parrots/parrots';
 
 const GameSprintLevel = () => {
   const [time, setTime] = useState(60);
   const [isSound, setIsSound] = useState(true);
   const [isPlay, setIsPlay] = useState(false);
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
   useEffect(() => {
     if (isPlay) {
@@ -24,6 +26,10 @@ const GameSprintLevel = () => {
     setIsSound(!isSound);
   };
 
+  const increaseCorrectCount = () => {
+    setCorrectAnswersCount((prev) => prev + 1);
+  };
+
   return (
     <div className="App-games">
       <div className="games-container">
@@ -34,6 +40,10 @@ const GameSprintLevel = () => {
         <Button variant="contained" onClick={handleIsSound}>
           {isSound ? 'выключить звук' : 'включить звук'}
         </Button>
+        <Button variant="contained" onClick={increaseCorrectCount}>
+          Увеличить число ответов
+        </Button>
+        <Parrots correctAnswersCount={correctAnswersCount} />
       </div>
     </div>
   );

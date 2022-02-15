@@ -25,3 +25,7 @@ export type TTime = {
   isSound: boolean;
   isPlay: boolean;
 };
+
+export type TCorrectAnsCount = {
+  correctAnswersCount: number;
+};
