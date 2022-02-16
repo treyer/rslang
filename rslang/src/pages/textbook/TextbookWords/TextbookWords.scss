@@ -73,6 +73,11 @@ $bg-btn5: #00acc1;
   }
 
   .textbook_words-container {
+    .circular-progress {
+      position: fixed;
+      bottom: 50%;
+    }
+
     .textbook_word-card-0 {
       background-color: $bg-btn0;
     }
@@ -103,6 +108,11 @@ $bg-btn5: #00acc1;
 
     .is-selected {
       background-color: $bg-selected;
+    }
+
+    .textbook_pagination {
+      display: flex;
+      justify-content: center;
     }
   }
 }

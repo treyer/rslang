@@ -3,7 +3,12 @@ import { TWord } from './types';
 import { WORDS_API_ERRORS } from './errors';
 
 class WordsAPI extends BaseAPI {
-  getWords(page: number, group: number, getWordsCb: (data: TWord[]) => void) {
+  getWords(
+    page: number,
+    group: number,
+    getWordsCb: (data: TWord[]) => void,
+    finallyCb = () => {},
+  ) {
     this.get(`words?page=${page}&group=${group}`)
       .then((result) => {
         BaseAPI.handleError(result, WORDS_API_ERRORS);
@@ -12,7 +17,8 @@ class WordsAPI extends BaseAPI {
       .then((data) => getWordsCb(data))
       .catch((error) => {
         console.error(error);
-      });
+      })
+      .finally(() => finallyCb());
   }
 
   getWord(wordId: string, getWordCb: (data: TWord) => void) {

@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
 
 import { TWord } from '../../../api/types';
@@ -18,6 +19,7 @@ const Dictionary = () => {
     '{"userWord.difficulty":"difficult", "userWord.optional.isDifficult":true}',
   );
   const [currCategory, setCurrCategory] = useState<TDictionaryCategory>('0');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const userId = `${localStorage.getItem('userId')}`;
@@ -26,10 +28,12 @@ const Dictionary = () => {
     const page = '';
     const filter = currFilter;
 
+    setLoading(true);
     UserAggregatedWordsAPI.getAggregatedUserWords(
       userId,
       token,
       (data: TWord[]) => setWords(data),
+      () => setLoading(false),
       group,
       page,
       filter,
@@ -47,6 +51,9 @@ const Dictionary = () => {
     setCurrFilter(filterRequest);
     setCurrCategory(id);
   }, []);
+
+  const hasEmptyMessage = words.length === 0 && !loading;
+  const hasWordCards = words.length !== 0 && !loading;
 
   return (
     <div className="dictionary-container">
@@ -74,13 +81,15 @@ const Dictionary = () => {
         />
       </div>
       <div className="words_list-container" key="words_list-container">
-        {words.length ? (
+        {loading && <CircularProgress className="circular-progress" />}
+        {hasWordCards && (
           <WordCardList
             key="dictionary_word-list"
             words={words}
             onSelectCard={() => console.error('ll')}
           />
-        ) : (
+        )}
+        {hasEmptyMessage && (
           <p className="dictionary-message">
             {DICTIONARY_CATEGORIES[currCategory].message}
           </p>

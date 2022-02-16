@@ -8,7 +8,7 @@ export const DICTIONARY_CATEGORIES = {
   '1': {
     id: '1',
     filter:
-      '{"userWord.difficulty":"difficult", "userWord.optional.isDifficult":true}',
+      '{"$and":[{"userWord.difficulty":"difficult", "userWord.optional.isDifficult":true, "userWord.optional.successCounter":"!5"}]}',
     message: 'У Вас нет изучученных слов в словаре.',
   },
   '2': {

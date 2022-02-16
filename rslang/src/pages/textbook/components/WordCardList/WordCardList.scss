@@ -8,6 +8,11 @@
   padding: 50px;
   flex-wrap: wrap;
   min-height: calc(100vh - 140px);
+  
+  .circular-progress {
+    position: absolute;
+    bottom: 50%;
+  }
 
   .words_list-card {
     width: 350px;

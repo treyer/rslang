@@ -1,5 +1,5 @@
 import { BaseAPI } from './baseAPI';
-import { WORDS_API_ERRORS } from './errors';
+import { USER_AGGREGATED_WORDS_API_ERRORS } from './errors';
 import { TWord } from './types';
 
 class UserAggregatedWordsAPI extends BaseAPI {
@@ -7,6 +7,7 @@ class UserAggregatedWordsAPI extends BaseAPI {
     userId: string,
     token: string,
     getAggregatedUserWordsCb: (data: TWord[]) => void,
+    finallyCb: () => void,
     group?: string,
     page?: string,
     filter?: string,
@@ -22,7 +23,7 @@ class UserAggregatedWordsAPI extends BaseAPI {
       Authorization: `Bearer ${token}`,
     })
       .then((result) => {
-        BaseAPI.handleError(result, WORDS_API_ERRORS);
+        BaseAPI.handleError(result, USER_AGGREGATED_WORDS_API_ERRORS);
         return result.json();
       })
       .then((data) => {
@@ -30,7 +31,8 @@ class UserAggregatedWordsAPI extends BaseAPI {
       })
       .catch((error) => {
         console.error(error);
-      });
+      })
+      .finally(() => finallyCb());
   }
 }
 

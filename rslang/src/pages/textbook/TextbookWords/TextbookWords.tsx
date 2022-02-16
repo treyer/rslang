@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { Pagination } from '@mui/material';
+import { Pagination, CircularProgress } from '@mui/material';
 
 import {
   useContext,
@@ -11,16 +11,14 @@ import {
 import classNames from 'classnames';
 import { TUserWord, TWord } from '../../../api/types';
 import WordsAPI from '../../../api/wordsAPI';
-
 import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
 import { ENGLISH_LEVELS } from '../../../General/constants';
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 import { LoginContext } from '../../../Context/login-context';
+import userWordsAPI from '../../../api/userWordsAPI';
+import WordCardList from '../components/WordCardList/WordCardList';
 
 import './TextbookWords.scss';
-import userWordsAPI from '../../../api/userWordsAPI';
-
-import WordCardList from '../components/WordCardList/WordCardList';
 
 export type TPlayListCollection = {
   [key: string]: string[];
@@ -34,6 +32,7 @@ const TextbookWords = () => {
   const [words, setWords] = useState<TWord[]>([]);
   const [currPage, setPage] = useState(1);
   const { userLoginData } = useContext(LoginContext);
+  const [loading, setLoading] = useState(false);
 
   const handleChangePage = (event: ChangeEvent<unknown>, pageNum: number) => {
     if (!event.target) {
@@ -45,8 +44,14 @@ const TextbookWords = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     const page = currPage - 1;
-    WordsAPI.getWords(page, groupLevel, (data: TWord[]) => setWords(data));
+    WordsAPI.getWords(
+      page,
+      groupLevel,
+      (data: TWord[]) => setWords(data),
+      () => setLoading(false),
+    );
   }, [currPage, location.pathname, groupLevel]);
 
   const onSelectCard = useCallback(
@@ -107,6 +112,7 @@ const TextbookWords = () => {
         ))}
       </section>
       <div className="textbook_words-container">
+        {loading && <CircularProgress className="circular-progress" />}
         <WordCardList
           words={words}
           group={groupLevel}
@@ -120,6 +126,7 @@ const TextbookWords = () => {
           color="primary"
           defaultPage={1}
           onChange={handleChangePage}
+          className="textbook_pagination"
         />
       </div>
     </div>
