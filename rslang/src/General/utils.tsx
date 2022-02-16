@@ -1,5 +1,6 @@
 import { isEmail } from 'validator';
 import { Typography } from '@mui/material';
+import { ExtraPoints } from './types';
 
 export const required = (value: string) => {
   if (!value.trim()) {
@@ -62,4 +63,17 @@ export const clearUserLoginInLocalStorage = () => {
   localStorage.setItem('refreshToken', '');
   localStorage.setItem('userId', '');
   localStorage.setItem('userName', '');
+};
+
+export const getExtraPointsString = (correctAnswersCount: number): string => {
+  if (correctAnswersCount >= 4 && correctAnswersCount < 8) {
+    return ExtraPoints.twentyPoints;
+  }
+  if (correctAnswersCount >= 8 && correctAnswersCount < 12) {
+    return ExtraPoints.fortyPoints;
+  }
+  if (correctAnswersCount >= 12) {
+    return ExtraPoints.eightyPoints;
+  }
+  return '';
 };

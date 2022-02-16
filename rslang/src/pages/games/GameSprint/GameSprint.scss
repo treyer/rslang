@@ -1,9 +1,17 @@
+$bg-sprint-page: #1a4452;
 $bg-btn0: #b2ebf2;
 $bg-btn1: #80deea;
 $bg-btn2: #4dd0e1;
 $bg-btn3: #26c6da;
 $bg-btn4: #00bcd4;
 $bg-btn5: #00acc1;
+$bg-wrong-btn: #ef5742;
+$bg-wrong-btn-hover: #ef4027;
+$bg-correct-btn: #28c38a;
+$bg-correct-btn-hover: #0d9c67;
+$color-white: #ffffff;
+$color-rosybrown: rosybrown;
+$color-hover: dimgray;
 
 .App-sprint {
   background-color: rosybrown;
@@ -95,5 +103,112 @@ $bg-btn5: #00acc1;
   .timer-wrapper {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .cancel-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+
+    .cancel-sprint-game-btn {
+      position: absolute;
+      top: -20px;
+      right: -50px;
+      font-size: 30px;
+      color: $color-white;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+
+      &:hover {
+        color: $color-hover;
+      }
+    }
+  }
+
+  .sprint-game-main-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 550px;
+    border: 6px solid $color-white;
+    border-radius: 20px;
+    background-color: $bg-sprint-page;
+    margin-bottom: 20px;
+
+    &.wrong {
+      border-color: #ef4027;
+    }
+
+    &.correct {
+      border-color: #0d9c67;
+    }
+  }
+
+  .sprint-sound-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 35px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .sprint-game-btns-wrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .sprint-addition-points {
+    color: $color-white;
+    margin-top: 10px;
+  }
+
+  .sprint-eng-version,
+  .sprint-rus-version {
+    color: $color-white;
+    margin-top: 30px;
+  }
+
+  .sprint-answer-btns-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin-top: 40px;
+
+    .sprint-btn-wrong,
+    .sprint-btn-correct {
+      border-radius: 10px;
+    }
+
+    .sprint-btn-wrong {
+      background-color: $bg-wrong-btn;
+
+      &:hover {
+        background-color: $bg-wrong-btn-hover;
+      }
+    }
+
+    .sprint-btn-correct {
+      width: 248px;
+      background-color: $bg-correct-btn;
+
+      &:hover {
+        background-color: $bg-correct-btn-hover;
+      }
+    }
+  }
+
+  .sprint-btn-play {
+    border-radius: 10px;
   }
 }
