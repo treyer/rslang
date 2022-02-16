@@ -16,6 +16,7 @@ type TWordCardListProps = {
   words: TWord[];
   group?: number;
   onSelectCard: (id: string) => void;
+  onUnSelectCard: (id: string) => void;
   isAuthorized?: boolean;
 };
 
@@ -23,6 +24,7 @@ const WordCardList = ({
   words,
   group,
   onSelectCard,
+  onUnSelectCard,
   isAuthorized,
 }: TWordCardListProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -105,7 +107,7 @@ const WordCardList = ({
         }) => (
           <WordCard
             key={id}
-            id={word}
+            id={id}
             word={word}
             image={image}
             textMeaning={textMeaning}
@@ -117,6 +119,7 @@ const WordCardList = ({
             onPlayWord={playTextbookWord}
             onHover={handleCardHover}
             onSelectCard={onSelectCard}
+            onUnSelectCard={onUnSelectCard}
             group={group}
             isAuthorized={isAuthorized}
           />

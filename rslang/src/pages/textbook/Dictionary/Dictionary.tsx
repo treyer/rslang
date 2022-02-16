@@ -87,6 +87,7 @@ const Dictionary = () => {
             key="dictionary_word-list"
             words={words}
             onSelectCard={() => console.error('ll')}
+            onUnSelectCard={() => console.error('ll')}
           />
         )}
         {hasEmptyMessage && (

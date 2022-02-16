@@ -31,7 +31,7 @@ const TextbookWords = () => {
 
   const [words, setWords] = useState<TWord[]>([]);
   const [currPage, setPage] = useState(1);
-  const { userLoginData } = useContext(LoginContext);
+  const { userLoginData, setUserLogin } = useContext(LoginContext);
   const [loading, setLoading] = useState(false);
 
   const handleChangePage = (event: ChangeEvent<unknown>, pageNum: number) => {
@@ -40,6 +40,7 @@ const TextbookWords = () => {
     }
     if (pageNum !== null) {
       setPage(pageNum);
+      setUserLogin({ ...userLoginData, pageForGames: currPage });
     }
   };
 
@@ -77,6 +78,12 @@ const TextbookWords = () => {
     [groupLevel, currPage],
   );
 
+  const onUnSelectCard = useCallback((wordId) => {
+    const userId = `${localStorage.getItem('userId')}`;
+    const token = `${localStorage.getItem('token')}`;
+    userWordsAPI.deleteUserWord(userId, wordId, token);
+  }, []);
+
   return (
     <div className="textbook_page">
       <div className="textbook_games-button-container">
@@ -84,12 +91,12 @@ const TextbookWords = () => {
           Закрепи слова при помощи игр.
         </span>
         <TextbookGamesButton
-          path={`/games/audio/${groupLevel}/${currPage - 1}`}
+          path={`/games/audio/${groupLevel}`}
           name="Аудиовызов"
           className="textbook_games-btn"
         />
         <TextbookGamesButton
-          path={`/games/sprint/${groupLevel}/${currPage - 1}`}
+          path={`/games/sprint/${groupLevel}`}
           name="Спринт"
           className="textbook_games-btn"
         />
@@ -117,6 +124,7 @@ const TextbookWords = () => {
           words={words}
           group={groupLevel}
           onSelectCard={onSelectCard}
+          onUnSelectCard={onUnSelectCard}
           isAuthorized={userLoginData.isLogined}
         />
 
