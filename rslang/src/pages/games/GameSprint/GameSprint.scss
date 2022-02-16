@@ -77,3 +77,23 @@ $bg-btn5: #00acc1;
     }
   }
 }
+
+.sprint-game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 70px);
+
+  .sprint-game-inner {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    height: 800px;
+  }
+
+  .timer-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}

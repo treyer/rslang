@@ -1,0 +1,46 @@
+.parrots-wrapper {
+  position: relative;
+  width: 500px;
+  height: 200px;
+
+  .branch {
+    position: absolute;
+    width: 500px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: 500px 100px;
+    top: 100px;
+  }
+
+  .parrot-1 {
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    width: 99px;
+    height: 120px;
+  }
+
+  .parrot-2 {
+    position: absolute;
+    top: 30px;
+    left: 110px;
+    width: 80px;
+    height: 120px;
+  }
+
+  .parrot-3 {
+    position: absolute;
+    top: 43px;
+    left: 200px;
+    width: 120px;
+    height: 111px;
+  }
+
+  .parrot-4 {
+    position: absolute;
+    top: 60px;
+    left: 300px;
+    width: 84px;
+    height: 120px;
+  }
+}
