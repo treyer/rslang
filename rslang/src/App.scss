@@ -2,7 +2,7 @@ $main-white: #ffffff;
 $hover-blue: #278d9f;
 $bg-header: #282c34;
 $bg-main: #6c89c2;
-$bg-games: #6cc2c2;
+$bg-games: #003333;
 $bg-textbook: #ffffff;
 $bg-stats: #836cc2;
 $bg-team: #ecd9e5;
@@ -90,6 +90,7 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
+    flex-wrap: wrap;
     gap: 50px;
     margin: 50px;
   }
