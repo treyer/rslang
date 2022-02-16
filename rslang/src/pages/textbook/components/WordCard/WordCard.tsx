@@ -28,8 +28,9 @@ type TWordCardProps = {
   textExampleTranslate: string;
   onPlayWord: (e: MouseEvent) => void;
   onHover: (e: MouseEvent) => void;
-  group: number;
-  isAuthorized: boolean;
+  onSelectCard: (id: string) => void;
+  group?: number;
+  isAuthorized?: boolean;
 };
 
 const WordCard = ({
@@ -44,14 +45,15 @@ const WordCard = ({
   textExampleTranslate,
   onPlayWord,
   onHover,
+  onSelectCard,
   group,
   isAuthorized,
 }: TWordCardProps) => {
   const [selected, setSelected] = useState(false);
-
   const handleSelectCard = useCallback(() => {
+    onSelectCard(id);
     setSelected(true);
-  }, []);
+  }, [id, onSelectCard]);
 
   const handleUnSelectCard = useCallback(() => {
     setSelected(false);
@@ -62,6 +64,7 @@ const WordCard = ({
       sx={{ maxWidth: 345 }}
       className={classNames(
         'textbook_word-card',
+        'dictionary_word-card',
         `textbook_word-card-${group}`,
         { 'is-selected': selected },
       )}

@@ -48,7 +48,7 @@
     "@typescript-eslint/no-empty-function": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-static-element-interactions": "off",
-    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-console": ["error", { "allow": ["warn", "error", "dir"] }],
     "jsx-a11y/label-has-associated-control": "off",
     "no-underscore-dangle": "off"
   },

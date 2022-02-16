@@ -16,27 +16,29 @@ $bg-games-btn: #00bcd4;
     margin-top: 20px;
     font-size: 2rem;
   }
+}
+.dictionary_words-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  grid-gap: 50px;
+  gap: 50px;
+  padding: 50px;
+  flex-wrap: wrap;
+  min-height: calc(100vh - 140px);
 
-  .textbook_words-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    grid-gap: 50px;
-    gap: 50px;
-    padding: 50px;
-    flex-wrap: wrap;
-
-    .textbook_word-card {
-      width: 350px;
-      height: 500px;
-      transition: 0.2s;
-      &:hover {
-        transform: scale(1.1);
-      }
+  .dictionary_word-card {
+    width: 350px;
+    height: 500px;
+    transition: 0.2s;
+    &:hover {
+      transform: scale(1.1);
     }
   }
+}
 
+.dictionary_btn-container {
   .dictionary_games-btn {
     min-width: 150px;
     background-color: $bg-games-btn;

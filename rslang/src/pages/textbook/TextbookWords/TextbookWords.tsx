@@ -11,7 +11,7 @@ import {
   ChangeEvent,
 } from 'react';
 import classNames from 'classnames';
-import { TWord } from '../../../api/types';
+import { TUserWord, TWord } from '../../../api/types';
 import WordsAPI from '../../../api/wordsAPI';
 
 import { SERVER_URL } from '../../../consts';
@@ -22,6 +22,7 @@ import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGames
 import { LoginContext } from '../../../Context/login-context';
 
 import './TextbookWords.scss';
+import userWordsAPI from '../../../api/userWordsAPI';
 
 export type TPlayListCollection = {
   [key: string]: string[];
@@ -84,20 +85,6 @@ const TextbookWords = () => {
     }
   }, [playedAudio, playedWordId, currentTrack, playList]);
 
-  const handleChangePage = (event: ChangeEvent<unknown>, pageNum: number) => {
-    if (!event.target) {
-      return;
-    }
-    if (pageNum !== null) {
-      setPage(pageNum);
-    }
-  };
-
-  useEffect(() => {
-    const page = currPage - 1;
-    WordsAPI.getWords(page, groupLevel, (data: TWord[]) => setWords(data));
-  }, [currPage, location.pathname, groupLevel]);
-
   useEffect(() => {
     const newPlayList = words.reduce(
       (acc, { id, audio, audioMeaning, audioExample }) => {
@@ -112,6 +99,43 @@ const TextbookWords = () => {
     );
     setPlayList(newPlayList);
   }, [words]);
+
+  const handleChangePage = (event: ChangeEvent<unknown>, pageNum: number) => {
+    if (!event.target) {
+      return;
+    }
+    if (pageNum !== null) {
+      setPage(pageNum);
+    }
+  };
+
+  useEffect(() => {
+    const page = currPage - 1;
+    WordsAPI.getWords(page, groupLevel, (data: TWord[]) => setWords(data));
+  }, [currPage, location.pathname, groupLevel]);
+
+  const onSelectCard = useCallback(
+    (wordId) => {
+      const userId = `${localStorage.getItem('userId')}`;
+      const token = `${localStorage.getItem('token')}`;
+      userWordsAPI.createUserWord(
+        userId,
+        wordId,
+        token,
+        {
+          difficulty: 'difficult',
+          optional: {
+            isDifficult: true,
+            deleted: false,
+            group: groupLevel,
+            page: currPage,
+          },
+        },
+        (data: TUserWord) => console.error(data),
+      );
+    },
+    [groupLevel, currPage],
+  );
 
   return (
     <div className="textbook_page">
@@ -173,6 +197,7 @@ const TextbookWords = () => {
               textExampleTranslate={textExampleTranslate}
               onPlayWord={playTextbookWord}
               onHover={handleCardHover}
+              onSelectCard={onSelectCard}
               group={groupLevel}
               isAuthorized={userLoginData.isLogined}
             />
