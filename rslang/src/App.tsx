@@ -32,6 +32,7 @@ function App() {
     userName: '',
     isLoginOpen: false,
     isRegisterOpen: false,
+    pageForGames: -1,
   });
   const value = { userLoginData, setUserLogin };
 
@@ -54,6 +55,7 @@ function App() {
             userName,
             isLoginOpen: false,
             isRegisterOpen: false,
+            pageForGames: -1,
           });
           setUserLoginToLocalStorage(
             data.token,

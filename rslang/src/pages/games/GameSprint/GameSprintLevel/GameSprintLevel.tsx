@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 import Timer from './Timer/timer';
 import Parrots from './Parrots/parrots';
@@ -33,19 +33,24 @@ const GameSprintLevel = () => {
 
   return (
     <div className="App-games">
-      <div className="games-container">
-        <Timer time={time} isSound={isSound} isPlay={isPlay} />
-        <Button variant="contained" onClick={handlePlay}>
-          Играть
-        </Button>
-        <Button variant="contained" onClick={handleIsSound}>
-          {isSound ? 'выключить звук' : 'включить звук'}
-        </Button>
-        <Button variant="contained" onClick={increaseCorrectCount}>
-          Увеличить число ответов
-        </Button>
-        <Parrots correctAnswersCount={correctAnswersCount} />
-        <TickPannel correctAnswersCount={correctAnswersCount} />
+      <div className="sprint-game-container">
+        <div className="sprint-game-inner">
+          <div className="timer-wrapper">
+            <Timer time={time} isSound={isSound} isPlay={isPlay} />
+            <Typography>280</Typography>
+          </div>
+          <Button variant="contained" onClick={handlePlay}>
+            Играть
+          </Button>
+          <Button variant="contained" onClick={handleIsSound}>
+            {isSound ? 'выключить звук' : 'включить звук'}
+          </Button>
+          <Button variant="contained" onClick={increaseCorrectCount}>
+            Увеличить число ответов
+          </Button>
+          <Parrots correctAnswersCount={correctAnswersCount} />
+          <TickPannel correctAnswersCount={correctAnswersCount} />
+        </div>
       </div>
     </div>
   );

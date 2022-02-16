@@ -10,6 +10,7 @@ export const LoginContext = createContext<TAppState>({
     userName: '',
     isLoginOpen: false,
     isRegisterOpen: false,
+    pageForGames: -1,
   },
   setUserLogin: () => {},
 });

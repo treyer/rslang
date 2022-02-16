@@ -13,6 +13,7 @@ export type TUserLogin = {
   userName: string;
   isLoginOpen: boolean;
   isRegisterOpen: boolean;
+  pageForGames: number;
 };
 
 export type TAppState = {

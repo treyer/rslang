@@ -14,7 +14,7 @@ const Timer = ({ time, isSound, isPlay }: TTime) => {
         soundEnd.play();
       }
     }
-  });
+  }, [time, isSound, isPlay]);
 
   const getStyle = (): string => {
     if (time === 0) return 'circle10';

@@ -61,6 +61,7 @@ const Login = () => {
                 userName: data.name,
                 isLoginOpen: true,
                 isRegisterOpen: false,
+                pageForGames: -1,
               });
               setUserLoginToLocalStorage(
                 data.token,
