@@ -1,11 +1,12 @@
 import { isEmail } from 'validator';
+import { Typography } from '@mui/material';
 
 export const required = (value: string) => {
   if (!value.trim()) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <Typography variant="body1" style={{ color: 'red' }}>
         Поле обязательно для заполнения
-      </div>
+      </Typography>
     );
   }
   return '';
@@ -14,9 +15,9 @@ export const required = (value: string) => {
 export const validEmail = (value: string) => {
   if (!isEmail(value)) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <Typography variant="body1" style={{ color: 'red' }}>
         Email не валиден
-      </div>
+      </Typography>
     );
   }
   return '';
@@ -25,9 +26,9 @@ export const validEmail = (value: string) => {
 export const validUsername = (value: string) => {
   if (value.length < 3 || value.length > 16) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <Typography variant="body1" style={{ color: 'red' }}>
         Имя пользователя должно содержать от 3 до 15 символов
-      </div>
+      </Typography>
     );
   }
   return '';
@@ -36,10 +37,29 @@ export const validUsername = (value: string) => {
 export const validPassword = (value: string) => {
   if (value.length < 8 || value.length > 16) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <Typography variant="body1" style={{ color: 'red' }}>
         Пароль должен содержать от 8 до 15 символов
-      </div>
+      </Typography>
     );
   }
   return '';
+};
+
+export const setUserLoginToLocalStorage = (
+  token: string,
+  refreshToken: string,
+  userId: string,
+  userName: string | null,
+) => {
+  localStorage.setItem('token', token);
+  localStorage.setItem('refreshToken', refreshToken);
+  localStorage.setItem('userId', userId);
+  localStorage.setItem('userName', String(userName));
+};
+
+export const clearUserLoginInLocalStorage = () => {
+  localStorage.setItem('token', '');
+  localStorage.setItem('refreshToken', '');
+  localStorage.setItem('userId', '');
+  localStorage.setItem('userName', '');
 };

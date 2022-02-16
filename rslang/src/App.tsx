@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 /*  import { TAuth, TUser, TUserBase, TUserWord, TWord } from './api/types';
@@ -6,10 +6,16 @@ import WordsAPI from './api/wordsAPI';
 import UsersAPI from './api/usersAPI';
 import UserWordsAPI from './api/userWordsAPI';  */
 import { ROUTES } from './General/constants';
-import Header from './Components/header/header';
 import Footer from './Components/footer/footer';
+import Header from './Components/header/header';
+import { LoginContext } from './Context/login-context';
 
 import './App.scss';
+import UsersAPI from './api/usersAPI';
+import {
+  clearUserLoginInLocalStorage,
+  setUserLoginToLocalStorage,
+} from './General/utils';
 
 /*  const refreshToken = '';
 const token =
@@ -18,6 +24,48 @@ const userId = '61fd7b9ad8227c0016ecf489';
 const wordId = '5e9f5ee35eb9e72bc21af66d';  */
 
 function App() {
+  const [userLoginData, setUserLogin] = useState({
+    isLogined: false,
+    token: '',
+    refreshToken: '',
+    userId: '',
+    userName: '',
+    isLoginOpen: false,
+    isRegisterOpen: false,
+  });
+  const value = { userLoginData, setUserLogin };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
+    const userId = localStorage.getItem('userId');
+    const userName = localStorage.getItem('userName');
+
+    if (token && refreshToken && userId && userName) {
+      UsersAPI.getNewUserToken(userId, refreshToken, (errorMess, data) => {
+        if (errorMess) {
+          clearUserLoginInLocalStorage();
+        } else if (data) {
+          setUserLogin({
+            isLogined: true,
+            token: data.token,
+            refreshToken: data.refreshToken,
+            userId: data.userId,
+            userName,
+            isLoginOpen: false,
+            isRegisterOpen: false,
+          });
+          setUserLoginToLocalStorage(
+            data.token,
+            data.refreshToken,
+            userId,
+            userName,
+          );
+        }
+      });
+    }
+  }, []);
+
   useEffect(() => {
     /*  WordsAPI.getWords(2, 2, (data: TWord[]) => console.log('words: ', data));
 
@@ -96,13 +144,15 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Routes>
-        {ROUTES.map((el) => (
-          <Route key={el.id} path={el.routePath} element={el.element} />
-        ))}
-      </Routes>
-      <Footer />
+      <LoginContext.Provider value={value}>
+        <Header />
+        <Routes>
+          {ROUTES.map((el) => (
+            <Route key={el.id} path={el.routePath} element={el.element} />
+          ))}
+        </Routes>
+        <Footer />
+      </LoginContext.Provider>
     </div>
   );
 }

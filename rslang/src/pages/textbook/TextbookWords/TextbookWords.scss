@@ -1,24 +1,126 @@
-$bg-container: #b2ebf2;
-$bg-selected-card: #fffde2;
+$bg-games-btn: #00bcd4;
+$bg-selected: #fffde2;
+$bg-btn0: #b2ebf2;
+$bg-btn1: #80deea;
+$bg-btn2: #4dd0e1;
+$bg-btn3: #26c6da;
+$bg-btn4: #00bcd4;
+$bg-btn5: #00acc1;
 
-.textbook_words-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  grid-gap: 50px;
-  gap: 50px;
-  padding: 50px;
-  flex-wrap: wrap;
-  background-color: $bg-container;
+.textbook_page {
+  .textbook_games-button-container-title {
+    display: block;
+    padding: 20px 0;
+    font-size: 1.2rem;
+    font-weight: inherit;
+    text-transform: uppercase;
+  }
 
-  .textbook_word-card {
-    transition: 0.2s;
-    &:hover {
-      transform: scale(1.1);
+  .textbook_games-btn {
+    min-width: 150px;
+    background-color: $bg-games-btn;
+    margin-right: 15px;
+  }
+
+  .is-unauthorized {
+    display: none;
+  }
+
+  .textbook_section-button {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    min-width: 50px;
+    gap: 10px;
+    padding-top: 20px;
+
+    .textbook_btn {
+      display: flex;
+      justify-content: flex-start;
+      &:focus {
+        color: #000000;
+      }
+    }
+
+    .textbook_button-0 {
+      background-color: $bg-btn0;
+    }
+
+    .textbook_button-1 {
+      background-color: $bg-btn1;
+    }
+
+    .textbook_button-2 {
+      background-color: $bg-btn2;
+    }
+
+    .textbook_button-3 {
+      background-color: $bg-btn3;
+    }
+
+    .textbook_button-4 {
+      background-color: $bg-btn4;
+    }
+
+    .textbook_button-5 {
+      background-color: $bg-btn5;
+    }
+
+    .textbook_code-title {
+      font-size: 3rem;
+      padding-right: 10px;
     }
   }
-  .is-selected {
-    background-color: $bg-selected-card;
+
+  .textbook_words-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    grid-gap: 50px;
+    gap: 50px;
+    padding: 50px;
+    flex-wrap: wrap;
+
+    .textbook_word-card {
+      width: 350px;
+      height: 500px;
+      transition: 0.2s;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .textbook_word-card-0 {
+      background-color: $bg-btn0;
+    }
+
+    .textbook_word-card-1 {
+      background-color: $bg-btn1;
+    }
+
+    .textbook_word-card-2 {
+      background-color: $bg-btn2;
+    }
+
+    .textbook_word-card-3 {
+      background-color: $bg-btn3;
+    }
+
+    .textbook_word-card-4 {
+      background-color: $bg-btn4;
+    }
+
+    .textbook_word-card-5 {
+      background-color: $bg-btn5;
+    }
+
+    .is-unauthorized {
+      opacity: 0;
+    }
+
+    .is-selected {
+      background-color: $bg-selected;
+    }
   }
 }

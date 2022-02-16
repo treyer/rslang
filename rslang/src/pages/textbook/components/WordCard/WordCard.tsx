@@ -27,6 +27,9 @@ type TWordCardProps = {
   textMeaningTranslate: string;
   textExampleTranslate: string;
   onPlayWord: (e: MouseEvent) => void;
+  onHover: (e: MouseEvent) => void;
+  group: number;
+  isAuthorized: boolean;
 };
 
 const WordCard = ({
@@ -40,6 +43,9 @@ const WordCard = ({
   textMeaningTranslate,
   textExampleTranslate,
   onPlayWord,
+  onHover,
+  group,
+  isAuthorized,
 }: TWordCardProps) => {
   const [selected, setSelected] = useState(false);
 
@@ -54,8 +60,13 @@ const WordCard = ({
   return (
     <Card
       sx={{ maxWidth: 345 }}
-      className={classNames('textbook_word-card', { 'is-selected': selected })}
-      id={`word-${id}`}
+      className={classNames(
+        'textbook_word-card',
+        `textbook_word-card-${group}`,
+        { 'is-selected': selected },
+      )}
+      id={id}
+      onMouseEnter={onHover}
     >
       <CardMedia
         component="img"
@@ -79,10 +90,18 @@ const WordCard = ({
             </IconButton>
           </CardActions>
           <CardActions>
-            <IconButton aria-label="add" onClick={handleSelectCard}>
+            <IconButton
+              aria-label="add"
+              onClick={handleSelectCard}
+              className={classNames({ 'is-unauthorized': !isAuthorized })}
+            >
               <AddCircleOutlineIcon />
             </IconButton>
-            <IconButton aria-label="remove" onClick={handleUnSelectCard}>
+            <IconButton
+              aria-label="remove"
+              onClick={handleUnSelectCard}
+              className={classNames({ 'is-unauthorized': !isAuthorized })}
+            >
               <RemoveCircleOutlineIcon />
             </IconButton>
           </CardActions>
@@ -91,10 +110,10 @@ const WordCard = ({
           {wordTranslate} {transcription}
         </Typography>
         <Typography variant="body2" color="text.secondary" textAlign="right">
-          {textMeaning}
+          {textMeaning.replace(/<\/?[a-zA-Z]+>/gi, '')}
         </Typography>
         <Typography variant="body2" textAlign="right">
-          {textExample}
+          {textExample.replace(/<\/?[a-zA-Z]+>/gi, '')}
         </Typography>
         <Typography variant="body2" color="text.secondary" textAlign="right">
           {textMeaningTranslate}

@@ -5,9 +5,9 @@ import { Button } from '@mui/material';
 type TEnglishLevelButtonProps = {
   id: string;
   code: string;
-  level: string;
+  level?: string;
   path: string;
-  onHover: (e: MouseEvent) => void;
+  onHover?: (e: MouseEvent) => void;
 };
 
 const EnglishLevelButton = ({

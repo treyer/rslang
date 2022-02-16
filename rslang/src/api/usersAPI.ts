@@ -2,7 +2,7 @@ import { BaseAPI } from './baseAPI';
 import { TAuth, TUser, TUserBase } from './types';
 import { USERS_API_ERRORS } from './errors';
 
-export class UsersAPI extends BaseAPI {
+class UsersAPI extends BaseAPI {
   createUser(
     dataUser: TUser,
     createNewUserCb: (error: string | null, data?: TUser) => void,
@@ -84,7 +84,7 @@ export class UsersAPI extends BaseAPI {
   getNewUserToken(
     userId: string,
     token: string,
-    getNewUserTokenCb: (dataToken: TAuth) => void,
+    getNewUserTokenCb: (errorMessage: string | null, dataToken?: TAuth) => void,
   ) {
     this.get(`users/${userId}/tokens`, {
       Authorization: `Bearer ${token}`,
@@ -93,9 +93,9 @@ export class UsersAPI extends BaseAPI {
         BaseAPI.handleError(result, USERS_API_ERRORS);
         return result.json();
       })
-      .then((result) => getNewUserTokenCb(result))
+      .then((result) => getNewUserTokenCb(null, result))
       .catch((error) => {
-        console.error(error);
+        getNewUserTokenCb(error.message);
       });
   }
 }

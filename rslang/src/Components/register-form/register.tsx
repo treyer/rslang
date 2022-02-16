@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
+import { CardContent, Avatar, Button, Typography } from '@mui/material';
 
 import UsersAPI from '../../api/usersAPI';
 import {
@@ -25,14 +26,17 @@ const Register = () => {
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername((e.target as HTMLInputElement).value);
+    setMessage('');
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail((e.target as HTMLInputElement).value);
+    setMessage('');
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword((e.target as HTMLInputElement).value);
+    setMessage('');
   };
 
   const handleRegister = (e: Event) => {
@@ -60,73 +64,133 @@ const Register = () => {
     }
   };
 
+  const handleFormReset = () => {
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setIsSuccess(false);
+    setMessage('');
+    setSubmitBtnState(false);
+  };
+
   return (
     <div className="register-form-wrapper">
       <div className="card card-container">
-        <Form onSubmit={handleRegister} ref={form}>
-          {!isSuccess && (
-            <div>
-              <div className="form-group">
-                <label htmlFor="username">имя</label>
-                <Input
-                  id="username"
-                  type="text"
-                  className="form-control"
-                  name="username"
-                  value={username}
-                  onChange={handleUsernameChange}
-                  validations={[required, validUsername]}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">email</label>
-                <Input
-                  id="email"
-                  type="text"
-                  className="form-control"
-                  name="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  validations={[required, validEmail]}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">пароль</label>
-                <Input
-                  id="password"
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  validations={[required, validPassword]}
-                />
-              </div>
-              <div className="form-group">
-                <button
+        {!isSuccess && (
+          <Avatar
+            sx={{ width: 90, height: 90 }}
+            style={{ margin: '10px auto 0' }}
+            src="/assets/img/user-add.png"
+            alt="Register user"
+          />
+        )}
+        {isSuccess && (
+          <Avatar
+            sx={{ width: 90, height: 90 }}
+            style={{ margin: '10px auto 0' }}
+            src="/assets/img/user-added-logined.png"
+            alt="User registered"
+          />
+        )}
+        <CardContent>
+          <Form onSubmit={handleRegister} ref={form}>
+            {!isSuccess && (
+              <div>
+                <div className="form-group">
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    имя:
+                  </Typography>
+                  <Input
+                    id="username"
+                    type="text"
+                    className="form-control"
+                    name="username"
+                    value={username}
+                    onChange={handleUsernameChange}
+                    validations={[required, validUsername]}
+                  />
+                </div>
+                <div className="form-group">
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    email:
+                  </Typography>
+                  <Input
+                    id="email"
+                    type="text"
+                    className="form-control"
+                    name="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    validations={[required, validEmail]}
+                  />
+                </div>
+                <div className="form-group">
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '5px',
+                      marginBottom: '-10px',
+                    }}
+                  >
+                    пароль:
+                  </Typography>
+                  <Input
+                    id="password"
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    validations={[required, validPassword]}
+                  />
+                </div>
+                <Button
                   type="submit"
-                  className="btn btn-primary btn-block"
+                  variant="contained"
                   disabled={submitBtnState}
+                  style={{ marginTop: '10px' }}
                 >
                   Зарегистрироваться
-                </button>
+                </Button>
               </div>
-            </div>
-          )}
-          {message && (
-            <div className="form-group">
-              <div
-                className={
-                  isSuccess ? 'alert alert-success' : 'alert alert-danger'
-                }
-                role="alert"
-              >
-                {message}
+            )}
+            {message && (
+              <div className="form-group">
+                {isSuccess && (
+                  <Typography variant="body1" style={{ color: 'green' }}>
+                    {message}
+                  </Typography>
+                )}
+                {isSuccess && (
+                  <Button variant="contained" onClick={handleFormReset}>
+                    Зарегистрировать заново
+                  </Button>
+                )}
+                {!isSuccess && (
+                  <Typography variant="body1" style={{ color: 'red' }}>
+                    {message}
+                  </Typography>
+                )}
               </div>
-            </div>
-          )}
-          <CheckButton style={{ display: 'none' }} ref={checkBtn} />
-        </Form>
+            )}
+            <CheckButton style={{ display: 'none' }} ref={checkBtn} />
+          </Form>
+        </CardContent>
       </div>
     </div>
   );

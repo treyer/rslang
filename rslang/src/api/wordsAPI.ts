@@ -2,7 +2,7 @@ import { BaseAPI } from './baseAPI';
 import { TWord } from './types';
 import { WORDS_API_ERRORS } from './errors';
 
-export class WordsAPI extends BaseAPI {
+class WordsAPI extends BaseAPI {
   getWords(
     page: number,
     group: number,

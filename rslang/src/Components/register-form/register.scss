@@ -1,4 +1,41 @@
 .register-form-wrapper {
   margin: 0 auto;
   width: 300px;
+
+  Input {
+    width: 250px;
+  }
+}
+
+.register-wrapper {
+  position: absolute;
+  top: -700px;
+  right: 0;
+  transition: top 1s ease-in-out;
+  z-index: 100;
+
+  &.active {
+    top: 65px;
+    display: block;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: 140px;
+    top: -28px;
+    border: 14px solid transparent;
+    border-bottom: 14px solid #ffffff;
+  }
+
+  .close-modal-register-btn {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    width: 18px;
+    min-width: 18px;
+    max-height: 18px;
+    padding: 0;
+    color: red;
+  }
 }
