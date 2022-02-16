@@ -4,7 +4,8 @@ import { TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
 
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
-import WordCard from '../components/WordCard/WordCard';
+
+import WordCardList from '../components/WordCardList/WordCardList';
 import { DICTIONARY_CATEGORIES } from '../constants/constants';
 
 import './Dictionary.scss';
@@ -49,7 +50,7 @@ const Dictionary = () => {
 
   return (
     <div className="dictionary-container">
-      <div className="dictionary_btn-container">
+      <div className="dictionary_btn-container" key="dictionary_btn">
         <TextbookGamesButton
           id="0"
           path="/dictionary/"
@@ -72,42 +73,20 @@ const Dictionary = () => {
           onClick={onHandleChangeCategory}
         />
       </div>
-      <div className="dictionary_words-container">
+      <div className="words_list-container" key="words_list-container">
         {words.length ? (
-          words.map(
-            ({
-              id,
-              word,
-              image,
-              textMeaning,
-              textExample,
-              transcription,
-              wordTranslate,
-              textMeaningTranslate,
-              textExampleTranslate,
-            }) => (
-              <WordCard
-                key={id}
-                id={id}
-                word={word}
-                image={image}
-                textMeaning={textMeaning}
-                textExample={textExample}
-                transcription={transcription}
-                wordTranslate={wordTranslate}
-                textMeaningTranslate={textMeaningTranslate}
-                textExampleTranslate={textExampleTranslate}
-                onPlayWord={() => console.error('ll')}
-                onHover={() => console.error('ll')}
-                onSelectCard={() => console.error('ll')}
-              />
-            ),
-          )
+          <WordCardList
+            key="dictionary_word-list"
+            words={words}
+            onSelectCard={() => console.error('ll')}
+          />
         ) : (
-          <p>{DICTIONARY_CATEGORIES[currCategory].message}</p>
+          <p className="dictionary-message">
+            {DICTIONARY_CATEGORIES[currCategory].message}
+          </p>
         )}
       </div>
-      <div className="dictionary_btn-container">
+      <div className="dictionary_btn-container" key="dictionary_games-btn">
         <span className="dictionary_games-button-title">
           Закрепи слова при помощи игр.
         </span>

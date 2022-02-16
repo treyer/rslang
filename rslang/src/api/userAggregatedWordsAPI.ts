@@ -26,7 +26,6 @@ class UserAggregatedWordsAPI extends BaseAPI {
         return result.json();
       })
       .then((data) => {
-        console.error(data);
         return getAggregatedUserWordsCb(data[0].paginatedResults);
       })
       .catch((error) => {

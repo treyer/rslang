@@ -9,7 +9,7 @@ export const DICTIONARY_CATEGORIES = {
     id: '1',
     filter:
       '{"userWord.difficulty":"difficult", "userWord.optional.isDifficult":true}',
-    message: 'У Вас нет изучаемых слов в словаре.',
+    message: 'У Вас нет изучученных слов в словаре.',
   },
   '2': {
     id: '2',

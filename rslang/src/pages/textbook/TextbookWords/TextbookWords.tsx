@@ -5,17 +5,13 @@ import {
   useContext,
   useCallback,
   useState,
-  useMemo,
   useEffect,
-  MouseEvent,
   ChangeEvent,
 } from 'react';
 import classNames from 'classnames';
 import { TUserWord, TWord } from '../../../api/types';
 import WordsAPI from '../../../api/wordsAPI';
 
-import { SERVER_URL } from '../../../consts';
-import WordCard from '../components/WordCard/WordCard';
 import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
 import { ENGLISH_LEVELS } from '../../../General/constants';
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
@@ -23,6 +19,8 @@ import { LoginContext } from '../../../Context/login-context';
 
 import './TextbookWords.scss';
 import userWordsAPI from '../../../api/userWordsAPI';
+
+import WordCardList from '../components/WordCardList/WordCardList';
 
 export type TPlayListCollection = {
   [key: string]: string[];
@@ -33,72 +31,9 @@ const TextbookWords = () => {
   const lengthLocation = location.pathname.split('/').length;
   const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState(0);
   const [words, setWords] = useState<TWord[]>([]);
-  const [playList, setPlayList] = useState<TPlayListCollection>({});
-  const [playedWordId, setPlayedWordId] = useState('');
   const [currPage, setPage] = useState(1);
   const { userLoginData } = useContext(LoginContext);
-
-  const playedAudio = useMemo(() => {
-    const track = playList[playedWordId]?.[currentTrack];
-    return track ? new Audio(track) : null;
-  }, [currentTrack, playedWordId, playList]);
-
-  const handleCardHover = useCallback((e: MouseEvent) => {
-    const target = e.currentTarget as HTMLElement;
-    if (!target) {
-      return;
-    }
-
-    setPlayedWordId(target.id);
-    setCurrentTrack(0);
-  }, []);
-
-  const playTextbookWord = useCallback(() => {
-    if (!playedAudio) {
-      return;
-    }
-
-    if (isPlaying) {
-      playedAudio.pause();
-      setIsPlaying(false);
-      return;
-    }
-
-    if (!isPlaying) {
-      playedAudio.play();
-      setIsPlaying(true);
-    }
-  }, [isPlaying, playedAudio]);
-
-  useEffect(() => {
-    if (playedAudio) {
-      playedAudio.addEventListener('ended', () => {
-        const nextTrack = playList[playedWordId]?.[currentTrack + 1]
-          ? currentTrack + 1
-          : 0;
-        setIsPlaying(false);
-        setCurrentTrack(nextTrack);
-      });
-    }
-  }, [playedAudio, playedWordId, currentTrack, playList]);
-
-  useEffect(() => {
-    const newPlayList = words.reduce(
-      (acc, { id, audio, audioMeaning, audioExample }) => {
-        acc[id] = [
-          `${SERVER_URL}/${audio}`,
-          `${SERVER_URL}/${audioMeaning}`,
-          `${SERVER_URL}/${audioExample}`,
-        ];
-        return acc;
-      },
-      {} as TPlayListCollection,
-    );
-    setPlayList(newPlayList);
-  }, [words]);
 
   const handleChangePage = (event: ChangeEvent<unknown>, pageNum: number) => {
     if (!event.target) {
@@ -172,37 +107,13 @@ const TextbookWords = () => {
         ))}
       </section>
       <div className="textbook_words-container">
-        {words.map(
-          ({
-            id,
-            word,
-            image,
-            textMeaning,
-            textExample,
-            transcription,
-            wordTranslate,
-            textMeaningTranslate,
-            textExampleTranslate,
-          }) => (
-            <WordCard
-              key={id}
-              id={id}
-              word={word}
-              image={image}
-              textMeaning={textMeaning}
-              textExample={textExample}
-              transcription={transcription}
-              wordTranslate={wordTranslate}
-              textMeaningTranslate={textMeaningTranslate}
-              textExampleTranslate={textExampleTranslate}
-              onPlayWord={playTextbookWord}
-              onHover={handleCardHover}
-              onSelectCard={onSelectCard}
-              group={groupLevel}
-              isAuthorized={userLoginData.isLogined}
-            />
-          ),
-        )}
+        <WordCardList
+          words={words}
+          group={groupLevel}
+          onSelectCard={onSelectCard}
+          isAuthorized={userLoginData.isLogined}
+        />
+
         <Pagination
           count={30}
           variant="outlined"

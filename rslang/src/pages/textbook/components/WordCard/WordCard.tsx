@@ -62,12 +62,9 @@ const WordCard = ({
   return (
     <Card
       sx={{ maxWidth: 345 }}
-      className={classNames(
-        'textbook_word-card',
-        'dictionary_word-card',
-        `textbook_word-card-${group}`,
-        { 'is-selected': selected },
-      )}
+      className={classNames('words_list-card', `textbook_word-card-${group}`, {
+        'is-selected': selected,
+      })}
       id={id}
       onMouseEnter={onHover}
     >
@@ -88,7 +85,7 @@ const WordCard = ({
         >
           <span>{word}</span>
           <CardActions>
-            <IconButton aria-label="volume" onClick={onPlayWord} id={id}>
+            <IconButton aria-label="volume" onClick={onPlayWord} id={word}>
               <VolumeUpIcon />
             </IconButton>
           </CardActions>
