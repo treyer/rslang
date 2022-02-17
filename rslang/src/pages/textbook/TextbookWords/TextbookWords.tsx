@@ -19,6 +19,8 @@ import userWordsAPI from '../../../api/userWordsAPI';
 import WordCardList from '../components/WordCardList/WordCardList';
 
 import './TextbookWords.scss';
+import userAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
+import { WORDS_PER_PAGE } from '../constants/constants';
 
 export type TPlayListCollection = {
   [key: string]: string[];
@@ -47,13 +49,28 @@ const TextbookWords = () => {
   useEffect(() => {
     setLoading(true);
     const page = currPage - 1;
-    WordsAPI.getWords(
-      page,
-      groupLevel,
-      (data: TWord[]) => setWords(data),
-      () => setLoading(false),
-    );
-  }, [currPage, location.pathname, groupLevel]);
+    const userId = `${localStorage.getItem('userId')}`;
+    const token = `${localStorage.getItem('token')}`;
+    if (userLoginData.isLogined) {
+      userAggregatedWordsAPI.getAggregatedUserWords(
+        userId,
+        token,
+        (data: TWord[]) => setWords(data),
+        `${groupLevel}`,
+        `${page}`,
+        WORDS_PER_PAGE,
+        '',
+        () => setLoading(false),
+      );
+    } else {
+      WordsAPI.getWords(
+        page,
+        groupLevel,
+        (data: TWord[]) => setWords(data),
+        () => setLoading(false),
+      );
+    }
+  }, [currPage, location.pathname, groupLevel, userLoginData.isLogined]);
 
   const onSelectCard = useCallback(
     (wordId) => {
@@ -68,6 +85,9 @@ const TextbookWords = () => {
           optional: {
             isDifficult: true,
             deleted: false,
+            failCounter: 0,
+            successCounter: 0,
+            correctAnswer: 0,
             group: groupLevel,
             page: currPage,
           },

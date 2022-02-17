@@ -3,6 +3,7 @@ export type TAPIErrorsMap = {
 };
 
 export type TWord = {
+  _id?: string;
   id: string;
   group: number;
   page: number;

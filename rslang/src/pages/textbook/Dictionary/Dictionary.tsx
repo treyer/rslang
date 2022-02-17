@@ -1,13 +1,14 @@
 import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
 
-import { TWord } from '../../../api/types';
+import { TUserWord, TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
+import userWordsAPI from '../../../api/userWordsAPI';
 
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 
 import WordCardList from '../components/WordCardList/WordCardList';
-import { DICTIONARY_CATEGORIES } from '../constants/constants';
+import { DICTIONARY_CATEGORIES, WORDS_PER_PAGE } from '../constants/constants';
 
 import './Dictionary.scss';
 
@@ -33,11 +34,11 @@ const Dictionary = () => {
       userId,
       token,
       (data: TWord[]) => setWords(data),
-      () => setLoading(false),
       group,
       page,
+      WORDS_PER_PAGE,
       filter,
-      '20',
+      () => setLoading(false),
     );
   }, [currFilter]);
 
@@ -54,6 +55,30 @@ const Dictionary = () => {
 
   const hasEmptyMessage = words.length === 0 && !loading;
   const hasWordCards = words.length !== 0 && !loading;
+
+  const onUnSelectCard = useCallback((wordId) => {
+    const userId = `${localStorage.getItem('userId')}`;
+    const token = `${localStorage.getItem('token')}`;
+
+    userWordsAPI.updateUserWord(
+      userId,
+      token,
+      wordId,
+      {
+        difficulty: '',
+        optional: {
+          isDifficult: false,
+          deleted: true,
+          failCounter: 0,
+          successCounter: 0,
+          correctAnswer: 0,
+          group: 0,
+          page: 1,
+        },
+      },
+      (data: TUserWord) => console.error(data),
+    );
+  }, []);
 
   return (
     <div className="dictionary-container">
@@ -87,7 +112,8 @@ const Dictionary = () => {
             key="dictionary_word-list"
             words={words}
             onSelectCard={() => console.error('ll')}
-            onUnSelectCard={() => console.error('ll')}
+            onUnSelectCard={onUnSelectCard}
+            currCategory={currCategory}
           />
         )}
         {hasEmptyMessage && (

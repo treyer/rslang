@@ -15,6 +15,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import { SERVER_URL } from '../../../../consts';
+import { DICTIONARY_CATEGORIES } from '../../constants/constants';
 
 type TWordCardProps = {
   id: string;
@@ -32,6 +33,7 @@ type TWordCardProps = {
   onUnSelectCard: (id: string) => void;
   group?: number;
   isAuthorized?: boolean;
+  currCategory?: string;
 };
 
 const WordCard = ({
@@ -50,6 +52,7 @@ const WordCard = ({
   onUnSelectCard,
   group,
   isAuthorized,
+  currCategory,
 }: TWordCardProps) => {
   const [selected, setSelected] = useState(false);
   const handleSelectCard = useCallback(() => {
@@ -97,14 +100,26 @@ const WordCard = ({
               id={id}
               aria-label="add"
               onClick={handleSelectCard}
-              className={classNames({ 'is-unauthorized': !isAuthorized })}
+              className={classNames({
+                'is-unauthorized': !isAuthorized,
+                'is-difficult':
+                  currCategory === '0' || currCategory === '1'
+                    ? DICTIONARY_CATEGORIES[0].activeBtn
+                    : false,
+              })}
             >
               <AddCircleOutlineIcon />
             </IconButton>
             <IconButton
               aria-label="remove"
               onClick={handleUnSelectCard}
-              className={classNames({ 'is-unauthorized': !isAuthorized })}
+              className={classNames({
+                'is-unauthorized': !isAuthorized,
+                'is-difficult':
+                  currCategory === '2'
+                    ? DICTIONARY_CATEGORIES[0].activeBtn
+                    : false,
+              })}
             >
               <RemoveCircleOutlineIcon />
             </IconButton>
