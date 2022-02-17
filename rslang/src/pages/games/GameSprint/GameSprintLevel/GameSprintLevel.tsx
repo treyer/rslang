@@ -1,32 +1,79 @@
 import { useEffect, useState } from 'react';
 import { Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import Timer from './Timer/timer';
 import Parrots from './Parrots/parrots';
 import TickPannel from './TickPannel/tick-pannel';
-import { getExtraPointsString } from '../../../../General/utils';
+import {
+  getExtraPointsByString,
+  getExtraPointsString,
+} from '../../../../General/utils';
 
 const GameSprintLevel = () => {
   const [time, setTime] = useState(60);
   const [isSound, setIsSound] = useState(true);
   const [isPlay, setIsPlay] = useState(false);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const [correctAnswersCountTotal, setCorrectAnswersCountTotal] = useState(0);
+  const [wrongAnswersCountTotal, setWrongAnswersCountTotal] = useState(0);
   const [points, setPoints] = useState(0);
   const [extraPoints, setExtraPoints] = useState('');
   const [englishVersion, setEnglishVersion] = useState('');
   const [russianVersion, setRussianVersion] = useState('');
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
+  const [isWrongAnswer, setIsWrongAnswer] = useState(false);
+  const [isResultsOpen, setIsResultsOpen] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     if (isPlay) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         if (time !== 0) setTime((prev) => prev - 1);
       }, 1000);
+      return () => clearTimeout(timer);
     }
+    return () => {};
   }, [time, isPlay]);
 
   useEffect(() => {
     setExtraPoints(getExtraPointsString(correctAnswersCount));
   }, [correctAnswersCount]);
+
+  useEffect((): (() => void) => {
+    if (isCorrectAnswer) {
+      if (isSound) {
+        if (correctAnswersCount % 4 === 0) {
+          const soundCorrectLevelUp = new Audio(
+            '/assets/audio/correct-answer-level-up.mp3',
+          );
+          soundCorrectLevelUp.play();
+        } else {
+          const soundCorrect = new Audio('/assets/audio/correct-answer.mp3');
+          soundCorrect.play();
+        }
+      }
+      const timer = setTimeout(() => {
+        setIsCorrectAnswer(false);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+    return () => {};
+  }, [isCorrectAnswer, correctAnswersCount, isSound]);
+
+  useEffect((): (() => void) => {
+    if (isWrongAnswer) {
+      if (isSound) {
+        const soundWrong = new Audio('/assets/audio/wrong-answer.mp3');
+        soundWrong.play();
+      }
+      const timer = setTimeout(() => {
+        setIsWrongAnswer(false);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+    return () => {};
+  }, [isWrongAnswer, isSound]);
 
   const handlePlay = () => {
     setIsPlay(true);
@@ -40,6 +87,27 @@ const GameSprintLevel = () => {
     setCorrectAnswersCount((prev) => prev + 1);
   };
 
+  const setAnswerAsCorrect = () => {
+    setIsCorrectAnswer(true);
+    setCorrectAnswersCount((prev) => prev + 1);
+    setCorrectAnswersCountTotal((prev) => prev + 1);
+    setPoints((prev) => prev + 10 + getExtraPointsByString(extraPoints));
+  };
+
+  const setAnswerAsFalse = () => {
+    setIsWrongAnswer(true);
+    setCorrectAnswersCount(0);
+    setWrongAnswersCountTotal((prev) => prev + 1);
+  };
+
+  const handleOpenResults = () => {
+    setIsResultsOpen((prev) => !prev);
+  };
+
+  const handleCloseGame = () => {
+    navigate('/games', { replace: true });
+  };
+
   return (
     <div className="App-games">
       <div className="sprint-game-container">
@@ -50,12 +118,20 @@ const GameSprintLevel = () => {
               {points}
             </Typography>
             <div className="cancel-wrapper">
-              <button type="button" className="cancel-sprint-game-btn">
+              <button
+                type="button"
+                className="cancel-sprint-game-btn"
+                onClick={handleCloseGame}
+              >
                 <Typography variant="h4">❌</Typography>
               </button>
             </div>
           </div>
-          <div className="sprint-game-main-wrapper correct">
+          <div
+            className={`sprint-game-main-wrapper ${
+              isCorrectAnswer ? 'correct' : ''
+            } ${isWrongAnswer ? 'wrong' : ''}`}
+          >
             <Typography
               variant="h6"
               className="sprint-addition-points"
@@ -111,6 +187,15 @@ const GameSprintLevel = () => {
           <div className="sprint-game-btns-wrapper">
             <Button variant="contained" onClick={increaseCorrectCount}>
               +
+            </Button>
+            <Button variant="contained" onClick={setAnswerAsCorrect}>
+              correct
+            </Button>
+            <Button variant="contained" onClick={setAnswerAsFalse}>
+              false
+            </Button>
+            <Button variant="contained" onClick={handleOpenResults}>
+              openModal
             </Button>
             <Button
               disabled={isPlay}

@@ -77,3 +77,23 @@ export const getExtraPointsString = (correctAnswersCount: number): string => {
   }
   return '';
 };
+
+export const getExtraPointsByString = (extraPoints: string): number => {
+  switch (extraPoints) {
+    case ExtraPoints.twentyPoints:
+      return 20;
+      break;
+
+    case ExtraPoints.fortyPoints:
+      return 40;
+      break;
+
+    case ExtraPoints.eightyPoints:
+      return 80;
+      break;
+
+    default:
+      return 0;
+      break;
+  }
+};

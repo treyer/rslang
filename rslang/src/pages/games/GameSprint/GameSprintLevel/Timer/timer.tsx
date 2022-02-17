@@ -7,8 +7,10 @@ const Timer = ({ time, isSound, isPlay }: TTime) => {
   useEffect(() => {
     if (isSound && isPlay) {
       if (time !== 0) {
-        const soundTick = new Audio('/assets/audio/tick-sound.mp3');
-        soundTick.play();
+        if (time !== 60) {
+          const soundTick = new Audio('/assets/audio/tick-sound.mp3');
+          soundTick.play();
+        }
       } else {
         const soundEnd = new Audio('/assets/audio/round-end-sound.mp3');
         soundEnd.play();
