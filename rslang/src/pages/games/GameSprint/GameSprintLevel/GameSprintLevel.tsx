@@ -59,7 +59,8 @@ const GameSprintLevel = () => {
       return () => clearTimeout(timer);
     }
     return () => {};
-  }, [isCorrectAnswer, correctAnswersCount, isSound]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCorrectAnswer]);
 
   useEffect((): (() => void) => {
     if (isWrongAnswer) {
@@ -73,7 +74,8 @@ const GameSprintLevel = () => {
       return () => clearTimeout(timer);
     }
     return () => {};
-  }, [isWrongAnswer, isSound]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isWrongAnswer]);
 
   const handlePlay = () => {
     setIsPlay(true);

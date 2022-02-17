@@ -16,7 +16,8 @@ const Timer = ({ time, isSound, isPlay }: TTime) => {
         soundEnd.play();
       }
     }
-  }, [time, isSound, isPlay]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [time]);
 
   const getStyle = (): string => {
     if (time === 0) return 'circle10';
