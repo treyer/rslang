@@ -82,7 +82,7 @@ class UserWordsAPI extends BaseAPI {
     userId: string,
     wordId: string,
     token: string,
-    deleteUserWordCb: (id: string) => void,
+    deleteUserWordCb = () => {},
   ) {
     this.delete(`users/${userId}/words/${wordId}`, {
       Authorization: `Bearer ${token}`,
@@ -90,7 +90,7 @@ class UserWordsAPI extends BaseAPI {
       .then((result) => {
         BaseAPI.handleError(result, USER_WORDS_API_ERRORS);
       })
-      .then(() => deleteUserWordCb(wordId))
+      .then(() => deleteUserWordCb())
       .catch((error) => {
         console.error(error);
       });

@@ -6,17 +6,19 @@ class WordsAPI extends BaseAPI {
   getWords(
     page: number,
     group: number,
-    updateWordsCb: (data: TWord[]) => void,
+    getWordsCb: (data: TWord[]) => void,
+    finallyCb = () => {},
   ) {
     this.get(`words?page=${page}&group=${group}`)
       .then((result) => {
         BaseAPI.handleError(result, WORDS_API_ERRORS);
         return result.json();
       })
-      .then((data) => updateWordsCb(data))
+      .then((data) => getWordsCb(data))
       .catch((error) => {
         console.error(error);
-      });
+      })
+      .finally(() => finallyCb());
   }
 
   getWord(wordId: string, getWordCb: (data: TWord) => void) {

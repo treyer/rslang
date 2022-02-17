@@ -28,8 +28,10 @@ type TWordCardProps = {
   textExampleTranslate: string;
   onPlayWord: (e: MouseEvent) => void;
   onHover: (e: MouseEvent) => void;
-  group: number;
-  isAuthorized: boolean;
+  onSelectCard: (id: string) => void;
+  onUnSelectCard: (id: string) => void;
+  group?: number;
+  isAuthorized?: boolean;
 };
 
 const WordCard = ({
@@ -44,28 +46,29 @@ const WordCard = ({
   textExampleTranslate,
   onPlayWord,
   onHover,
+  onSelectCard,
+  onUnSelectCard,
   group,
   isAuthorized,
 }: TWordCardProps) => {
   const [selected, setSelected] = useState(false);
-
   const handleSelectCard = useCallback(() => {
+    onSelectCard(id);
     setSelected(true);
-  }, []);
+  }, [id, onSelectCard]);
 
   const handleUnSelectCard = useCallback(() => {
+    onUnSelectCard(id);
     setSelected(false);
-  }, []);
+  }, [id, onUnSelectCard]);
 
   return (
     <Card
       sx={{ maxWidth: 345 }}
-      className={classNames(
-        'textbook_word-card',
-        `textbook_word-card-${group}`,
-        { 'is-selected': selected },
-      )}
-      id={id}
+      className={classNames('words_list-card', `textbook_word-card-${group}`, {
+        'is-selected': selected,
+      })}
+      id={word}
       onMouseEnter={onHover}
     >
       <CardMedia
@@ -85,12 +88,13 @@ const WordCard = ({
         >
           <span>{word}</span>
           <CardActions>
-            <IconButton aria-label="volume" onClick={onPlayWord} id={id}>
+            <IconButton aria-label="volume" onClick={onPlayWord}>
               <VolumeUpIcon />
             </IconButton>
           </CardActions>
           <CardActions>
             <IconButton
+              id={id}
               aria-label="add"
               onClick={handleSelectCard}
               className={classNames({ 'is-unauthorized': !isAuthorized })}

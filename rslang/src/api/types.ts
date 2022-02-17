@@ -52,6 +52,8 @@ export type TOptionalUserWord = {
   failCounter?: number;
   successCounter?: number;
   correctAnswer?: number;
+  group?: number;
+  page?: number;
 };
 
 export type TStatistic = {
