@@ -26,3 +26,9 @@ export const WORDS_API_ERRORS: TAPIErrorsMap = {
   [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
   [StatusCodes.NOT_FOUND]: 'Word not found.',
 };
+
+export const USER_AGGREGATED_WORDS_API_ERRORS: TAPIErrorsMap = {
+  [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
+  [StatusCodes.NOT_FOUND]: 'Word not found.',
+  [StatusCodes.UNAUTHORIZED]: 'Unauthorized.',
+};

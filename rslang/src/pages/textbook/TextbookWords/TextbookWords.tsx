@@ -1,25 +1,22 @@
 import { useLocation } from 'react-router-dom';
-import { Pagination } from '@mui/material';
+import { Pagination, CircularProgress } from '@mui/material';
 
 import {
   useContext,
   useCallback,
   useState,
-  useMemo,
   useEffect,
-  MouseEvent,
   ChangeEvent,
 } from 'react';
 import classNames from 'classnames';
-import { TWord } from '../../../api/types';
+import { TUserWord, TWord } from '../../../api/types';
 import WordsAPI from '../../../api/wordsAPI';
-
-import { SERVER_URL } from '../../../consts';
-import WordCard from '../components/WordCard/WordCard';
 import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
 import { ENGLISH_LEVELS } from '../../../General/constants';
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 import { LoginContext } from '../../../Context/login-context';
+import userWordsAPI from '../../../api/userWordsAPI';
+import WordCardList from '../components/WordCardList/WordCardList';
 
 import './TextbookWords.scss';
 
@@ -32,57 +29,10 @@ const TextbookWords = () => {
   const lengthLocation = location.pathname.split('/').length;
   const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState(0);
   const [words, setWords] = useState<TWord[]>([]);
-  const [playList, setPlayList] = useState<TPlayListCollection>({});
-  const [playedWordId, setPlayedWordId] = useState('');
   const [currPage, setPage] = useState(1);
-  const { userLoginData } = useContext(LoginContext);
-
-  const playedAudio = useMemo(() => {
-    const track = playList[playedWordId]?.[currentTrack];
-    return track ? new Audio(track) : null;
-  }, [currentTrack, playedWordId, playList]);
-
-  const handleCardHover = useCallback((e: MouseEvent) => {
-    const target = e.currentTarget as HTMLElement;
-    if (!target) {
-      return;
-    }
-
-    setPlayedWordId(target.id);
-    setCurrentTrack(0);
-  }, []);
-
-  const playTextbookWord = useCallback(() => {
-    if (!playedAudio) {
-      return;
-    }
-
-    if (isPlaying) {
-      playedAudio.pause();
-      setIsPlaying(false);
-      return;
-    }
-
-    if (!isPlaying) {
-      playedAudio.play();
-      setIsPlaying(true);
-    }
-  }, [isPlaying, playedAudio]);
-
-  useEffect(() => {
-    if (playedAudio) {
-      playedAudio.addEventListener('ended', () => {
-        const nextTrack = playList[playedWordId]?.[currentTrack + 1]
-          ? currentTrack + 1
-          : 0;
-        setIsPlaying(false);
-        setCurrentTrack(nextTrack);
-      });
-    }
-  }, [playedAudio, playedWordId, currentTrack, playList]);
+  const { userLoginData, setUserLogin } = useContext(LoginContext);
+  const [loading, setLoading] = useState(false);
 
   const handleChangePage = (event: ChangeEvent<unknown>, pageNum: number) => {
     if (!event.target) {
@@ -90,28 +40,49 @@ const TextbookWords = () => {
     }
     if (pageNum !== null) {
       setPage(pageNum);
+      setUserLogin({ ...userLoginData, pageForGames: currPage });
     }
   };
 
   useEffect(() => {
+    setLoading(true);
     const page = currPage - 1;
-    WordsAPI.getWords(page, groupLevel, (data: TWord[]) => setWords(data));
+    WordsAPI.getWords(
+      page,
+      groupLevel,
+      (data: TWord[]) => setWords(data),
+      () => setLoading(false),
+    );
   }, [currPage, location.pathname, groupLevel]);
 
-  useEffect(() => {
-    const newPlayList = words.reduce(
-      (acc, { id, audio, audioMeaning, audioExample }) => {
-        acc[id] = [
-          `${SERVER_URL}/${audio}`,
-          `${SERVER_URL}/${audioMeaning}`,
-          `${SERVER_URL}/${audioExample}`,
-        ];
-        return acc;
-      },
-      {} as TPlayListCollection,
-    );
-    setPlayList(newPlayList);
-  }, [words]);
+  const onSelectCard = useCallback(
+    (wordId) => {
+      const userId = `${localStorage.getItem('userId')}`;
+      const token = `${localStorage.getItem('token')}`;
+      userWordsAPI.createUserWord(
+        userId,
+        wordId,
+        token,
+        {
+          difficulty: 'difficult',
+          optional: {
+            isDifficult: true,
+            deleted: false,
+            group: groupLevel,
+            page: currPage,
+          },
+        },
+        (data: TUserWord) => console.error(data),
+      );
+    },
+    [groupLevel, currPage],
+  );
+
+  const onUnSelectCard = useCallback((wordId) => {
+    const userId = `${localStorage.getItem('userId')}`;
+    const token = `${localStorage.getItem('token')}`;
+    userWordsAPI.deleteUserWord(userId, wordId, token);
+  }, []);
 
   return (
     <div className="textbook_page">
@@ -120,12 +91,12 @@ const TextbookWords = () => {
           Закрепи слова при помощи игр.
         </span>
         <TextbookGamesButton
-          path={`/games/audio/${groupLevel}/${currPage - 1}`}
+          path={`/games/audio/${groupLevel}`}
           name="Аудиовызов"
           className="textbook_games-btn"
         />
         <TextbookGamesButton
-          path={`/games/sprint/${groupLevel}/${currPage - 1}`}
+          path={`/games/sprint/${groupLevel}`}
           name="Спринт"
           className="textbook_games-btn"
         />
@@ -148,42 +119,22 @@ const TextbookWords = () => {
         ))}
       </section>
       <div className="textbook_words-container">
-        {words.map(
-          ({
-            id,
-            word,
-            image,
-            textMeaning,
-            textExample,
-            transcription,
-            wordTranslate,
-            textMeaningTranslate,
-            textExampleTranslate,
-          }) => (
-            <WordCard
-              key={id}
-              id={id}
-              word={word}
-              image={image}
-              textMeaning={textMeaning}
-              textExample={textExample}
-              transcription={transcription}
-              wordTranslate={wordTranslate}
-              textMeaningTranslate={textMeaningTranslate}
-              textExampleTranslate={textExampleTranslate}
-              onPlayWord={playTextbookWord}
-              onHover={handleCardHover}
-              group={groupLevel}
-              isAuthorized={userLoginData.isLogined}
-            />
-          ),
-        )}
+        {loading && <CircularProgress className="circular-progress" />}
+        <WordCardList
+          words={words}
+          group={groupLevel}
+          onSelectCard={onSelectCard}
+          onUnSelectCard={onUnSelectCard}
+          isAuthorized={userLoginData.isLogined}
+        />
+
         <Pagination
           count={30}
           variant="outlined"
           color="primary"
           defaultPage={1}
           onChange={handleChangePage}
+          className="textbook_pagination"
         />
       </div>
     </div>
