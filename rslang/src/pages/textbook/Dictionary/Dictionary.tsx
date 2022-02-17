@@ -65,10 +65,34 @@ const Dictionary = () => {
       token,
       wordId,
       {
-        difficulty: '',
+        difficulty: 'difficult',
         optional: {
           isDifficult: false,
           deleted: true,
+          failCounter: 0,
+          successCounter: 0,
+          correctAnswer: 0,
+          group: 0,
+          page: 1,
+        },
+      },
+      (data: TUserWord) => console.error(data),
+    );
+  }, []);
+
+  const onSelectCard = useCallback((wordId) => {
+    const userId = `${localStorage.getItem('userId')}`;
+    const token = `${localStorage.getItem('token')}`;
+
+    userWordsAPI.updateUserWord(
+      userId,
+      token,
+      wordId,
+      {
+        difficulty: 'difficult',
+        optional: {
+          isDifficult: true,
+          deleted: false,
           failCounter: 0,
           successCounter: 0,
           correctAnswer: 0,
@@ -111,7 +135,7 @@ const Dictionary = () => {
           <WordCardList
             key="dictionary_word-list"
             words={words}
-            onSelectCard={() => console.error('ll')}
+            onSelectCard={onSelectCard}
             onUnSelectCard={onUnSelectCard}
             currCategory={currCategory}
           />
