@@ -63,8 +63,10 @@ class UserWordsAPI extends BaseAPI {
     token: string,
     wordId: string,
     dataWord: TUserWord,
-    updateUserWordCb: (data: TUserWord) => void,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    updateUserWordCb = (_result: TUserWord) => {},
   ) {
+    console.error('dataWord: ', dataWord);
     this.put(`users/${userId}/words/${wordId}`, dataWord, {
       Authorization: `Bearer ${token}`,
     })

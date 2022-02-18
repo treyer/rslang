@@ -6,6 +6,7 @@ import React, {
   MouseEvent,
 } from 'react';
 import { TWord } from '../../../../api/types';
+
 import { SERVER_URL } from '../../../../consts';
 import { TPlayListCollection } from '../../TextbookWords/TextbookWords';
 import WordCard from '../WordCard/WordCard';
@@ -18,6 +19,7 @@ type TWordCardListProps = {
   onSelectCard: (id: string) => void;
   onUnSelectCard: (id: string) => void;
   isAuthorized?: boolean;
+  currCategory?: string;
 };
 
 const WordCardList = ({
@@ -26,6 +28,7 @@ const WordCardList = ({
   onSelectCard,
   onUnSelectCard,
   isAuthorized,
+  currCategory,
 }: TWordCardListProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
@@ -95,6 +98,7 @@ const WordCardList = ({
     <div className="words_list-container">
       {words.map(
         ({
+          _id,
           id,
           word,
           image,
@@ -104,10 +108,11 @@ const WordCardList = ({
           wordTranslate,
           textMeaningTranslate,
           textExampleTranslate,
+          userWord,
         }) => (
           <WordCard
-            key={id}
-            id={id}
+            key={_id || id}
+            id={_id || id}
             word={word}
             image={image}
             textMeaning={textMeaning}
@@ -122,6 +127,9 @@ const WordCardList = ({
             onUnSelectCard={onUnSelectCard}
             group={group}
             isAuthorized={isAuthorized}
+            currCategory={currCategory}
+            isDifficult={!!userWord?.optional?.isDifficult}
+            isStudied={!!userWord?.optional?.deleted}
           />
         ),
       )}

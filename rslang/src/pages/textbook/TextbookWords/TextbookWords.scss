@@ -1,5 +1,6 @@
 $bg-games-btn: #00bcd4;
 $bg-selected: #fffde2;
+$bg-studied: rgb(164, 247, 164);
 $bg-btn0: #b2ebf2;
 $bg-btn1: #80deea;
 $bg-btn2: #4dd0e1;
@@ -108,6 +109,10 @@ $bg-btn5: #00acc1;
 
     .is-selected {
       background-color: $bg-selected;
+    }
+
+    .is-studied {
+      background-color: $bg-studied;
     }
 
     .textbook_pagination {
