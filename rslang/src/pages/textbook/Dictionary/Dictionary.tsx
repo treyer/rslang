@@ -122,21 +122,21 @@ const Dictionary = () => {
       <div className="dictionary_btn-container" key="dictionary_btn">
         <TextbookGamesButton
           id="0"
-          path="/dictionary/"
+          path={`/dictionary/${groupLevel}`}
           name="Сложные"
           className="dictionary_btn"
           onClick={onHandleChangeCategory}
         />
         <TextbookGamesButton
           id="1"
-          path="/dictionary/"
+          path={`/dictionary/${groupLevel}`}
           name="Изучаемые"
           className="dictionary_btn"
           onClick={onHandleChangeCategory}
         />
         <TextbookGamesButton
           id="2"
-          path="/dictionary/"
+          path={`/dictionary/${groupLevel}`}
           name="Изученные"
           className="dictionary_btn"
           onClick={onHandleChangeCategory}
