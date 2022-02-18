@@ -9,6 +9,8 @@ import {
   getExtraPointsByString,
   getExtraPointsString,
 } from '../../../../General/utils';
+import { getGameWords } from '../../../../General/game-utils';
+import { TWord } from '../../../../api/types';
 
 const GameSprintLevel = () => {
   const [time, setTime] = useState(60);
@@ -24,6 +26,7 @@ const GameSprintLevel = () => {
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [isWrongAnswer, setIsWrongAnswer] = useState(false);
   const [isResultsOpen, setIsResultsOpen] = useState(false);
+  const [gameWords, setGameWords] = useState<TWord[]>([]);
   const navigate = useNavigate();
 
   useEffect((): (() => void) => {
@@ -35,6 +38,12 @@ const GameSprintLevel = () => {
     }
     return () => {};
   }, [time, isPlay]);
+
+  useEffect(() => {
+    getGameWords(-1, 3, 38).then((data) => {
+      setGameWords(data);
+    });
+  }, []);
 
   useEffect(() => {
     setExtraPoints(getExtraPointsString(correctAnswersCount));
@@ -199,6 +208,7 @@ const GameSprintLevel = () => {
             <Button variant="contained" onClick={handleOpenResults}>
               openModal
             </Button>
+            <Button variant="contained">{gameWords.length}</Button>
             <Button
               disabled={isPlay}
               className="sprint-btn-play"

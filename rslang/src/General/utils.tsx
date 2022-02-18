@@ -82,18 +82,45 @@ export const getExtraPointsByString = (extraPoints: string): number => {
   switch (extraPoints) {
     case ExtraPoints.twentyPoints:
       return 20;
-      break;
 
     case ExtraPoints.fortyPoints:
       return 40;
-      break;
 
     case ExtraPoints.eightyPoints:
       return 80;
-      break;
 
     default:
       return 0;
-      break;
   }
 };
+
+export const getRandomInteger = (min: number, max: number): number => {
+  const rand = min - 0.5 + Math.random() * (max - min + 1);
+  return Math.round(rand);
+};
+
+// get count integer numbers from interval from min to max
+export const getRandomIntegersFromInterval = (
+  min: number,
+  max: number,
+  count: number,
+): number[] => {
+  const numbers: number[] = [];
+  while (numbers.length !== count) {
+    const rand = getRandomInteger(min, max);
+    if (!numbers.includes(rand)) numbers.push(rand);
+  }
+  return numbers;
+};
+
+export function shuffleArray<T>(array: Array<T>): Array<T> {
+  for (let i = array.length - 1; i > 0; i - 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    // eslint-disable-next-line no-param-reassign
+    array[i] = array[j];
+    // eslint-disable-next-line no-param-reassign
+    array[j] = temp;
+  }
+  return array;
+}
