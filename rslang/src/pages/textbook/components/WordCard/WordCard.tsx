@@ -103,7 +103,7 @@ const WordCard = ({
               className={classNames({
                 'is-unauthorized': !isAuthorized,
                 'is-difficult':
-                  currCategory === '0' || currCategory === '1'
+                  currCategory === '1'
                     ? DICTIONARY_CATEGORIES[0].activeBtn
                     : false,
               })}

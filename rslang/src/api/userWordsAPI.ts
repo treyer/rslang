@@ -63,8 +63,9 @@ class UserWordsAPI extends BaseAPI {
     token: string,
     wordId: string,
     dataWord: TUserWord,
-    updateUserWordCb: (data: TUserWord) => void,
+    updateUserWordCb = (_result: TUserWord) => {},
   ) {
+    console.error('dataWord: ', dataWord);
     this.put(`users/${userId}/words/${wordId}`, dataWord, {
       Authorization: `Bearer ${token}`,
     })

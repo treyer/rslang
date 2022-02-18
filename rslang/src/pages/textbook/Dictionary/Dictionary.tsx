@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
 
 import { TUserWord, TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
-import userWordsAPI from '../../../api/userWordsAPI';
+import UserWordsAPI from '../../../api/userWordsAPI';
 
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 
@@ -56,15 +56,11 @@ const Dictionary = () => {
   const hasEmptyMessage = words.length === 0 && !loading;
   const hasWordCards = words.length !== 0 && !loading;
 
-  const onUnSelectCard = useCallback((wordId) => {
-    const userId = `${localStorage.getItem('userId')}`;
-    const token = `${localStorage.getItem('token')}`;
-
-    userWordsAPI.updateUserWord(
-      userId,
-      token,
-      wordId,
-      {
+  const onUnSelectCard = useCallback(
+    (wordId) => {
+      const userId = `${localStorage.getItem('userId')}`;
+      const token = `${localStorage.getItem('token')}`;
+      const dataWord = {
         difficulty: 'difficult',
         optional: {
           isDifficult: false,
@@ -72,37 +68,50 @@ const Dictionary = () => {
           failCounter: 0,
           successCounter: 0,
           correctAnswer: 0,
-          group: 0,
-          page: 1,
         },
-      },
-      (data: TUserWord) => console.error(data),
-    );
-  }, []);
+      };
 
-  const onSelectCard = useCallback((wordId) => {
-    const userId = `${localStorage.getItem('userId')}`;
-    const token = `${localStorage.getItem('token')}`;
+      if (currCategory === '0') {
+        UserWordsAPI.deleteUserWord(userId, wordId, token);
+      } else {
+        UserWordsAPI.updateUserWord(userId, token, wordId, dataWord);
+      }
+      setWords(words.filter((word) => word._id !== wordId));
+    },
+    [currCategory, words],
+  );
 
-    userWordsAPI.updateUserWord(
-      userId,
-      token,
-      wordId,
-      {
-        difficulty: 'difficult',
-        optional: {
-          isDifficult: true,
-          deleted: false,
-          failCounter: 0,
-          successCounter: 0,
-          correctAnswer: 0,
-          group: 0,
-          page: 1,
-        },
-      },
-      (data: TUserWord) => console.error(data),
-    );
-  }, []);
+  const onSelectCard = useCallback(
+    (wordId) => {
+      const userId = `${localStorage.getItem('userId')}`;
+      const token = `${localStorage.getItem('token')}`;
+      if (currCategory === '0') {
+        UserWordsAPI.updateUserWord(userId, token, wordId, {
+          difficulty: 'difficult',
+          optional: {
+            isDifficult: false,
+            deleted: true,
+            failCounter: 0,
+            successCounter: 0,
+            correctAnswer: 0,
+          },
+        });
+      } else {
+        UserWordsAPI.updateUserWord(userId, token, wordId, {
+          difficulty: 'difficult',
+          optional: {
+            isDifficult: true,
+            deleted: false,
+            failCounter: 0,
+            successCounter: 0,
+            correctAnswer: 0,
+          },
+        });
+      }
+      setWords(words.filter((word) => word._id !== wordId));
+    },
+    [currCategory, words],
+  );
 
   return (
     <div className="dictionary-container">

@@ -15,11 +15,11 @@ import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLe
 import { ENGLISH_LEVELS } from '../../../General/constants';
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 import { LoginContext } from '../../../Context/login-context';
-import userWordsAPI from '../../../api/userWordsAPI';
+import UserWordsAPI from '../../../api/userWordsAPI';
 import WordCardList from '../components/WordCardList/WordCardList';
 
 import './TextbookWords.scss';
-import userAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
+import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
 import { WORDS_PER_PAGE } from '../constants/constants';
 
 export type TPlayListCollection = {
@@ -51,8 +51,9 @@ const TextbookWords = () => {
     const page = currPage - 1;
     const userId = `${localStorage.getItem('userId')}`;
     const token = `${localStorage.getItem('token')}`;
+
     if (userLoginData.isLogined) {
-      userAggregatedWordsAPI.getAggregatedUserWords(
+      UserAggregatedWordsAPI.getAggregatedUserWords(
         userId,
         token,
         (data: TWord[]) => setWords(data),
@@ -76,7 +77,7 @@ const TextbookWords = () => {
     (wordId) => {
       const userId = `${localStorage.getItem('userId')}`;
       const token = `${localStorage.getItem('token')}`;
-      userWordsAPI.createUserWord(
+      UserWordsAPI.createUserWord(
         userId,
         wordId,
         token,
@@ -101,7 +102,7 @@ const TextbookWords = () => {
   const onUnSelectCard = useCallback((wordId) => {
     const userId = `${localStorage.getItem('userId')}`;
     const token = `${localStorage.getItem('token')}`;
-    userWordsAPI.deleteUserWord(userId, wordId, token);
+    UserWordsAPI.deleteUserWord(userId, wordId, token);
   }, []);
 
   return (
