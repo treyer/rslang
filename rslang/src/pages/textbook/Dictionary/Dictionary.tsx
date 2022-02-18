@@ -2,9 +2,10 @@ import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { TWord } from '../../../api/types';
+import { TStatistic, TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
 import UserWordsAPI from '../../../api/userWordsAPI';
+import UsersStatisticAPI from '../../../api/usersStatisticAPI';
 
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 
@@ -89,6 +90,21 @@ const Dictionary = () => {
     (wordId) => {
       const userId = `${localStorage.getItem('userId')}`;
       const token = `${localStorage.getItem('token')}`;
+
+      /*  UsersStatisticAPI.upsetStatistics(userId, token, {
+        learnedWords: 2,
+        optional: {
+          audioCall: {
+            rightAnswers: 2,
+            wrongAnswers: 1,
+          },
+        },
+      });  */
+
+      /*  UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) =>
+        console.error('ff: ', data),
+      );  */
+
       if (currCategory === '0') {
         UserWordsAPI.updateUserWord(userId, token, wordId, {
           difficulty: 'difficult',

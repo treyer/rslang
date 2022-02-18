@@ -66,8 +66,14 @@ export type TStatistic = {
 };
 
 export type TOptionalStatistic = {
-  audioCall?: string;
-  sprint?: string;
+  audioCall?: {
+    rightAnswers: number;
+    wrongAnswers: number;
+  };
+  sprint?: {
+    rightAnswers: number;
+    wrongAnswers: number;
+  };
 };
 
 export type TSetting = {
