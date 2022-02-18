@@ -1,7 +1,7 @@
 import { MouseEvent, useCallback, useState } from 'react';
 import { Typography } from '@mui/material';
-import { ENGLISH_LEVELS } from '../../../General/constants';
-import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
+import { ENGLISH_LEVELS } from '../../General/constants';
+import EnglishLevelButton from '../EnglishLevelButton/EnglishLevelButton';
 import './GameAudio.scss';
 
 type TGameId = keyof typeof ENGLISH_LEVELS;

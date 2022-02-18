@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Card, Button } from '@mui/material';
 
 import { Sections } from '../../General/constants';
@@ -47,9 +47,14 @@ const Header = () => {
           return true;
         }).map((el) => (
           <nav key={el.id}>
-            <Link className="" to={el.routePath}>
+            <NavLink
+              style={({ isActive }) => ({
+                color: isActive ? '#278d9f' : 'white',
+              })}
+              to={el.routePath}
+            >
               <span className="Section-Title">{el.title}</span>
-            </Link>
+            </NavLink>
           </nav>
         ))}
       </nav>
