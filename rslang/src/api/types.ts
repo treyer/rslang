@@ -66,13 +66,14 @@ export type TStatistic = {
 };
 
 export type TOptionalStatistic = {
+  bestSeries?: number;
   audioCall?: {
-    rightAnswers: number;
-    wrongAnswers: number;
+    rightAnswers?: number;
+    wrongAnswers?: number;
   };
   sprint?: {
-    rightAnswers: number;
-    wrongAnswers: number;
+    rightAnswers?: number;
+    wrongAnswers?: number;
   };
 };
 
