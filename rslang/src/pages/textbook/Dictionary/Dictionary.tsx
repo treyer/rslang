@@ -1,5 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
@@ -15,6 +16,9 @@ import './Dictionary.scss';
 type TDictionaryCategory = keyof typeof DICTIONARY_CATEGORIES;
 
 const Dictionary = () => {
+  const location = useLocation();
+  const lengthLocation = location.pathname.split('/').length;
+  const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
   const [words, setWords] = useState<TWord[]>([]);
   const [currFilter, setCurrFilter] = useState(
     '{"userWord.difficulty":"difficult", "userWord.optional.isDifficult":true}',
@@ -170,7 +174,7 @@ const Dictionary = () => {
           className="dictionary_games-btn"
         />
         <TextbookGamesButton
-          path="/textbook/englishLevels"
+          path={`/textbook/words/${groupLevel}`}
           name="Учебник"
           className="dictionary_games-btn"
         />

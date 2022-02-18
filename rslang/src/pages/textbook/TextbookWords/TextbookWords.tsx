@@ -122,7 +122,7 @@ const TextbookWords = () => {
           className="textbook_games-btn"
         />
         <TextbookGamesButton
-          path="/dictionary"
+          path={`/dictionary/${groupLevel}`}
           name="Словарь"
           className={classNames('textbook_games-btn', {
             'is-unauthorized': !userLoginData.isLogined,

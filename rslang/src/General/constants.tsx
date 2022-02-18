@@ -65,7 +65,7 @@ export const ROUTES: TPath[] = [
   },
   {
     id: 11,
-    routePath: '/dictionary/',
+    routePath: '/dictionary/:id',
     title: 'Словарь',
     element: <Dictionary />,
   },

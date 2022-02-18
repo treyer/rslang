@@ -128,7 +128,7 @@ const WordCardList = ({
             group={group}
             isAuthorized={isAuthorized}
             currCategory={currCategory}
-            isSelected={!!userWord?.optional?.isDifficult}
+            isDifficult={!!userWord?.optional?.isDifficult}
             isStudied={!!userWord?.optional?.deleted}
           />
         ),

@@ -33,7 +33,7 @@ type TWordCardProps = {
   onHover: (e: MouseEvent) => void;
   onSelectCard: (id: string) => void;
   onUnSelectCard: (id: string) => void;
-  isSelected: boolean;
+  isDifficult: boolean;
   isStudied: boolean;
   group?: number;
   isAuthorized?: boolean;
@@ -57,7 +57,7 @@ const WordCard = ({
   group,
   isAuthorized,
   currCategory,
-  isSelected,
+  isDifficult,
   isStudied,
 }: TWordCardProps) => {
   const [selected, setSelected] = useState(false);
@@ -75,7 +75,7 @@ const WordCard = ({
     <Card
       sx={{ maxWidth: 345 }}
       className={classNames('words_list-card', `textbook_word-card-${group}`, {
-        'is-selected': selected || isSelected,
+        'is-selected': selected || isDifficult,
         'is-studied': isStudied,
       })}
       id={word}
@@ -109,7 +109,7 @@ const WordCard = ({
                 aria-label="add"
                 onClick={handleSelectCard}
                 className={classNames({
-                  'is-unauthorized': !isAuthorized,
+                  'is-unauthorized': !isAuthorized || isDifficult || selected,
                 })}
               >
                 <AddCircleOutlineIcon />
