@@ -133,7 +133,7 @@ const Dictionary = () => {
         <TextbookGamesButton
           id="2"
           path="/dictionary/"
-          name="Удаленные"
+          name="Изученные"
           className="dictionary_btn"
           onClick={onHandleChangeCategory}
         />
