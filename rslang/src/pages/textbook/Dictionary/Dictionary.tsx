@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
 
-import { TUserWord, TWord } from '../../../api/types';
+import { TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
 import UserWordsAPI from '../../../api/userWordsAPI';
 

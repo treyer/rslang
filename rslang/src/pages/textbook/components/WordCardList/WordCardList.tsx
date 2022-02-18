@@ -6,6 +6,7 @@ import React, {
   MouseEvent,
 } from 'react';
 import { TWord } from '../../../../api/types';
+
 import { SERVER_URL } from '../../../../consts';
 import { TPlayListCollection } from '../../TextbookWords/TextbookWords';
 import WordCard from '../WordCard/WordCard';
@@ -107,6 +108,7 @@ const WordCardList = ({
           wordTranslate,
           textMeaningTranslate,
           textExampleTranslate,
+          userWord,
         }) => (
           <WordCard
             key={_id || id}
@@ -126,6 +128,8 @@ const WordCardList = ({
             group={group}
             isAuthorized={isAuthorized}
             currCategory={currCategory}
+            isSelected={!!userWord?.optional?.isDifficult}
+            isStudied={!!userWord?.optional?.deleted}
           />
         ),
       )}

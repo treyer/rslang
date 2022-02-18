@@ -18,6 +18,9 @@ export type TWord = {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
+  userWord?: {
+    optional?: TOptionalUserWord;
+  };
 };
 
 export type TUser = TUserBase & {

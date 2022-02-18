@@ -63,6 +63,7 @@ class UserWordsAPI extends BaseAPI {
     token: string,
     wordId: string,
     dataWord: TUserWord,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     updateUserWordCb = (_result: TUserWord) => {},
   ) {
     console.error('dataWord: ', dataWord);

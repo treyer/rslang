@@ -33,6 +33,8 @@ type TWordCardProps = {
   onHover: (e: MouseEvent) => void;
   onSelectCard: (id: string) => void;
   onUnSelectCard: (id: string) => void;
+  isSelected: boolean;
+  isStudied: boolean;
   group?: number;
   isAuthorized?: boolean;
   currCategory?: string;
@@ -55,6 +57,8 @@ const WordCard = ({
   group,
   isAuthorized,
   currCategory,
+  isSelected,
+  isStudied,
 }: TWordCardProps) => {
   const [selected, setSelected] = useState(false);
   const handleSelectCard = useCallback(() => {
@@ -71,7 +75,8 @@ const WordCard = ({
     <Card
       sx={{ maxWidth: 345 }}
       className={classNames('words_list-card', `textbook_word-card-${group}`, {
-        'is-selected': selected,
+        'is-selected': selected || isSelected,
+        'is-studied': isStudied,
       })}
       id={word}
       onMouseEnter={onHover}
