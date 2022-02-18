@@ -36,10 +36,12 @@ export class BaseAPI {
   }
 
   put(route: string, body = {}, headers: { [key: string]: string } = {}) {
+    console.error('BODY: ', JSON.stringify(body));
     return fetch(`${this.url}/${route}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
+        'Content-Type': 'application/json',
         ...headers,
       },
       body: JSON.stringify(body),

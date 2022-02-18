@@ -1,19 +1,24 @@
 import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
+import UserWordsAPI from '../../../api/userWordsAPI';
 
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 
 import WordCardList from '../components/WordCardList/WordCardList';
-import { DICTIONARY_CATEGORIES } from '../constants/constants';
+import { DICTIONARY_CATEGORIES, WORDS_PER_PAGE } from '../constants/constants';
 
 import './Dictionary.scss';
 
 type TDictionaryCategory = keyof typeof DICTIONARY_CATEGORIES;
 
 const Dictionary = () => {
+  const location = useLocation();
+  const lengthLocation = location.pathname.split('/').length;
+  const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
   const [words, setWords] = useState<TWord[]>([]);
   const [currFilter, setCurrFilter] = useState(
     '{"userWord.difficulty":"difficult", "userWord.optional.isDifficult":true}',
@@ -33,11 +38,11 @@ const Dictionary = () => {
       userId,
       token,
       (data: TWord[]) => setWords(data),
-      () => setLoading(false),
       group,
       page,
+      WORDS_PER_PAGE,
       filter,
-      '20',
+      () => setLoading(false),
     );
   }, [currFilter]);
 
@@ -54,6 +59,63 @@ const Dictionary = () => {
 
   const hasEmptyMessage = words.length === 0 && !loading;
   const hasWordCards = words.length !== 0 && !loading;
+
+  const onUnSelectCard = useCallback(
+    (wordId) => {
+      const userId = `${localStorage.getItem('userId')}`;
+      const token = `${localStorage.getItem('token')}`;
+      const dataWord = {
+        difficulty: 'difficult',
+        optional: {
+          isDifficult: false,
+          deleted: true,
+          failCounter: 0,
+          successCounter: 0,
+          correctAnswer: 0,
+        },
+      };
+
+      if (currCategory === '0') {
+        UserWordsAPI.deleteUserWord(userId, wordId, token);
+      } else {
+        UserWordsAPI.updateUserWord(userId, token, wordId, dataWord);
+      }
+      setWords(words.filter((word) => word._id !== wordId));
+    },
+    [currCategory, words],
+  );
+
+  const onSelectCard = useCallback(
+    (wordId) => {
+      const userId = `${localStorage.getItem('userId')}`;
+      const token = `${localStorage.getItem('token')}`;
+      if (currCategory === '0') {
+        UserWordsAPI.updateUserWord(userId, token, wordId, {
+          difficulty: 'difficult',
+          optional: {
+            isDifficult: false,
+            deleted: true,
+            failCounter: 0,
+            successCounter: 0,
+            correctAnswer: 0,
+          },
+        });
+      } else {
+        UserWordsAPI.updateUserWord(userId, token, wordId, {
+          difficulty: 'difficult',
+          optional: {
+            isDifficult: true,
+            deleted: false,
+            failCounter: 0,
+            successCounter: 0,
+            correctAnswer: 0,
+          },
+        });
+      }
+      setWords(words.filter((word) => word._id !== wordId));
+    },
+    [currCategory, words],
+  );
 
   return (
     <div className="dictionary-container">
@@ -75,7 +137,7 @@ const Dictionary = () => {
         <TextbookGamesButton
           id="2"
           path="/dictionary/"
-          name="Удаленные"
+          name="Изученные"
           className="dictionary_btn"
           onClick={onHandleChangeCategory}
         />
@@ -86,8 +148,9 @@ const Dictionary = () => {
           <WordCardList
             key="dictionary_word-list"
             words={words}
-            onSelectCard={() => console.error('ll')}
-            onUnSelectCard={() => console.error('ll')}
+            onSelectCard={onSelectCard}
+            onUnSelectCard={onUnSelectCard}
+            currCategory={currCategory}
           />
         )}
         {hasEmptyMessage && (
@@ -111,7 +174,7 @@ const Dictionary = () => {
           className="dictionary_games-btn"
         />
         <TextbookGamesButton
-          path="/textbook/englishLevels"
+          path={`/textbook/words/${groupLevel}`}
           name="Учебник"
           className="dictionary_games-btn"
         />

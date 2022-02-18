@@ -7,11 +7,11 @@ class UserAggregatedWordsAPI extends BaseAPI {
     userId: string,
     token: string,
     getAggregatedUserWordsCb: (data: TWord[]) => void,
-    finallyCb: () => void,
     group?: string,
     page?: string,
-    filter?: string,
     wordsPerPage?: string,
+    filter?: string,
+    finallyCb = () => {},
   ) {
     const params = new URLSearchParams({
       ...(group ? { group } : {}),

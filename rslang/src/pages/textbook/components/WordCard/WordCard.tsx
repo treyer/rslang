@@ -13,8 +13,11 @@ import {
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Tooltip from '@mui/material/Tooltip';
 
 import { SERVER_URL } from '../../../../consts';
+import { DICTIONARY_CATEGORIES } from '../../constants/constants';
+import { getTooltipMessage } from '../../utils/getTooltipMesage';
 
 type TWordCardProps = {
   id: string;
@@ -30,8 +33,11 @@ type TWordCardProps = {
   onHover: (e: MouseEvent) => void;
   onSelectCard: (id: string) => void;
   onUnSelectCard: (id: string) => void;
+  isDifficult: boolean;
+  isStudied: boolean;
   group?: number;
   isAuthorized?: boolean;
+  currCategory?: string;
 };
 
 const WordCard = ({
@@ -50,6 +56,9 @@ const WordCard = ({
   onUnSelectCard,
   group,
   isAuthorized,
+  currCategory,
+  isDifficult,
+  isStudied,
 }: TWordCardProps) => {
   const [selected, setSelected] = useState(false);
   const handleSelectCard = useCallback(() => {
@@ -66,7 +75,8 @@ const WordCard = ({
     <Card
       sx={{ maxWidth: 345 }}
       className={classNames('words_list-card', `textbook_word-card-${group}`, {
-        'is-selected': selected,
+        'is-selected': selected || isDifficult,
+        'is-studied': isStudied,
       })}
       id={word}
       onMouseEnter={onHover}
@@ -93,21 +103,33 @@ const WordCard = ({
             </IconButton>
           </CardActions>
           <CardActions>
-            <IconButton
-              id={id}
-              aria-label="add"
-              onClick={handleSelectCard}
-              className={classNames({ 'is-unauthorized': !isAuthorized })}
-            >
-              <AddCircleOutlineIcon />
-            </IconButton>
-            <IconButton
-              aria-label="remove"
-              onClick={handleUnSelectCard}
-              className={classNames({ 'is-unauthorized': !isAuthorized })}
-            >
-              <RemoveCircleOutlineIcon />
-            </IconButton>
+            <Tooltip title={getTooltipMessage(currCategory)}>
+              <IconButton
+                id={id}
+                aria-label="add"
+                onClick={handleSelectCard}
+                className={classNames({
+                  'is-unauthorized': !isAuthorized || isDifficult || selected,
+                })}
+              >
+                <AddCircleOutlineIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Удалить из сложных слов">
+              <IconButton
+                aria-label="remove"
+                onClick={handleUnSelectCard}
+                className={classNames({
+                  'is-unauthorized': !isAuthorized,
+                  'is-difficult':
+                    currCategory === '1' || currCategory === '2'
+                      ? DICTIONARY_CATEGORIES[0].activeBtn
+                      : false,
+                })}
+              >
+                <RemoveCircleOutlineIcon />
+              </IconButton>
+            </Tooltip>
           </CardActions>
         </Typography>
         <Typography variant="subtitle1" textAlign="right">
