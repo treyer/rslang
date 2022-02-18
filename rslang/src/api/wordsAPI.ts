@@ -8,6 +8,9 @@ class WordsAPI extends BaseAPI {
     group: number,
     getWordsCb: (data: TWord[]) => void,
     finallyCb = () => {},
+    errorCb = (_error: Error) => {
+      console.error(_error);
+    },
   ) {
     this.get(`words?page=${page}&group=${group}`)
       .then((result) => {
@@ -15,22 +18,24 @@ class WordsAPI extends BaseAPI {
         return result.json();
       })
       .then((data) => getWordsCb(data))
-      .catch((error) => {
-        console.error(error);
-      })
+      .catch((error) => errorCb(error))
       .finally(() => finallyCb());
   }
 
-  getWord(wordId: string, getWordCb: (data: TWord) => void) {
+  getWord(
+    wordId: string,
+    getWordCb: (data: TWord) => void,
+    errorCb = (_error: Error) => {
+      console.error(_error);
+    },
+  ) {
     this.get(`words/${wordId}`)
       .then((result) => {
         BaseAPI.handleError(result, WORDS_API_ERRORS);
         return result.json();
       })
       .then((result) => getWordCb(result))
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch((error) => errorCb(error));
   }
 }
 
