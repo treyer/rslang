@@ -1,7 +1,7 @@
 import { TWord } from '../api/types';
 import wordsAPI from '../api/wordsAPI';
 import { PAGES_PER_GROUP, WORDS_PER_PAGE } from './constants';
-import { getRandomIntegersFromInterval, shuffleArray } from './utils';
+import { getRandomIntegersFromInterval } from './utils';
 
 export const getGameWords = async (
   page: number,
@@ -18,7 +18,18 @@ export const getGameWords = async (
       pagesNeed,
     );
   } else {
-    pagesNumbers = [0];
+    pagesNumbers = [];
+    pagesNumbers.push(page);
+    console.error(page);
+    if (pagesNeed !== 1) {
+      let i = page - 1;
+      while (pagesNumbers.length !== pagesNeed) {
+        if (i === -1) break;
+        pagesNumbers.push(i);
+        i -= 1;
+      }
+    }
+    console.error(pagesNumbers);
   }
 
   let result = await Promise.all(
@@ -31,7 +42,11 @@ export const getGameWords = async (
     }),
   );
   result = result.flat();
-  // result = shuffleArray(result);
+  // shuffle array
+  result = result
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
   if (result.length > count) {
     result = result.slice(0, count);
   }

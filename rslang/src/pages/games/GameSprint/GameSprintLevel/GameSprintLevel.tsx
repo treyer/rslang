@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Button, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useContext } from 'react';
+import { Button, Typography, Card } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Timer from './Timer/timer';
 import Parrots from './Parrots/parrots';
@@ -8,11 +8,18 @@ import TickPannel from './TickPannel/tick-pannel';
 import {
   getExtraPointsByString,
   getExtraPointsString,
+  getRandomInteger,
 } from '../../../../General/utils';
 import { getGameWords } from '../../../../General/game-utils';
 import { TWord } from '../../../../api/types';
+import { WORDS_COUNT_FOR_SPRINT_GAME } from '../../../../General/constants';
+import { LoginContext } from '../../../../Context/login-context';
 
 const GameSprintLevel = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { userLoginData, setUserLogin } = useContext(LoginContext);
+
   const [time, setTime] = useState(60);
   const [isSound, setIsSound] = useState(true);
   const [isPlay, setIsPlay] = useState(false);
@@ -25,9 +32,11 @@ const GameSprintLevel = () => {
   const [russianVersion, setRussianVersion] = useState('');
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [isWrongAnswer, setIsWrongAnswer] = useState(false);
-  const [isResultsOpen, setIsResultsOpen] = useState(false);
+  const [isResultsModalOpen, setIsResultsModalOpen] = useState(false);
   const [gameWords, setGameWords] = useState<TWord[]>([]);
-  const navigate = useNavigate();
+  const [correctWords, setCorrectWords] = useState<TWord[]>([]);
+  const [wrongWords, setWrongWords] = useState<TWord[]>([]);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
   useEffect((): (() => void) => {
     if (isPlay) {
@@ -40,9 +49,30 @@ const GameSprintLevel = () => {
   }, [time, isPlay]);
 
   useEffect(() => {
-    getGameWords(-1, 3, 38).then((data) => {
+    if (time === 0) {
+      setIsPlay(false);
+      setIsResultsModalOpen(true);
+    }
+  }, [time]);
+
+  useEffect(() => {
+    const pathArr = location.pathname.split('/');
+    const page = userLoginData.pageForGames;
+    console.error(page);
+    if (page !== -1) {
+      setUserLogin({
+        ...userLoginData,
+        pageForGames: -1,
+      });
+    }
+    getGameWords(
+      page,
+      Number(pathArr[pathArr.length - 1]),
+      WORDS_COUNT_FOR_SPRINT_GAME,
+    ).then((data) => {
       setGameWords(data);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -87,6 +117,7 @@ const GameSprintLevel = () => {
   }, [isWrongAnswer]);
 
   const handlePlay = () => {
+    setCurrentWord();
     setIsPlay(true);
   };
 
@@ -112,11 +143,53 @@ const GameSprintLevel = () => {
   };
 
   const handleOpenResults = () => {
-    setIsResultsOpen((prev) => !prev);
+    setIsResultsModalOpen((prev) => !prev);
   };
 
   const handleCloseGame = () => {
     navigate('/games', { replace: true });
+  };
+
+  const setCurrentWord = () => {
+    const random10 = getRandomInteger(1, 10);
+    setCurrentWordIndex(gameWords.length - 1);
+    setEnglishVersion(gameWords[gameWords.length - 1].word);
+    if (random10 < 5) {
+      setRussianVersion(gameWords[gameWords.length - 1].wordTranslate);
+    } else {
+      const randomWordIndex = getRandomInteger(0, gameWords.length - 1);
+      setRussianVersion(gameWords[randomWordIndex].wordTranslate);
+    }
+  };
+
+  const handleWrongBtnClick = () => {
+    const word = gameWords[gameWords.length - 1];
+    if (gameWords[currentWordIndex].wordTranslate !== russianVersion) {
+      setAnswerAsCorrect();
+      setCorrectWords(correctWords.concat(word));
+    } else {
+      setAnswerAsFalse();
+      setWrongWords(wrongWords.concat(word));
+    }
+    const arr = gameWords;
+    arr.pop();
+    setGameWords(arr);
+    setCurrentWord();
+  };
+
+  const handleCorrectBtnClick = () => {
+    const word = gameWords[gameWords.length - 1];
+    if (gameWords[currentWordIndex].wordTranslate === russianVersion) {
+      setAnswerAsCorrect();
+      setCorrectWords(correctWords.concat(word));
+    } else {
+      setAnswerAsFalse();
+      setWrongWords(wrongWords.concat(word));
+    }
+    const arr = gameWords;
+    arr.pop();
+    setGameWords(arr);
+    setCurrentWord();
   };
 
   return (
@@ -171,6 +244,7 @@ const GameSprintLevel = () => {
                 variant="contained"
                 className="sprint-btn-wrong"
                 disabled={!isPlay}
+                onClick={handleWrongBtnClick}
               >
                 <Typography variant="h3">Неверно</Typography>
               </Button>
@@ -178,6 +252,7 @@ const GameSprintLevel = () => {
                 className="sprint-btn-correct"
                 variant="contained"
                 disabled={!isPlay}
+                onClick={handleCorrectBtnClick}
               >
                 <Typography variant="h3">Верно</Typography>
               </Button>
@@ -210,7 +285,7 @@ const GameSprintLevel = () => {
             </Button>
             <Button variant="contained">{gameWords.length}</Button>
             <Button
-              disabled={isPlay}
+              disabled={isPlay || gameWords.length === 0}
               className="sprint-btn-play"
               variant="contained"
               color="success"
@@ -220,6 +295,16 @@ const GameSprintLevel = () => {
               <Typography variant="h4">Играть</Typography>
             </Button>
           </div>
+        </div>
+        <div
+          className={`sprint-game-results-wrapper ${
+            isResultsModalOpen ? 'active' : ''
+          }`}
+        >
+          <Card>
+            {correctAnswersCountTotal}
+            {wrongAnswersCountTotal}
+          </Card>
         </div>
       </div>
     </div>

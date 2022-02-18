@@ -212,4 +212,17 @@ $color-hover: dimgray;
   .sprint-btn-play {
     border-radius: 10px;
   }
+
+  .sprint-game-results-wrapper {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    top: -1000px;
+    background-color: $color-white;
+    transition: top 1s ease-in-out;
+
+    &.active {
+      top: 200px;
+    }
+  }
 }
