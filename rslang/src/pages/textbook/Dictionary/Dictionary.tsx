@@ -3,10 +3,9 @@ import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { TStatistic, TWord } from '../../../api/types';
+import { TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
 import UserWordsAPI from '../../../api/userWordsAPI';
-import UsersStatisticAPI from '../../../api/usersStatisticAPI';
 
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 
