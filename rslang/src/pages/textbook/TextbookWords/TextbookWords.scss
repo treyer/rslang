@@ -1,6 +1,7 @@
 $bg-games-btn: #00bcd4;
 $bg-selected: #fffde2;
-$bg-studied: rgb(164, 247, 164);
+$bg-studied: #a4f7a4;
+$bg-studied-page: #d6f5d6;
 $bg-btn0: #b2ebf2;
 $bg-btn1: #80deea;
 $bg-btn2: #4dd0e1;
@@ -38,9 +39,10 @@ $bg-btn5: #00acc1;
     .textbook_btn {
       display: flex;
       justify-content: flex-start;
-      &:focus {
-        color: #000000;
-      }
+    }
+
+    .textbook_active-btn {
+      color: #000000;
     }
 
     .textbook_button-0 {
@@ -118,7 +120,11 @@ $bg-btn5: #00acc1;
     .textbook_pagination {
       display: flex;
       justify-content: center;
-      margin-bottom: 15px;
+      padding-bottom: 15px;
     }
   }
+}
+
+.is-studied-page {
+  background-color: $bg-studied-page;
 }
