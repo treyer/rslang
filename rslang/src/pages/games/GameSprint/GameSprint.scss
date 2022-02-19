@@ -1,0 +1,99 @@
+$bg-btn0: #b2ebf2;
+$bg-btn1: #80deea;
+$bg-btn2: #4dd0e1;
+$bg-btn3: #26c6da;
+$bg-btn4: #00bcd4;
+$bg-btn5: #00acc1;
+
+.App-sprint {
+  background-color: rosybrown;
+  min-height: calc(100vh - 140px);
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-y: auto;
+
+  .sprint_level-title {
+    padding: 30px 0;
+  }
+
+  .sprint_level-title-control {
+    padding: 10px 0;
+    line-height: 1rem;
+    margin-top: 50px;
+  }
+
+  .sprint_levels-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 1600px;
+    gap: 20px;
+
+    .sprint_level-list-section-button {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      min-width: 50px;
+      gap: 10px;
+
+      .textbook_btn {
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .textbook_button-0 {
+        background-color: $bg-btn0;
+      }
+
+      .textbook_button-1 {
+        background-color: $bg-btn1;
+      }
+
+      .textbook_button-2 {
+        background-color: $bg-btn2;
+      }
+
+      .textbook_button-3 {
+        background-color: $bg-btn3;
+      }
+
+      .textbook_button-4 {
+        background-color: $bg-btn4;
+      }
+
+      .textbook_button-5 {
+        background-color: $bg-btn5;
+      }
+
+      .textbook_code-title {
+        font-size: 3rem;
+        padding-right: 10px;
+      }
+
+      .game_level-title {
+        font-size: 1.5rem;
+        text-align: justify;
+      }
+    }
+  }
+}
+
+.sprint-game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 70px);
+
+  .sprint-game-inner {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    height: 800px;
+  }
+
+  .timer-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}

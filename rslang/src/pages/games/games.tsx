@@ -1,0 +1,73 @@
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
+
+const Games = () => {
+  return (
+    <div className="App-games">
+      <div className="games-container">
+        <Card sx={{ maxWidth: 500, height: 500 }}>
+          <CardMedia
+            component="img"
+            alt="sprint"
+            height="300"
+            image="./assets/img/sprint1.jpg"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              Спринт
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Проверьте, сколько очков вы можете получить за одну минуту,
+              угадывая слова. С помощью этой игры вы тренируете навык быстрого
+              перевода с английского языка на русский.
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button
+              size="small"
+              component={Link}
+              to="/games/sprint"
+              variant="contained"
+            >
+              Играть
+            </Button>
+          </CardActions>
+        </Card>
+        <Card sx={{ maxWidth: 500, height: 500 }}>
+          <CardMedia
+            component="img"
+            alt="sprint"
+            height="300"
+            image="./assets/img/audio.jpeg"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              Аудиовызов
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Проверьте,сколько слов вы правильно переведете.С помощью этой игры
+              вы улучшите восприятие речи на слух.
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button
+              size="small"
+              component={Link}
+              to="/games/audio"
+              variant="contained"
+            >
+              Играть
+            </Button>
+          </CardActions>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+export default Games;
