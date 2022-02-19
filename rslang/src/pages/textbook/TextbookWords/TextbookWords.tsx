@@ -124,7 +124,11 @@ const TextbookWords = () => {
   }, []);
 
   return (
-    <div className="textbook_page">
+    <div
+      className={classNames('textbook_page', {
+        'is-studied-page': disabled,
+      })}
+    >
       <div className="textbook_games-button-container">
         <span className="textbook_games-button-container-title">
           Закрепи слова при помощи игр.
