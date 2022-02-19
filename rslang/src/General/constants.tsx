@@ -8,9 +8,9 @@ import Team from '../pages/team/team';
 
 import { TPath } from './types';
 import GameSprint from '../pages/games/GameSprint/GameSprint';
-import GameAudio from '../pages/games/GameAudio/GameAudio';
+import GameAudio from '../Components/GameAudio/GameAudio';
 import GameSprintLevel from '../pages/games/GameSprint/GameSprintLevel/GameSprintLevel';
-import GameAudioLevel from '../pages/games/GameAudio/GameAudioLevel/GameAudioLevel';
+import GameAudioLevel from '../Components/GameAudioLevel/GameAudioLevel';
 
 export const ROUTES: TPath[] = [
   { id: 1, routePath: '/', title: 'Главная', element: <Main /> },
