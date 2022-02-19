@@ -19,9 +19,9 @@ export const getGameWords = async (
     );
   } else {
     pagesNumbers = [];
-    pagesNumbers.push(page);
+    pagesNumbers.push(page - 1);
     if (pagesNeed !== 1) {
-      let i = page - 1;
+      let i = page - 2;
       while (pagesNumbers.length !== pagesNeed) {
         if (i === -1) break;
         pagesNumbers.push(i);
