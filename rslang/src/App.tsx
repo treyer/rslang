@@ -16,6 +16,7 @@ import {
   clearUserLoginInLocalStorage,
   setUserLoginToLocalStorage,
 } from './General/utils';
+import { AppProvider } from './Context/audio-context';
 
 /*  const refreshToken = '';
 const token =
@@ -148,11 +149,13 @@ function App() {
     <div className="App">
       <LoginContext.Provider value={value}>
         <Header />
-        <Routes>
-          {ROUTES.map((el) => (
-            <Route key={el.id} path={el.routePath} element={el.element} />
-          ))}
-        </Routes>
+        <AppProvider>
+          <Routes>
+            {ROUTES.map((el) => (
+              <Route key={el.id} path={el.routePath} element={el.element} />
+            ))}
+          </Routes>
+        </AppProvider>
         <Footer />
       </LoginContext.Provider>
     </div>
