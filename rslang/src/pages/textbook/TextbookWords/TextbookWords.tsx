@@ -160,6 +160,7 @@ const TextbookWords = () => {
             key={id}
             id={id}
             code={code}
+            currLevel={groupLevel.toString()}
           />
         ))}
       </section>

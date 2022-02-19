@@ -39,9 +39,10 @@ $bg-btn5: #00acc1;
     .textbook_btn {
       display: flex;
       justify-content: flex-start;
-      &:focus {
-        color: #000000;
-      }
+    }
+
+    .textbook_active-btn {
+      color: #000000;
     }
 
     .textbook_button-0 {
