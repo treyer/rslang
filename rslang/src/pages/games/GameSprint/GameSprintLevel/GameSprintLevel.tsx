@@ -58,7 +58,6 @@ const GameSprintLevel = () => {
   useEffect(() => {
     const pathArr = location.pathname.split('/');
     const page = userLoginData.pageForGames;
-    console.error(page);
     if (page !== -1) {
       setUserLogin({
         ...userLoginData,

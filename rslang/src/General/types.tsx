@@ -41,3 +41,9 @@ export enum ExtraPoints {
   fortyPoints = '+40 очков за слово',
   eightyPoints = '+80 очков за слово',
 }
+
+export type TWordResult = {
+  word: string;
+  wordTranslate: string;
+  audioSrc: string;
+};

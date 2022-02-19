@@ -20,7 +20,6 @@ export const getGameWords = async (
   } else {
     pagesNumbers = [];
     pagesNumbers.push(page);
-    console.error(page);
     if (pagesNeed !== 1) {
       let i = page - 1;
       while (pagesNumbers.length !== pagesNeed) {
@@ -29,7 +28,6 @@ export const getGameWords = async (
         i -= 1;
       }
     }
-    console.error(pagesNumbers);
   }
 
   let result = await Promise.all(
