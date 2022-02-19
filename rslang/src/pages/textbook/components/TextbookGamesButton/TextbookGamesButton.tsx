@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 type TTextbookGamesButtonProps = {
   path: string;
   name: string;
-  className: string;
+  className?: string;
   disabledBtn?: boolean;
   onClick?: (e: MouseEvent) => void;
   id?: string;
