@@ -124,7 +124,11 @@ const TextbookWords = () => {
   }, []);
 
   return (
-    <div className="textbook_page">
+    <div
+      className={classNames('textbook_page', {
+        'is-studied-page': disabled,
+      })}
+    >
       <div className="textbook_games-button-container">
         <span className="textbook_games-button-container-title">
           Закрепи слова при помощи игр.
@@ -156,6 +160,7 @@ const TextbookWords = () => {
             key={id}
             id={id}
             code={code}
+            currLevel={groupLevel.toString()}
           />
         ))}
       </section>

@@ -17,7 +17,7 @@ export const ROUTES: TPath[] = [
   { id: 2, routePath: '/games', title: 'Мини-игры', element: <Games /> },
   {
     id: 3,
-    routePath: '/textbook/englishLevels',
+    routePath: '/textbook',
     title: 'Учебник',
     element: <TextbookEnglishLevels />,
   },

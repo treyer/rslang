@@ -62,7 +62,7 @@ export type TOptionalUserWord = {
 
 export type TStatistic = {
   learnedWords: number;
-  optional: TOptionalStatistic;
+  optional?: TOptionalStatistic;
 };
 
 export type TOptionalStatistic = {
@@ -75,9 +75,4 @@ export type TOptionalStatistic = {
     rightAnswers?: number;
     wrongAnswers?: number;
   };
-};
-
-export type TSetting = {
-  wordsPerDay: number;
-  optional: object;
 };

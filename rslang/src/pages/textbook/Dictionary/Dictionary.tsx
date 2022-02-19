@@ -1,11 +1,11 @@
 import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
+import classNames from 'classnames';
 
-import { TStatistic, TWord } from '../../../api/types';
+import { TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
 import UserWordsAPI from '../../../api/userWordsAPI';
-import UsersStatisticAPI from '../../../api/usersStatisticAPI';
 
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 
@@ -136,27 +136,18 @@ const Dictionary = () => {
   return (
     <div className="dictionary-container">
       <div className="dictionary_btn-container" key="dictionary_btn">
-        <TextbookGamesButton
-          id="0"
-          path={`/dictionary/${groupLevel}`}
-          name="Сложные"
-          className="dictionary_btn"
-          onClick={onHandleChangeCategory}
-        />
-        <TextbookGamesButton
-          id="1"
-          path={`/dictionary/${groupLevel}`}
-          name="Изучаемые"
-          className="dictionary_btn"
-          onClick={onHandleChangeCategory}
-        />
-        <TextbookGamesButton
-          id="2"
-          path={`/dictionary/${groupLevel}`}
-          name="Изученные"
-          className="dictionary_btn"
-          onClick={onHandleChangeCategory}
-        />
+        {Object.values(DICTIONARY_CATEGORIES).map(({ id, name }) => (
+          <TextbookGamesButton
+            id={id}
+            path={`/dictionary/${groupLevel}`}
+            key={id}
+            name={name}
+            className={classNames('dictionary_btn', {
+              'dictionary_active-btn': id === currCategory,
+            })}
+            onClick={onHandleChangeCategory}
+          />
+        ))}
       </div>
       <div className="words_list-container" key="words_list-container">
         {loading && <CircularProgress className="circular-progress" />}
