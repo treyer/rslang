@@ -2,7 +2,7 @@
   width: 975px;
   margin: 0 auto;
 
-  .audio-game_score{
+  .audio-game_score {
     background: rgba(255, 255, 255, 0.308);
     border-radius: 50%;
     color: rgb(248, 246, 246);
@@ -46,47 +46,46 @@
     margin-bottom: 60px;
 
     .audio-answer {
-        width: 18%;
-        background: #fff;
-        min-height: 40px;
-        cursor: pointer;
-        margin-bottom: 30px;
-        display: flex;
-        align-items: center;
-        border: 5px solid #f3f3f3;
-        border-radius: 10px;
+      width: 18%;
+      background: #fff;
+      min-height: 40px;
+      cursor: pointer;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      border: 5px solid #f3f3f3;
+      border-radius: 10px;
 
-        &:hover {
-          transform: scale(1.05);
-          border: 5px solid rgba(169, 247, 234, 0.829);
-        }
+      &:hover {
+        transform: scale(1.05);
+        border: 5px solid rgba(169, 247, 234, 0.829);
       }
+    }
 
-      .audio-answer_number {
-        font-size: 20px;
-        background-color: #ffffff;
-        color: rgb(17, 16, 16);
-        width: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+    .audio-answer_number {
+      font-size: 20px;
+      background-color: #ffffff;
+      color: rgb(17, 16, 16);
+      width: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-      .audio-answer_text {
-        font-weight: 600;
-        font-size: 20px;
-        display: flex;
-        align-items: center;
-      }
+    .audio-answer_text {
+      font-weight: 600;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+    }
 
-      .correct-answer {
-        border: 5px solid #1ea55bd0;
-      }
+    .correct-answer {
+      border: 5px solid #1ea55bd0;
+    }
 
-      .wrong-answer {
-        border: 5px solid #dc0a0ab6;
-      }
-
+    .wrong-answer {
+      border: 5px solid #dc0a0ab6;
+    }
   }
 
   .audio-btn_next {
@@ -149,6 +148,5 @@
         background: #525eac;
       }
     }
-
   }
 }

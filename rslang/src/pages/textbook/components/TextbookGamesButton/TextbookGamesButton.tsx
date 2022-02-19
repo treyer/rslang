@@ -7,11 +7,13 @@ type TTextbookGamesButtonProps = {
   path: string;
   name: string;
   className: string;
+  disabledBtn?: boolean;
   onClick?: (e: MouseEvent) => void;
   id?: string;
 };
 
 const TextbookGamesButton = ({
+  disabledBtn,
   path,
   name,
   className,
@@ -19,6 +21,7 @@ const TextbookGamesButton = ({
   onClick,
 }: TTextbookGamesButtonProps) => (
   <Button
+    disabled={disabledBtn}
     id={id}
     component={Link}
     to={`${path}`}
