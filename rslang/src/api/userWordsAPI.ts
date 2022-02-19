@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BaseAPI } from './baseAPI';
 import { TUserWord } from './types';
 import { USER_WORDS_API_ERRORS } from './errors';
@@ -24,7 +25,7 @@ class UserWordsAPI extends BaseAPI {
     wordId: string,
     token: string,
     dataWord: TUserWord,
-    createUserWordCb: (data: TUserWord) => void,
+    createUserWordCb = (_result: TUserWord) => {},
   ) {
     this.post(`users/${userId}/words/${wordId}`, dataWord, {
       Authorization: `Bearer ${token}`,
@@ -63,7 +64,7 @@ class UserWordsAPI extends BaseAPI {
     token: string,
     wordId: string,
     dataWord: TUserWord,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     updateUserWordCb = (_result: TUserWord) => {},
   ) {
     this.put(`users/${userId}/words/${wordId}`, dataWord, {
@@ -83,7 +84,7 @@ class UserWordsAPI extends BaseAPI {
     userId: string,
     wordId: string,
     token: string,
-    deleteUserWordCb = () => {},
+    deleteUserWordCb = (deletedWordId: string) => {},
   ) {
     this.delete(`users/${userId}/words/${wordId}`, {
       Authorization: `Bearer ${token}`,
@@ -91,7 +92,7 @@ class UserWordsAPI extends BaseAPI {
       .then((result) => {
         BaseAPI.handleError(result, USER_WORDS_API_ERRORS);
       })
-      .then(() => deleteUserWordCb())
+      .then(() => deleteUserWordCb(wordId))
       .catch((error) => {
         console.error(error);
       });

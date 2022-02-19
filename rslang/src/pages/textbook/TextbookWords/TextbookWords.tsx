@@ -9,7 +9,7 @@ import {
   ChangeEvent,
 } from 'react';
 import classNames from 'classnames';
-import { TUserWord, TWord } from '../../../api/types';
+import { TWord } from '../../../api/types';
 import WordsAPI from '../../../api/wordsAPI';
 import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
 import { ENGLISH_LEVELS } from '../../../General/constants';
@@ -35,16 +35,26 @@ const TextbookWords = () => {
   const [currPage, setPage] = useState(1);
   const { userLoginData, setUserLogin } = useContext(LoginContext);
   const [loading, setLoading] = useState(false);
-
+  const [disabled, setDisabled] = useState(false);
+  const [updatedWord, setUpdatedWord] = useState({});
   const handleChangePage = (event: ChangeEvent<unknown>, pageNum: number) => {
     if (!event.target) {
       return;
     }
     if (pageNum !== null) {
       setPage(pageNum);
-      setUserLogin({ ...userLoginData, pageForGames: currPage });
+      setUserLogin({ ...userLoginData, pageForGames: currPage - 1 });
     }
   };
+
+  useEffect(() => {
+    const isGameBtnDisabled = words.every(
+      (word) =>
+        word.userWord?.optional?.isDifficult ||
+        word.userWord?.optional?.deleted,
+    );
+    setDisabled(isGameBtnDisabled);
+  }, [words, userLoginData.isLogined]);
 
   useEffect(() => {
     setLoading(true);
@@ -71,7 +81,13 @@ const TextbookWords = () => {
         () => setLoading(false),
       );
     }
-  }, [currPage, location.pathname, groupLevel, userLoginData.isLogined]);
+  }, [
+    currPage,
+    location.pathname,
+    groupLevel,
+    userLoginData.isLogined,
+    updatedWord,
+  ]);
 
   const onSelectCard = useCallback(
     (wordId) => {
@@ -93,16 +109,18 @@ const TextbookWords = () => {
             page: currPage,
           },
         },
-        (data: TUserWord) => console.error(data),
+        (word) => setUpdatedWord(word),
       );
     },
-    [groupLevel, currPage],
+    [groupLevel, currPage, setUpdatedWord],
   );
 
   const onUnSelectCard = useCallback((wordId) => {
     const userId = `${localStorage.getItem('userId')}`;
     const token = `${localStorage.getItem('token')}`;
-    UserWordsAPI.deleteUserWord(userId, wordId, token);
+    UserWordsAPI.deleteUserWord(userId, wordId, token, (word) =>
+      setUpdatedWord(word),
+    );
   }, []);
 
   return (
@@ -112,11 +130,13 @@ const TextbookWords = () => {
           Закрепи слова при помощи игр.
         </span>
         <TextbookGamesButton
+          disabledBtn={disabled}
           path={`/games/audio/${groupLevel}`}
           name="Аудиовызов"
           className="textbook_games-btn"
         />
         <TextbookGamesButton
+          disabledBtn={disabled}
           path={`/games/sprint/${groupLevel}`}
           name="Спринт"
           className="textbook_games-btn"

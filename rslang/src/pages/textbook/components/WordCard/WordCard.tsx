@@ -109,7 +109,8 @@ const WordCard = ({
                 aria-label="add"
                 onClick={handleSelectCard}
                 className={classNames({
-                  'is-unauthorized': !isAuthorized || isDifficult || selected,
+                  'is-unauthorized':
+                    !isAuthorized || isDifficult || selected || isStudied,
                 })}
               >
                 <AddCircleOutlineIcon />
@@ -120,7 +121,7 @@ const WordCard = ({
                 aria-label="remove"
                 onClick={handleUnSelectCard}
                 className={classNames({
-                  'is-unauthorized': !isAuthorized,
+                  'is-unauthorized': !isAuthorized || isStudied,
                   'is-difficult':
                     currCategory === '1' || currCategory === '2'
                       ? DICTIONARY_CATEGORIES[0].activeBtn
