@@ -14,6 +14,7 @@ import { getGameWords } from '../../../../General/game-utils';
 import { TWord } from '../../../../api/types';
 import { WORDS_COUNT_FOR_SPRINT_GAME } from '../../../../General/constants';
 import { LoginContext } from '../../../../Context/login-context';
+import GameResults from '../../../../Components/GameResults/GameResults';
 
 const GameSprintLevel = () => {
   const location = useLocation();
@@ -191,6 +192,10 @@ const GameSprintLevel = () => {
     setCurrentWord();
   };
 
+  const handleCloseResults = () => {
+    setIsResultsModalOpen(false);
+  };
+
   return (
     <div className="App-games">
       <div className="sprint-game-container">
@@ -301,10 +306,29 @@ const GameSprintLevel = () => {
           }`}
         >
           <Card>
-            {correctAnswersCountTotal}
-            {wrongAnswersCountTotal}
+            <div className="results-inner-wrapper">
+              <button
+                type="button"
+                className="results-inner-wrapper-close-btn"
+                onClick={handleCloseResults}
+              >
+                <Typography variant="h4">❌</Typography>
+              </button>
+              <GameResults
+                correctCount={correctAnswersCountTotal}
+                wrongCount={wrongAnswersCountTotal}
+                correctWords={correctWords}
+                wrongWords={wrongWords}
+              />
+            </div>
           </Card>
         </div>
+        <div
+          className={`game-results-background ${
+            isResultsModalOpen ? 'active' : ''
+          }`}
+          onClick={handleCloseResults}
+        />
       </div>
     </div>
   );

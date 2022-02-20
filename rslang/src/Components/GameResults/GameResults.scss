@@ -1,0 +1,10 @@
+.game-results-wrong-wrapper,
+.game-results-correct-wrapper {
+  width: 95%;
+  min-height: 350px;
+  max-height: 350px;
+  border: 1px solid gray;
+  margin: 8px auto 7px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
