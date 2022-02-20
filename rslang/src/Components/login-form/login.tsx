@@ -83,6 +83,7 @@ const Login = () => {
       token: '',
       refreshToken: '',
       userId: '',
+      pageForGames: -1,
     });
     setMessage('');
     setIsSuccess(false);

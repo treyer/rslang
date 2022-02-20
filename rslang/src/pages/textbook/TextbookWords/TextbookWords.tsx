@@ -37,14 +37,18 @@ const TextbookWords = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [updatedWord, setUpdatedWord] = useState({});
+
   const handleChangePage = (event: ChangeEvent<unknown>, pageNum: number) => {
     if (!event.target) {
       return;
     }
     if (pageNum !== null) {
       setPage(pageNum);
-      setUserLogin({ ...userLoginData, pageForGames: currPage - 1 });
     }
+  };
+
+  const setPageForGames = () => {
+    setUserLogin({ ...userLoginData, pageForGames: currPage });
   };
 
   useEffect(() => {
@@ -138,12 +142,14 @@ const TextbookWords = () => {
           path={`/games/audio/${groupLevel}`}
           name="Аудиовызов"
           className="textbook_games-btn"
+          onClick={setPageForGames}
         />
         <TextbookGamesButton
           disabledBtn={disabled}
           path={`/games/sprint/${groupLevel}`}
           name="Спринт"
           className="textbook_games-btn"
+          onClick={setPageForGames}
         />
         <TextbookGamesButton
           path={`/dictionary/${groupLevel}`}

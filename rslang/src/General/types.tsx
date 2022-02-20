@@ -34,3 +34,16 @@ export type TCorrectAnsCount = {
 export type TTickStatus = {
   status: boolean;
 };
+
+// eslint-disable-next-line no-shadow
+export enum ExtraPoints {
+  twentyPoints = '+20 очков за слово',
+  fortyPoints = '+40 очков за слово',
+  eightyPoints = '+80 очков за слово',
+}
+
+export type TWordResult = {
+  word: string;
+  wordTranslate: string;
+  audioSrc: string;
+};
