@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
 import UserWordsAPI from '../../../api/userWordsAPI';
+import UsersStatisticAPI from '../../../api/usersStatisticAPI';
 
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 
@@ -91,31 +92,22 @@ const Dictionary = () => {
       const userId = `${localStorage.getItem('userId')}`;
       const token = `${localStorage.getItem('token')}`;
 
-      /*  UsersStatisticAPI.upsetStatistics(userId, token, {
-        learnedWords: 2,
-        optional: {
-          audioCall: {
-            rightAnswers: 2,
-            wrongAnswers: 1,
-          },
-        },
-      });  */
-
-      /*  UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) =>
-        console.error('ff: ', data),
-      );  */
-
       if (currCategory === '0') {
-        UserWordsAPI.updateUserWord(userId, token, wordId, {
-          difficulty: 'difficult',
-          optional: {
-            isDifficult: false,
-            deleted: true,
-            failCounter: 0,
-            successCounter: 0,
-            correctAnswer: 0,
-          },
-        });
+        Promise.all([
+          UserWordsAPI.updateUserWord(userId, token, wordId, {
+            difficulty: 'difficult',
+            optional: {
+              isDifficult: false,
+              deleted: true,
+              failCounter: 0,
+              successCounter: 0,
+              correctAnswer: 0,
+            },
+          }),
+          UsersStatisticAPI.upsetStatistics(userId, token, {
+            learnedWords: 2,
+          }),
+        ]);
       } else {
         UserWordsAPI.updateUserWord(userId, token, wordId, {
           difficulty: 'difficult',
