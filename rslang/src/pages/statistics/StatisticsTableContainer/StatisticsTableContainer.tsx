@@ -24,7 +24,12 @@ const StatisticsTableContainer = ({
   ];
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 300 }} size="small" aria-label="a dense table">
+      <Table
+        sx={{ minWidth: 300 }}
+        size="small"
+        aria-label="a dense table"
+        className="statistics_table"
+      >
         <TableHead>
           <TableRow>
             <TableCell>Наименование показателя</TableCell>
