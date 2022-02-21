@@ -38,6 +38,7 @@ const GameSprintLevel = () => {
   const [correctWords, setCorrectWords] = useState<TWord[]>([]);
   const [wrongWords, setWrongWords] = useState<TWord[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [pageForGames, setPageForGames] = useState(-1);
 
   useEffect((): (() => void) => {
     if (isPlay) {
@@ -57,21 +58,15 @@ const GameSprintLevel = () => {
   }, [time]);
 
   useEffect(() => {
-    const pathArr = location.pathname.split('/');
     const page = userLoginData.pageForGames;
+    setPageForGames(page);
     if (page !== -1) {
       setUserLogin({
         ...userLoginData,
         pageForGames: -1,
       });
     }
-    getGameWords(
-      page,
-      Number(pathArr[pathArr.length - 1]),
-      WORDS_COUNT_FOR_SPRINT_GAME,
-    ).then((data) => {
-      setGameWords(data);
-    });
+    getWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -194,6 +189,32 @@ const GameSprintLevel = () => {
 
   const handleCloseResults = () => {
     setIsResultsModalOpen(false);
+    setCorrectWords([]);
+    setWrongWords([]);
+    setGameWords([]);
+    getWords();
+    setTime(60);
+    setCorrectAnswersCount(0);
+    setCorrectAnswersCountTotal(0);
+    setWrongAnswersCountTotal(0);
+    setPoints(0);
+    setExtraPoints('');
+    setEnglishVersion('');
+    setRussianVersion('');
+    setIsCorrectAnswer(false);
+    setIsWrongAnswer(false);
+    setCurrentWordIndex(0);
+  };
+
+  const getWords = () => {
+    const pathArr = location.pathname.split('/');
+    getGameWords(
+      pageForGames,
+      Number(pathArr[pathArr.length - 1]),
+      WORDS_COUNT_FOR_SPRINT_GAME,
+    ).then((data) => {
+      setGameWords(data);
+    });
   };
 
   return (
