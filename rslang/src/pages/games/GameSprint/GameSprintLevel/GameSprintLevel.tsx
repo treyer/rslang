@@ -338,19 +338,6 @@ const GameSprintLevel = () => {
               </button>
             </div>
             <div className="sprint-game-btns-wrapper">
-              {/* <Button variant="contained" onClick={increaseCorrectCount}>
-              +
-            </Button>
-            <Button variant="contained" onClick={setAnswerAsCorrect}>
-              correct
-            </Button>
-            <Button variant="contained" onClick={setAnswerAsFalse}>
-              false
-            </Button>
-            <Button variant="contained" onClick={handleOpenResults}>
-              openModal
-            </Button>
-            <Button variant="contained">{gameWords.length}</Button> */}
               <Button
                 disabled={isPlay || gameWords.length === 0}
                 className="sprint-btn-play"
