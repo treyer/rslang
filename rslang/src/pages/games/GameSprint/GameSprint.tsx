@@ -2,6 +2,7 @@ import { MouseEvent, useCallback, useState } from 'react';
 import { Typography } from '@mui/material';
 import EnglishLevelButton from '../../../Components/EnglishLevelButton/EnglishLevelButton';
 import { ENGLISH_LEVELS } from '../../../General/constants';
+import BranchParrot from '../../../Components/BranchParrot/BranchParrot';
 import './GameSprint.scss';
 
 type TGameId = keyof typeof ENGLISH_LEVELS;
@@ -41,8 +42,18 @@ const GameSprint = () => {
         </section>
       </div>
       <Typography variant="h4" className="sprint_level-title-control">
-        <p>Используйте мышь, чтобы выбрать.</p>
-        <p>Используйте клавиши влево или вправо.</p>
+        <p>Используйте мышь, чтобы выбрать ответ.</p>
+        <p>В процессе игры вы можете использовать клавиши:</p>
+        <p>
+          <i style={{ color: 'burlywood' }}>пробел</i> - начать игру
+        </p>
+        <p>
+          <i style={{ color: 'burlywood' }}>A (латинская) </i>- выбрать ответ
+          как неправильный
+        </p>
+        <p>
+          <i style={{ color: 'burlywood' }}>S</i> - выбрать ответ как правильный
+        </p>
       </Typography>
     </div>
   );

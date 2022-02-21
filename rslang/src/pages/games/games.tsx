@@ -10,18 +10,18 @@ const Games = () => {
   return (
     <div className="App-games">
       <div className="games-container">
-        <Card sx={{ maxWidth: 500, height: 500 }}>
+        <Card sx={{ maxWidth: 500, height: 600 }} className="games-card">
           <CardMedia
             component="img"
             alt="sprint"
             height="300"
-            image="./assets/img/sprint1.jpg"
+            image="./assets/img/proficiency.jpg"
           />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+          <CardContent sx={{ height: 200 }}>
+            <Typography gutterBottom variant="h4" component="div">
               Спринт
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="h6">
               Проверьте, сколько очков вы можете получить за одну минуту,
               угадывая слова. С помощью этой игры вы тренируете навык быстрого
               перевода с английского языка на русский.
@@ -33,25 +33,26 @@ const Games = () => {
               component={Link}
               to="/games/sprint"
               variant="contained"
+              className="games-btn"
             >
               Играть
             </Button>
           </CardActions>
         </Card>
-        <Card sx={{ maxWidth: 500, height: 500 }}>
+        <Card sx={{ maxWidth: 500, height: 600 }} className="games-card">
           <CardMedia
             component="img"
             alt="sprint"
             height="300"
-            image="./assets/img/audio.jpeg"
+            image="./assets/img/headphones.jpg"
           />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+          <CardContent sx={{ height: 200 }}>
+            <Typography gutterBottom variant="h4" component="div">
               Аудиовызов
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Проверьте,сколько слов вы правильно переведете.С помощью этой игры
-              вы улучшите восприятие речи на слух.
+            <Typography variant="h6">
+              Проверьте, сколько слов вы правильно переведете. С помощью этой
+              игры вы улучшите восприятие речи на слух.
             </Typography>
           </CardContent>
           <CardActions>
@@ -60,6 +61,7 @@ const Games = () => {
               component={Link}
               to="/games/audio"
               variant="contained"
+              className="games-btn"
             >
               Играть
             </Button>

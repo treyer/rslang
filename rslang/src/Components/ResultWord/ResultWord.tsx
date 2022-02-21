@@ -1,9 +1,10 @@
 import { Typography } from '@mui/material';
 import { TWordResult } from '../../General/types';
+import './ResultWord.scss';
 
 const ResultWord = ({ word, wordTranslate, audioSrc }: TWordResult) => {
   const playAudio = () => {
-    const sound = new Audio(process.env.REACT_APP_SERVER_URL + audioSrc);
+    const sound = new Audio(`${process.env.REACT_APP_SERVER_URL}/${audioSrc}`);
     sound.play();
   };
 
@@ -16,8 +17,13 @@ const ResultWord = ({ word, wordTranslate, audioSrc }: TWordResult) => {
         }}
         onClick={playAudio}
       />
-      <Typography variant="body1">{word}</Typography>
-      <Typography variant="body1">{wordTranslate}</Typography>
+      <Typography className="game-results-word-eng" variant="h5">
+        {word}
+      </Typography>
+      <Typography variant="h5"> - </Typography>
+      <Typography className="game-results-word-rus" variant="h6">
+        {wordTranslate}
+      </Typography>
     </div>
   );
 };

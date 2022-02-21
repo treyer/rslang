@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 type TAnswer = {
   answerText: string;
   index: number;
@@ -20,6 +22,14 @@ const Answer = ({
   const correctAnswerClass = isCorrectAnswer ? 'correct-answer' : '';
   const wrongAnswerClass = isWrongAnswer ? 'wrong-answer' : '';
   const disabledClass = currentAnswer ? 'disabled-answer' : '';
+
+  useEffect((): (() => void) => {
+    if (isCorrectAnswer) {
+      const soundCorrect = new Audio('/assets/audio/correct-answer.mp3');
+      soundCorrect.play();
+    }
+    return () => {};
+  }, [isCorrectAnswer]);
 
   return (
     <div
