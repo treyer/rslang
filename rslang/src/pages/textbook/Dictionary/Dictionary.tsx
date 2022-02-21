@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { TWord } from '../../../api/types';
+import { TStatistic, TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
 import UserWordsAPI from '../../../api/userWordsAPI';
 import UsersStatisticAPI from '../../../api/usersStatisticAPI';
@@ -27,6 +27,9 @@ const Dictionary = () => {
   );
   const [currCategory, setCurrCategory] = useState<TDictionaryCategory>('0');
   const [loading, setLoading] = useState(false);
+  const [currStatisticLearnedWord, setCurrStatisticLearnedWord] = useState<
+    undefined | number
+  >();
 
   useEffect(() => {
     const userId = `${localStorage.getItem('userId')}`;
@@ -91,38 +94,40 @@ const Dictionary = () => {
     (wordId) => {
       const userId = `${localStorage.getItem('userId')}`;
       const token = `${localStorage.getItem('token')}`;
-
-      if (currCategory === '0') {
+      if (currCategory === '0' || currCategory === '1') {
         Promise.all([
           UserWordsAPI.updateUserWord(userId, token, wordId, {
             difficulty: 'difficult',
             optional: {
               isDifficult: false,
               deleted: true,
-              failCounter: 0,
-              successCounter: 0,
-              correctAnswer: 0,
             },
           }),
-          UsersStatisticAPI.upsetStatistics(userId, token, {
-            learnedWords: 2,
-          }),
-        ]);
+          UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) =>
+            setCurrStatisticLearnedWord(data.learnedWords),
+          ),
+        ]).then(() => {
+          if (
+            currStatisticLearnedWord !== undefined &&
+            currStatisticLearnedWord >= 0
+          ) {
+            UsersStatisticAPI.upsetStatistics(userId, token, {
+              learnedWords: (currStatisticLearnedWord as unknown as number) + 1,
+            });
+          }
+        });
       } else {
         UserWordsAPI.updateUserWord(userId, token, wordId, {
           difficulty: 'difficult',
           optional: {
             isDifficult: true,
             deleted: false,
-            failCounter: 0,
-            successCounter: 0,
-            correctAnswer: 0,
           },
         });
       }
       setWords(words.filter((word) => word._id !== wordId));
     },
-    [currCategory, words],
+    [currCategory, words, currStatisticLearnedWord],
   );
 
   return (
