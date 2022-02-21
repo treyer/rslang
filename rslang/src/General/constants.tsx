@@ -125,3 +125,4 @@ export const ENGLISH_LEVELS = {
 export const PAGES_PER_GROUP = 30;
 export const WORDS_PER_PAGE = 20;
 export const WORDS_COUNT_FOR_SPRINT_GAME = 70;
+export const WORDS_COUNT_FOR_AUDIO_GAME = 20;

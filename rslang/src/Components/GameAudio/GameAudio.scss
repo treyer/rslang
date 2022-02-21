@@ -4,13 +4,16 @@ $bg-btn2: #4dd0e1;
 $bg-btn3: #26c6da;
 $bg-btn4: #00bcd4;
 $bg-btn5: #00acc1;
+$bg-audio-page: #1a4452;
+$color-white: #ffffff;
 
 .App-audio {
-  background-color: rgb(172, 188, 143);
+  background-color: $bg-audio-page;
   min-height: calc(100vh - 140px);
   background-size: cover;
   background-attachment: fixed;
   overflow-y: auto;
+  color: $color-white;
 
   .audio_level-title {
     padding: 30px 0;
