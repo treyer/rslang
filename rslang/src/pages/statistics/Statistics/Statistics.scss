@@ -1,0 +1,10 @@
+$dg-table: #5dabb9;
+.statistics_container {
+  margin: 0 auto;
+  max-width: 1600px;
+  padding: 50px 20px;
+
+  .statistics_table {
+    background-color: $dg-table;
+  }
+}

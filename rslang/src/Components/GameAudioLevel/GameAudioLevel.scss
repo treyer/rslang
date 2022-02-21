@@ -30,7 +30,7 @@ $color-hover: dimgray;
     .audio-cancel-wrapper {
       position: relative;
       display: flex;
-      align-items:flex-end;
+      align-items: flex-end;
       justify-content: flex-end;
 
       .audio-branch {
@@ -52,7 +52,7 @@ $color-hover: dimgray;
       .cancel-audio-game-btn {
         display: flex;
         flex-wrap: wrap;
-        justify-content:space-evenly;
+        justify-content: space-evenly;
         margin-top: 50px;
 
         .cancel-game-btn {
@@ -68,8 +68,6 @@ $color-hover: dimgray;
             transform: scale(1.05);
           }
         }
-
-
       }
     }
 
@@ -108,8 +106,8 @@ $color-hover: dimgray;
         justify-content: center;
 
         .audio-element {
-        width: 200px;
-        height: 200px;
+          width: 200px;
+          height: 200px;
 
           .audio-element_icon {
             width: 130px;
@@ -121,7 +119,7 @@ $color-hover: dimgray;
       .audio-answers {
         display: flex;
         flex-wrap: wrap;
-        justify-content:space-evenly;
+        justify-content: space-evenly;
         margin-top: 50px;
         margin-bottom: 60px;
 
@@ -168,8 +166,6 @@ $color-hover: dimgray;
         }
       }
     }
-
-
 
     .audio-btn_next {
       margin: 0 auto;

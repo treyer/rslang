@@ -21,8 +21,7 @@ export const DICTIONARY_CATEGORIES = {
   '2': {
     id: '2',
     name: 'Изученные',
-    filter:
-      '{"$and":[{"userWord.difficulty":"difficult", "userWord.optional.deleted":true}]}',
+    filter: '{"$and":[{ "userWord.optional.deleted":true}]}',
     message: 'У Вас нет удаленных слов в словаре.',
     activeBtn: true,
     tooltipAddMessage: 'Добавить в сложные слова',

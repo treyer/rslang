@@ -18,9 +18,10 @@ import { LoginContext } from '../../../Context/login-context';
 import UserWordsAPI from '../../../api/userWordsAPI';
 import WordCardList from '../components/WordCardList/WordCardList';
 
-import './TextbookWords.scss';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
 import { WORDS_PER_PAGE } from '../constants/constants';
+
+import './TextbookWords.scss';
 
 export type TPlayListCollection = {
   [key: string]: string[];

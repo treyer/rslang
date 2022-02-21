@@ -75,4 +75,5 @@ export type TOptionalStatistic = {
     rightAnswers?: number;
     wrongAnswers?: number;
   };
+  onDateDay?: Date;
 };
