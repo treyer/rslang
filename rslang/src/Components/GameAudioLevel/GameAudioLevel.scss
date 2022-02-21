@@ -14,10 +14,6 @@ $color-rosybrown: rosybrown;
 $color-hover: dimgray;
 
 .games-audio-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   height: calc(100vh - 70px);
 
@@ -30,60 +26,66 @@ $color-hover: dimgray;
     .audio-cancel-wrapper {
       position: relative;
       display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
+      justify-content: space-between;
 
-      .audio-branch {
-        position: absolute;
-        width: 450px;
-        height: 100px;
-        background-repeat: no-repeat;
-        background-size: 500px 100px;
-        top: 100px;
-      }
-
-      .audio-parrot-one {
-        top: 1px;
-        left: 840px;
-        width: 99px;
-        height: 120px;
-      }
-
-      .cancel-audio-game-btn {
+      .audio-games-btn {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        margin-top: 50px;
+        flex-wrap: wrap-reverse;
 
-        .cancel-game-btn {
-          background-color: #569ea3;
-          min-height: 40px;
-          cursor: pointer;
+        .audio-branch {
+          position: absolute;
+          width: 450px;
+          height: 40px;
+          background-repeat: no-repeat;
+          background-size: 500px 100px;
+          top: 50px;
+        }
+
+        .audio-parrot-one {
+
+          width: 99px;
+          height: 120px;
+        }
+
+        .cancel-audio-game-btn {
           display: flex;
-          align-items: center;
-          border: 4px solid #f3f3f3;
-          border-radius: 10px;
+          flex-wrap: wrap;
+          justify-content:space-evenly;
+          margin-top: 60px;
+          margin-bottom: 20px;
 
-          &:hover {
-            transform: scale(1.05);
+          .cancel-game-btn {
+            background-color: #569ea3;
+            min-height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border: 4px solid #f3f3f3;
+            border-radius: 10px;
+
+            &:hover {
+              transform: scale(1.05);
+            }
           }
         }
       }
-    }
 
-    .audio-game_score {
-      background: rgba(255, 255, 255, 0.308);
-      border-radius: 50%;
-      color: rgb(248, 246, 246);
-      font-size: 25px;
-      width: 100px;
-      font-weight: 600;
-      height: 100px;
-      margin-bottom: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      .audio-game_score {
+        background: rgba(255, 255, 255, 0.308);
+        border-radius: 50%;
+        color: rgb(248, 246, 246);
+        font-size: 25px;
+        width: 100px;
+        font-weight: 600;
+        height: 100px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
+    
     .audio-question-container {
       position: relative;
       display: flex;
@@ -119,8 +121,8 @@ $color-hover: dimgray;
       .audio-answers {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-evenly;
-        margin-top: 50px;
+        justify-content:space-evenly;
+        margin-top: 20px;
         margin-bottom: 60px;
 
         .audio-answer {
