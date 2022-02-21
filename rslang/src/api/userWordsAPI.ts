@@ -67,7 +67,7 @@ class UserWordsAPI extends BaseAPI {
 
     updateUserWordCb = (_result: TUserWord) => {},
   ) {
-    this.put(`users/${userId}/words/${wordId}`, dataWord, {
+    return this.put(`users/${userId}/words/${wordId}`, dataWord, {
       Authorization: `Bearer ${token}`,
     })
       .then((result) => {

@@ -89,31 +89,35 @@ const Dictionary = () => {
     },
     [currCategory, words],
   );
+  const userId = `${localStorage.getItem('userId')}`;
+  const token = `${localStorage.getItem('token')}`;
+
+  useEffect(() => {
+    UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) =>
+      setCurrStatisticLearnedWord(data.learnedWords),
+    );
+  }, [userId, token]);
 
   const onSelectCard = useCallback(
     (wordId) => {
-      const userId = `${localStorage.getItem('userId')}`;
-      const token = `${localStorage.getItem('token')}`;
       if (currCategory === '0' || currCategory === '1') {
-        Promise.all([
-          UserWordsAPI.updateUserWord(userId, token, wordId, {
-            difficulty: 'difficult',
-            optional: {
-              isDifficult: false,
-              deleted: true,
-            },
-          }),
-          UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) =>
-            setCurrStatisticLearnedWord(data.learnedWords),
-          ),
-        ]).then(() => {
-          if (
-            currStatisticLearnedWord !== undefined &&
-            currStatisticLearnedWord >= 0
-          ) {
-            UsersStatisticAPI.upsetStatistics(userId, token, {
-              learnedWords: (currStatisticLearnedWord as unknown as number) + 1,
-            });
+        UserWordsAPI.updateUserWord(userId, token, wordId, {
+          difficulty: 'difficult',
+          optional: {
+            isDifficult: false,
+            deleted: true,
+          },
+        }).then(() => {
+          if (currStatisticLearnedWord !== undefined) {
+            UsersStatisticAPI.upsetStatistics(
+              userId,
+              token,
+              {
+                learnedWords:
+                  (currStatisticLearnedWord as unknown as number) + 1,
+              },
+              (data) => setCurrStatisticLearnedWord(data.learnedWords),
+            );
           }
         });
       } else {
@@ -127,7 +131,7 @@ const Dictionary = () => {
       }
       setWords(words.filter((word) => word._id !== wordId));
     },
-    [currCategory, words, currStatisticLearnedWord],
+    [currCategory, words, currStatisticLearnedWord, userId, token],
   );
 
   return (
