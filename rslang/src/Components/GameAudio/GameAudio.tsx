@@ -2,7 +2,6 @@ import { MouseEvent, useCallback, useState } from 'react';
 import { Typography } from '@mui/material';
 import { ENGLISH_LEVELS } from '../../General/constants';
 import EnglishLevelButton from '../EnglishLevelButton/EnglishLevelButton';
-import BranchParrot from '../BranchParrot/BranchParrot';
 import './GameAudio.scss';
 
 type TGameId = keyof typeof ENGLISH_LEVELS;
@@ -46,7 +45,6 @@ const GameAudio = () => {
         <p>Используйте цифровые клавиши от 1 до 5 для выбора ответа</p>
         <p>Используйте пробел для повтроного звучания слова</p>
       </Typography>
-      <BranchParrot />
     </div>
   );
 };
