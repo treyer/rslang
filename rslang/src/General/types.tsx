@@ -1,3 +1,5 @@
+import { TWord } from '../api/types';
+
 export type TPath = {
   id: number;
   routePath: string;
@@ -46,4 +48,23 @@ export type TWordResult = {
   word: string;
   wordTranslate: string;
   audioSrc: string;
+};
+
+export type THeaderResult = {
+  headerName: string;
+  headerValue: number;
+  headerType: HeaderType;
+};
+
+// eslint-disable-next-line no-shadow
+export enum HeaderType {
+  correct,
+  wrong,
+}
+
+export type TGameResults = {
+  correctCount: number;
+  wrongCount: number;
+  correctWords: TWord[];
+  wrongWords: TWord[];
 };

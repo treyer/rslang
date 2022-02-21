@@ -14,6 +14,7 @@ import { getGameWords } from '../../../../General/game-utils';
 import { TWord } from '../../../../api/types';
 import { WORDS_COUNT_FOR_SPRINT_GAME } from '../../../../General/constants';
 import { LoginContext } from '../../../../Context/login-context';
+import GameResults from '../../../../Components/GameResults/GameResults';
 
 const GameSprintLevel = () => {
   const location = useLocation();
@@ -37,6 +38,7 @@ const GameSprintLevel = () => {
   const [correctWords, setCorrectWords] = useState<TWord[]>([]);
   const [wrongWords, setWrongWords] = useState<TWord[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [pageForGames, setPageForGames] = useState(-1);
 
   useEffect((): (() => void) => {
     if (isPlay) {
@@ -58,6 +60,7 @@ const GameSprintLevel = () => {
   useEffect(() => {
     const pathArr = location.pathname.split('/');
     const page = userLoginData.pageForGames;
+    setPageForGames(page);
     if (page !== -1) {
       setUserLogin({
         ...userLoginData,
@@ -124,9 +127,9 @@ const GameSprintLevel = () => {
     setIsSound(!isSound);
   };
 
-  const increaseCorrectCount = () => {
-    setCorrectAnswersCount((prev) => prev + 1);
-  };
+  // const increaseCorrectCount = () => {
+  //   setCorrectAnswersCount((prev) => prev + 1);
+  // };
 
   const setAnswerAsCorrect = () => {
     setIsCorrectAnswer(true);
@@ -141,23 +144,27 @@ const GameSprintLevel = () => {
     setWrongAnswersCountTotal((prev) => prev + 1);
   };
 
-  const handleOpenResults = () => {
-    setIsResultsModalOpen((prev) => !prev);
-  };
+  // const handleOpenResults = () => {
+  //   setIsResultsModalOpen((prev) => !prev);
+  // };
 
   const handleCloseGame = () => {
     navigate('/games', { replace: true });
   };
 
   const setCurrentWord = () => {
-    const random10 = getRandomInteger(1, 10);
-    setCurrentWordIndex(gameWords.length - 1);
-    setEnglishVersion(gameWords[gameWords.length - 1].word);
-    if (random10 < 5) {
-      setRussianVersion(gameWords[gameWords.length - 1].wordTranslate);
+    if (gameWords.length === 0) {
+      setGameEnded();
     } else {
-      const randomWordIndex = getRandomInteger(0, gameWords.length - 1);
-      setRussianVersion(gameWords[randomWordIndex].wordTranslate);
+      const random10 = getRandomInteger(1, 10);
+      setCurrentWordIndex(gameWords.length - 1);
+      setEnglishVersion(gameWords[gameWords.length - 1].word);
+      if (random10 < 5) {
+        setRussianVersion(gameWords[gameWords.length - 1].wordTranslate);
+      } else {
+        const randomWordIndex = getRandomInteger(0, gameWords.length - 1);
+        setRussianVersion(gameWords[randomWordIndex].wordTranslate);
+      }
     }
   };
 
@@ -189,6 +196,42 @@ const GameSprintLevel = () => {
     arr.pop();
     setGameWords(arr);
     setCurrentWord();
+  };
+
+  const handleCloseResults = () => {
+    setIsResultsModalOpen(false);
+    setCorrectWords([]);
+    setWrongWords([]);
+    setGameWords([]);
+    getWords();
+    setTime(60);
+    setCorrectAnswersCount(0);
+    setCorrectAnswersCountTotal(0);
+    setWrongAnswersCountTotal(0);
+    setPoints(0);
+    setExtraPoints('');
+    setEnglishVersion('');
+    setRussianVersion('');
+    setIsCorrectAnswer(false);
+    setIsWrongAnswer(false);
+    setCurrentWordIndex(0);
+  };
+
+  const getWords = () => {
+    const pathArr = location.pathname.split('/');
+    getGameWords(
+      pageForGames,
+      Number(pathArr[pathArr.length - 1]),
+      WORDS_COUNT_FOR_SPRINT_GAME,
+    ).then((data) => {
+      setGameWords(data);
+    });
+  };
+
+  const setGameEnded = () => {
+    setTime(0);
+    setIsPlay(false);
+    setIsResultsModalOpen(true);
   };
 
   return (
@@ -270,7 +313,7 @@ const GameSprintLevel = () => {
             </button>
           </div>
           <div className="sprint-game-btns-wrapper">
-            <Button variant="contained" onClick={increaseCorrectCount}>
+            {/* <Button variant="contained" onClick={increaseCorrectCount}>
               +
             </Button>
             <Button variant="contained" onClick={setAnswerAsCorrect}>
@@ -282,7 +325,7 @@ const GameSprintLevel = () => {
             <Button variant="contained" onClick={handleOpenResults}>
               openModal
             </Button>
-            <Button variant="contained">{gameWords.length}</Button>
+            <Button variant="contained">{gameWords.length}</Button> */}
             <Button
               disabled={isPlay || gameWords.length === 0}
               className="sprint-btn-play"
@@ -301,10 +344,29 @@ const GameSprintLevel = () => {
           }`}
         >
           <Card>
-            {correctAnswersCountTotal}
-            {wrongAnswersCountTotal}
+            <div className="results-inner-wrapper">
+              <button
+                type="button"
+                className="results-inner-wrapper-close-btn"
+                onClick={handleCloseResults}
+              >
+                <Typography variant="h4">❌</Typography>
+              </button>
+              <GameResults
+                correctCount={correctAnswersCountTotal}
+                wrongCount={wrongAnswersCountTotal}
+                correctWords={correctWords}
+                wrongWords={wrongWords}
+              />
+            </div>
           </Card>
         </div>
+        <div
+          className={`game-results-background ${
+            isResultsModalOpen ? 'active' : ''
+          }`}
+          onClick={handleCloseResults}
+        />
       </div>
     </div>
   );
