@@ -44,7 +44,7 @@ class UserWordsAPI extends BaseAPI {
     userId: string,
     wordId: string,
     token: string,
-    getUserWordCb: (data: TUserWord) => void,
+    getUserWordCb: (error: string | null, data?: TUserWord) => void,
   ) {
     this.get(`users/${userId}/words/${wordId}`, {
       Authorization: `Bearer ${token}`,
@@ -53,10 +53,8 @@ class UserWordsAPI extends BaseAPI {
         BaseAPI.handleError(result, USER_WORDS_API_ERRORS);
         return result.json();
       })
-      .then((result) => getUserWordCb(result))
-      .catch((error) => {
-        console.error(error);
-      });
+      .then((result) => getUserWordCb(null, result))
+      .catch((error) => getUserWordCb(error.message));
   }
 
   updateUserWord(

@@ -11,7 +11,10 @@ import {
   getExtraPointsString,
   getRandomInteger,
 } from '../../../../General/utils';
-import { getGameWords } from '../../../../General/game-utils';
+import {
+  getGameWords,
+  setPlayedWordStatus,
+} from '../../../../General/game-utils';
 import { TWord } from '../../../../api/types';
 import { WORDS_COUNT_FOR_SPRINT_GAME } from '../../../../General/constants';
 import { LoginContext } from '../../../../Context/login-context';
@@ -174,9 +177,11 @@ const GameSprintLevel = () => {
     if (gameWords[currentWordIndex].wordTranslate !== russianVersion) {
       setAnswerAsCorrect();
       setCorrectWords(correctWords.concat(word));
+      sendAnswer(word, true);
     } else {
       setAnswerAsFalse();
       setWrongWords(wrongWords.concat(word));
+      sendAnswer(word, false);
     }
     const arr = gameWords;
     arr.pop();
@@ -189,14 +194,27 @@ const GameSprintLevel = () => {
     if (gameWords[currentWordIndex].wordTranslate === russianVersion) {
       setAnswerAsCorrect();
       setCorrectWords(correctWords.concat(word));
+      sendAnswer(word, true);
     } else {
       setAnswerAsFalse();
       setWrongWords(wrongWords.concat(word));
+      sendAnswer(word, false);
     }
     const arr = gameWords;
     arr.pop();
     setGameWords(arr);
     setCurrentWord();
+  };
+
+  const sendAnswer = (word: TWord, isCorrect: boolean) => {
+    if (userLoginData.isLogined) {
+      setPlayedWordStatus(
+        userLoginData.userId,
+        word.id,
+        userLoginData.token,
+        isCorrect,
+      );
+    }
   };
 
   const handleCloseResults = () => {
