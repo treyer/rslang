@@ -1,11 +1,12 @@
 $main-white: #ffffff;
 $hover-blue: #278d9f;
+$hover-btn: #5dabb9;
 $bg-header: #282c34;
-$bg-main: #6c89c2;
+$bg-main: #ffffff;
 $bg-games: #0e3848;
 $bg-textbook: #ffffff;
-$bg-stats: #836cc2;
-$bg-team: #ecd9e5;
+$bg-stats: #ffffff;
+$bg-team: #ffffff;
 $bg-footer: #121c1e;
 $bg-black: #000000;
 
@@ -54,6 +55,19 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
 
   .register-modal-btn {
     margin-right: 20px;
+    background-color: $hover-blue;
+
+    &:hover {
+      background-color: $hover-btn;
+    }
+  }
+
+  .enter-modal-btn {
+    background-color: $hover-blue;
+
+    &:hover {
+      background-color:$hover-btn;
+    }
   }
 }
 
@@ -76,6 +90,52 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
 .App-main {
   background-color: $bg-main;
   min-height: calc(100vh - 140px);
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-y: auto;
+
+  .main-section-start {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 35px;
+    margin: 120px;
+  }
+
+  .main-container-paral {
+    width: 100%;
+    height: 300px;
+    padding: 0;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
+  .main-container {
+    padding-bottom: 40px;
+  }
+
+  .main-card {
+    transition: 0.2s;
+    background-color: #278d9f2f;
+    -webkit-box-shadow: 10px 8px 27px -5px rgba(39, 141, 159, 0.75);
+    -moz-box-shadow: 10px 8px 27px -5px rgba(39, 141, 159, 0.75);
+    box-shadow: 10px 8px 27px -5px rgba(39, 141, 159, 0.75);
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  .main-section_end {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 35px;
+    margin-bottom: 200px;
+  }
 }
 
 .App-games {
@@ -93,6 +153,27 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
     flex-wrap: wrap;
     gap: 50px;
     margin: 50px;
+
+    .games-card {
+      color: #ffffff;
+      transition: 0.2s;
+      background-color: #60b9c92f;
+      -webkit-box-shadow: 7px 5px 19px 5px rgba(39, 141, 159, 0.68);
+      -moz-box-shadow: 7px 5px 19px 5px rgba(39, 141, 159, 0.68);
+      box-shadow: 7px 5px 19px 5px rgba(39, 141, 159, 0.68);
+      &:hover {
+        transform: scale(1.1);
+      }
+
+      .games-btn {
+        background-color: $hover-blue;
+        width: 150px;
+
+        &:hover {
+          background-color: $hover-btn;
+        }
+      }
+    }
   }
 }
 
@@ -123,6 +204,10 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
 
     .team-card {
       transition: 0.2s;
+      background-color: #278d9f2f;
+      -webkit-box-shadow: 10px 8px 27px -5px rgba(39, 141, 159, 0.75);
+      -moz-box-shadow: 10px 8px 27px -5px rgba(39, 141, 159, 0.75);
+      box-shadow: 10px 8px 27px -5px rgba(39, 141, 159, 0.75);
 
       .team-img_static {
         position: absolute;
@@ -139,6 +224,7 @@ $logo-filter: invert(57%) sepia(100%) saturate(329%) hue-rotate(141deg)
 
       .team-button {
         color: #282c34;
+        font-size: 14px;
         &:hover {
           color: $hover-blue;
         }

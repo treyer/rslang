@@ -14,11 +14,12 @@ $color-rosybrown: rosybrown;
 $color-hover: dimgray;
 
 .App-sprint {
-  background-color: rosybrown;
+  background-color: $bg-sprint-page;
   min-height: calc(100vh - 140px);
   background-size: cover;
   background-attachment: fixed;
   overflow-y: auto;
+  color: $color-white;
 
   .sprint_level-title {
     padding: 30px 0;

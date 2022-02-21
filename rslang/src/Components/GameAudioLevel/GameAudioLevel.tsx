@@ -1,16 +1,22 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Typography } from '@mui/material';
 import { TWord } from '../../api/types';
 import { AppContext } from '../../Context/audio-context';
 import Question from '../GameAudioQuestion/Question';
 import WordsAPI from '../../api/wordsAPI';
 import './GameAudioLevel.scss';
+import { LoginContext } from '../../Context/login-context';
+import { getGameWords } from '../../General/game-utils';
+import { WORDS_COUNT_FOR_AUDIO_GAME } from '../../General/constants';
 
 const GameAudioLevel = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const lengthLocation = location.pathname.split('/').length;
   const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
+  const { userLoginData, setUserLogin } = useContext(LoginContext);
   const [currPage] = useState(1);
   const { state, dispatch } = React.useContext(AppContext);
   const { currentQuestionIndex, questions, correctAnswerCount, showResults } =
@@ -24,9 +30,40 @@ const GameAudioLevel = () => {
     );
   }, [currPage, location.pathname, groupLevel, dispatch]);
 
+  useEffect(() => {
+    const pathArr = location.pathname.split('/');
+    const page = userLoginData.pageForGames;
+    if (page !== -1) {
+      setUserLogin({
+        ...userLoginData,
+        pageForGames: -1,
+      });
+    }
+    getGameWords(
+      page,
+      Number(pathArr[pathArr.length - 1]),
+      WORDS_COUNT_FOR_AUDIO_GAME,
+    ).then((data) => {
+      dispatch({ type: 'LOADING_BASE', payload: data });
+    });
+  }, [dispatch, location.pathname, setUserLogin, userLoginData]);
+
+  const NextQuestion = () => {
+    const audio = new Audio();
+    audio.src = '/assets/audio/tick-sound.mp3';
+    audio.play();
+  };
+
+  const handleReturnGames = () => {
+    navigate('/games', { replace: true });
+  };
+  const handleReturnWords = () => {
+    navigate('/textbook/words/0', { replace: true });
+  };
+
   return (
     <div className="App-games">
-      <div className="games-container">
+      <div className="games-audio-container">
         <div className="game-audio_quiz">
           {state.showResults && (
             <div className="game-audio_results">
@@ -47,6 +84,36 @@ const GameAudioLevel = () => {
           )}
           {!showResults && questions.length > 0 && (
             <div>
+              <div className="audio-cancel-wrapper">
+                <div
+                  className="audio-branch"
+                  style={{
+                    backgroundImage: `url(/assets/img/branch.png)`,
+                  }}
+                />
+                <div
+                  className="audio-parrot-one"
+                  style={{
+                    backgroundImage: `url(/assets/img/parrot-1.png)`,
+                  }}
+                />
+                <div className="cancel-audio-game-btn">
+                  <button
+                    type="button"
+                    className="cancel-game-btn"
+                    onClick={handleReturnGames}
+                  >
+                    <Typography variant="h5">Игры</Typography>
+                  </button>
+                  <button
+                    type="button"
+                    className="cancel-game-btn"
+                    onClick={handleReturnWords}
+                  >
+                    <Typography variant="h5">Учебник</Typography>
+                  </button>
+                </div>
+              </div>
               <div className="audio-game_score">
                 {scoreQuestion} / {allQuestions}
               </div>
@@ -55,9 +122,10 @@ const GameAudioLevel = () => {
                 className="audio-btn_next"
                 onClick={() => {
                   dispatch({ type: 'NEXT_QUESTION', payload: '' });
+                  NextQuestion();
                 }}
               >
-                Next
+                Следующее слово
               </div>
             </div>
           )}
