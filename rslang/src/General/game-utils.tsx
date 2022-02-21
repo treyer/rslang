@@ -53,3 +53,10 @@ export const getGameWords = async (
 
   // TODO: catch error
 };
+
+const setPlayedWordStatus = (
+  userId: string,
+  wordId: string,
+  token: string,
+  answerType: boolean,
+): void => {};
