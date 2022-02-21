@@ -10,7 +10,7 @@ const Question = () => {
   const { currentQuestionIndex, questions, currentAnswer } = state;
   const currentQuestion = questions[currentQuestionIndex];
   return (
-    <>
+    <div className="audio-question-container">
       <div className="audio-question">
         <CardActions>
           <IconButton
@@ -40,7 +40,7 @@ const Question = () => {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

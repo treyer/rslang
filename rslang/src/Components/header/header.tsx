@@ -84,7 +84,11 @@ const Header = () => {
             <Register />
           </Card>
         </div>
-        <Button variant="contained" onClick={handleLoginOnClick}>
+        <Button
+          variant="contained"
+          className="enter-modal-btn"
+          onClick={handleLoginOnClick}
+        >
           {userLoginData.isLogined ? 'Выход' : 'Вход'}
         </Button>
         <div
