@@ -7,20 +7,20 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 type TStatisticsTableContainerProps = {
-  learnedCounterWord: number;
+  learnedCounterWord?: number;
 };
 
 const StatisticsTableContainer = ({
   learnedCounterWord,
 }: TStatisticsTableContainerProps) => {
-  function createData(name: string, today: number) {
+  function createData(name: string, today?: number) {
     return { name, today };
   }
 
   const rows = [
     createData('Количество изученных слов:', learnedCounterWord),
-    createData('Процент правильных ответов:', 237),
-    createData('Самая длинная серия правильных ответов:', 262),
+    createData('Процент правильных ответов:', 0),
+    createData('Самая длинная серия правильных ответов:', 0),
   ];
   return (
     <TableContainer component={Paper}>

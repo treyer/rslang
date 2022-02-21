@@ -18,6 +18,8 @@ import './Dictionary.scss';
 type TDictionaryCategory = keyof typeof DICTIONARY_CATEGORIES;
 
 const Dictionary = () => {
+  const userId = `${localStorage.getItem('userId')}`;
+  const token = `${localStorage.getItem('token')}`;
   const location = useLocation();
   const lengthLocation = location.pathname.split('/').length;
   const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
@@ -32,8 +34,6 @@ const Dictionary = () => {
   >();
 
   useEffect(() => {
-    const userId = `${localStorage.getItem('userId')}`;
-    const token = `${localStorage.getItem('token')}`;
     const group = '';
     const page = '';
     const filter = currFilter;
@@ -49,7 +49,7 @@ const Dictionary = () => {
       filter,
       () => setLoading(false),
     );
-  }, [currFilter]);
+  }, [currFilter, token, userId]);
 
   const onHandleChangeCategory = useCallback((e: MouseEvent) => {
     const target = e.currentTarget as HTMLElement;
@@ -67,16 +67,11 @@ const Dictionary = () => {
 
   const onUnSelectCard = useCallback(
     (wordId) => {
-      const userId = `${localStorage.getItem('userId')}`;
-      const token = `${localStorage.getItem('token')}`;
       const dataWord = {
         difficulty: 'difficult',
         optional: {
           isDifficult: false,
           deleted: true,
-          failCounter: 0,
-          successCounter: 0,
-          correctAnswer: 0,
         },
       };
 
@@ -87,15 +82,20 @@ const Dictionary = () => {
       }
       setWords(words.filter((word) => word._id !== wordId));
     },
-    [currCategory, words],
+    [currCategory, words, token, userId],
   );
-  const userId = `${localStorage.getItem('userId')}`;
-  const token = `${localStorage.getItem('token')}`;
+
+  /*  const isTodayDate = (date: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+    return today.toString() === date.toString();
+  };  */
 
   useEffect(() => {
-    UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) =>
-      setCurrStatisticLearnedWord(data.learnedWords),
-    );
+    UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) => {
+      setCurrStatisticLearnedWord(data.learnedWords);
+    });
   }, [userId, token]);
 
   const onSelectCard = useCallback(
@@ -115,6 +115,9 @@ const Dictionary = () => {
               {
                 learnedWords:
                   (currStatisticLearnedWord as unknown as number) + 1,
+                optional: {
+                  onDateDay: Date.now() as unknown as Date,
+                },
               },
               (data) => setCurrStatisticLearnedWord(data.learnedWords),
             );
