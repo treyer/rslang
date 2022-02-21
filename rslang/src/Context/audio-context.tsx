@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import React, { FC, useReducer } from 'react';
 import {
   normalQuestions,
   shuffleAnswers,
   TBackendQuestion,
 } from '../General/Function-helpers';
+import { TWord } from '../api/types';
 
 export type TAppState = {
   state: TReducerState;
@@ -17,12 +19,26 @@ const initialState: TReducerState = {
   answers: [],
   currentAnswer: '',
   correctAnswerCount: 0,
+  correctWords: [],
+  wrongWords: [],
 };
 
 export type TQuestion = {
   question: string;
   correctAnswer: string;
   incorrectAnswers: string[];
+  word: string;
+  audioExample: string;
+  audioMeaning: string;
+  group: number;
+  id: string;
+  image: string;
+  page: number;
+  textExample: string;
+  textExampleTranslate: string;
+  textMeaning: string;
+  textMeaningTranslate: string;
+  transcription: string;
 };
 
 export type TReducerState = {
@@ -32,6 +48,8 @@ export type TReducerState = {
   answers: string[];
   currentAnswer: string;
   correctAnswerCount: number;
+  correctWords: TWord[];
+  wrongWords: TWord[];
 };
 
 type TReducerAction =
@@ -46,6 +64,36 @@ type TReducerAction =
 const reducer = (state: TReducerState, action: TReducerAction) => {
   switch (action.type) {
     case 'SELECT_ANSWER': {
+      const wordQuestion = {
+        wordTranslate:
+          state.questions[state.currentQuestionIndex].correctAnswer,
+        word: state.questions[state.currentQuestionIndex].word,
+        audio: state.questions[state.currentQuestionIndex].question,
+        audioExample: state.questions[state.currentQuestionIndex].audioExample,
+        audioMeaning: state.questions[state.currentQuestionIndex].audioMeaning,
+        group: state.questions[state.currentQuestionIndex].group,
+        id: state.questions[state.currentQuestionIndex].id,
+        image: state.questions[state.currentQuestionIndex].image,
+        page: +state.questions[state.currentQuestionIndex].page,
+        textExample: state.questions[state.currentQuestionIndex].textExample,
+        textExampleTranslate:
+          state.questions[state.currentQuestionIndex].textExampleTranslate,
+        textMeaning: state.questions[state.currentQuestionIndex].textMeaning,
+        textMeaningTranslate:
+          state.questions[state.currentQuestionIndex].textMeaningTranslate,
+        transcription:
+          state.questions[state.currentQuestionIndex].transcription,
+      };
+      const correctWords =
+        action.payload ===
+        state.questions[state.currentQuestionIndex].correctAnswer
+          ? state.correctWords.concat(wordQuestion)
+          : state.correctWords;
+      const wrongWords =
+        action.payload ===
+        state.questions[state.currentQuestionIndex].correctAnswer
+          ? state.wrongWords
+          : state.wrongWords.concat(wordQuestion);
       const correctAnswerCount =
         action.payload ===
         state.questions[state.currentQuestionIndex].correctAnswer
@@ -53,6 +101,8 @@ const reducer = (state: TReducerState, action: TReducerAction) => {
           : state.correctAnswerCount;
       return {
         ...state,
+        correctWords,
+        wrongWords,
         currentAnswer: action.payload,
         correctAnswerCount,
       };

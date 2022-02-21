@@ -40,12 +40,9 @@ const Team = () => {
               >
                 Team lead
               </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                className="team-text"
-              >
-                Координировал команду
+              <Typography variant="body2" className="team-text">
+                Координировал команду, реализовал авторизацию и регистрацию
+                пользователя, создал игру Спринт.
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -95,12 +92,9 @@ const Team = () => {
               >
                 Developer
               </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                className="team-text"
-              >
-                Настроила Бекенд
+              <Typography variant="body2" className="team-text">
+                Настроила Бекенд и всю работу с ним, создала раздел
+                Учебник,страницу Статистики и Словарь.
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -150,12 +144,9 @@ const Team = () => {
               >
                 Developer
               </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                className="team-text"
-              >
-                Стартовая верстка.
+              <Typography variant="body2" className="team-text">
+                Работала над версткой и дизайном, настроила роутинг, создала
+                игру Аудиовызов.
               </Typography>
             </CardContent>
           </CardActionArea>
