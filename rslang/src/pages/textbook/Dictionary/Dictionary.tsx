@@ -3,9 +3,10 @@ import React, { useEffect, useState, useCallback, MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { TWord } from '../../../api/types';
+import { TStatistic, TWord } from '../../../api/types';
 import UserAggregatedWordsAPI from '../../../api/userAggregatedWordsAPI';
 import UserWordsAPI from '../../../api/userWordsAPI';
+import UsersStatisticAPI from '../../../api/usersStatisticAPI';
 
 import TextbookGamesButton from '../components/TextbookGamesButton/TextbookGamesButton';
 
@@ -17,6 +18,8 @@ import './Dictionary.scss';
 type TDictionaryCategory = keyof typeof DICTIONARY_CATEGORIES;
 
 const Dictionary = () => {
+  const userId = `${localStorage.getItem('userId')}`;
+  const token = `${localStorage.getItem('token')}`;
   const location = useLocation();
   const lengthLocation = location.pathname.split('/').length;
   const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
@@ -26,10 +29,11 @@ const Dictionary = () => {
   );
   const [currCategory, setCurrCategory] = useState<TDictionaryCategory>('0');
   const [loading, setLoading] = useState(false);
+  const [currStatisticLearnedWord, setCurrStatisticLearnedWord] = useState<
+    undefined | number
+  >();
 
   useEffect(() => {
-    const userId = `${localStorage.getItem('userId')}`;
-    const token = `${localStorage.getItem('token')}`;
     const group = '';
     const page = '';
     const filter = currFilter;
@@ -45,7 +49,7 @@ const Dictionary = () => {
       filter,
       () => setLoading(false),
     );
-  }, [currFilter]);
+  }, [currFilter, token, userId]);
 
   const onHandleChangeCategory = useCallback((e: MouseEvent) => {
     const target = e.currentTarget as HTMLElement;
@@ -63,16 +67,11 @@ const Dictionary = () => {
 
   const onUnSelectCard = useCallback(
     (wordId) => {
-      const userId = `${localStorage.getItem('userId')}`;
-      const token = `${localStorage.getItem('token')}`;
       const dataWord = {
         difficulty: 'difficult',
         optional: {
           isDifficult: false,
           deleted: true,
-          failCounter: 0,
-          successCounter: 0,
-          correctAnswer: 0,
         },
       };
 
@@ -83,38 +82,46 @@ const Dictionary = () => {
       }
       setWords(words.filter((word) => word._id !== wordId));
     },
-    [currCategory, words],
+    [currCategory, words, token, userId],
   );
+
+  /*  const isTodayDate = (date: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+    return today.toString() === date.toString();
+  };  */
+
+  useEffect(() => {
+    UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) => {
+      setCurrStatisticLearnedWord(data.learnedWords);
+    });
+  }, [userId, token]);
 
   const onSelectCard = useCallback(
     (wordId) => {
-      const userId = `${localStorage.getItem('userId')}`;
-      const token = `${localStorage.getItem('token')}`;
-
-      /*  UsersStatisticAPI.upsetStatistics(userId, token, {
-        learnedWords: 2,
-        optional: {
-          audioCall: {
-            rightAnswers: 2,
-            wrongAnswers: 1,
-          },
-        },
-      });  */
-
-      /*  UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) =>
-        console.error('ff: ', data),
-      );  */
-
-      if (currCategory === '0') {
+      if (currCategory === '0' || currCategory === '1') {
         UserWordsAPI.updateUserWord(userId, token, wordId, {
           difficulty: 'difficult',
           optional: {
             isDifficult: false,
             deleted: true,
-            failCounter: 0,
-            successCounter: 0,
-            correctAnswer: 0,
           },
+        }).then(() => {
+          if (currStatisticLearnedWord !== undefined) {
+            UsersStatisticAPI.upsetStatistics(
+              userId,
+              token,
+              {
+                learnedWords:
+                  (currStatisticLearnedWord as unknown as number) + 1,
+                optional: {
+                  onDateDay: Date.now() as unknown as Date,
+                },
+              },
+              (data) => setCurrStatisticLearnedWord(data.learnedWords),
+            );
+          }
         });
       } else {
         UserWordsAPI.updateUserWord(userId, token, wordId, {
@@ -122,15 +129,12 @@ const Dictionary = () => {
           optional: {
             isDifficult: true,
             deleted: false,
-            failCounter: 0,
-            successCounter: 0,
-            correctAnswer: 0,
           },
         });
       }
       setWords(words.filter((word) => word._id !== wordId));
     },
-    [currCategory, words],
+    [currCategory, words, currStatisticLearnedWord, userId, token],
   );
 
   return (
