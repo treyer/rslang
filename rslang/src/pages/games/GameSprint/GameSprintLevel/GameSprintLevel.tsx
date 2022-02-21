@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
+import Hotkeys from 'react-hot-keys';
 import { Button, Typography, Card } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -234,86 +235,110 @@ const GameSprintLevel = () => {
     setIsResultsModalOpen(true);
   };
 
+  const handleKeyPress = (keyName: string, event: Event) => {
+    event.preventDefault();
+    if (
+      keyName === 'space' &&
+      !isPlay &&
+      gameWords.length > 0 &&
+      !isResultsModalOpen
+    ) {
+      handlePlay();
+    }
+    if (keyName === 'a' && isPlay && !isResultsModalOpen) {
+      handleWrongBtnClick();
+    }
+    if (keyName === 's' && isPlay && !isResultsModalOpen) {
+      handleCorrectBtnClick();
+    }
+  };
+
   return (
     <div className="App-games">
-      <div className="sprint-game-container">
-        <div className="sprint-game-inner">
-          <div className="timer-wrapper">
-            <Timer time={time} isSound={isSound} isPlay={isPlay} />
-            <Typography variant="h3" style={{ color: 'white' }}>
-              {points}
-            </Typography>
-            <div className="cancel-wrapper">
+      <Hotkeys
+        keyName="space, a, s"
+        onKeyDown={(keyName, event) => {
+          handleKeyPress(keyName, event);
+        }}
+      >
+        <div className="sprint-game-container">
+          <div className="sprint-game-inner">
+            <div className="timer-wrapper">
+              <Timer time={time} isSound={isSound} isPlay={isPlay} />
+              <Typography variant="h3" style={{ color: 'white' }}>
+                {points}
+              </Typography>
+              <div className="cancel-wrapper">
+                <button
+                  type="button"
+                  className="cancel-sprint-game-btn"
+                  onClick={handleCloseGame}
+                >
+                  <Typography variant="h4">❌</Typography>
+                </button>
+              </div>
+            </div>
+            <div
+              className={`sprint-game-main-wrapper ${
+                isCorrectAnswer ? 'correct' : ''
+              } ${isWrongAnswer ? 'wrong' : ''}`}
+            >
+              <Typography
+                variant="h6"
+                className="sprint-addition-points"
+                style={{ height: '30px' }}
+              >
+                {extraPoints}
+              </Typography>
+              <Parrots correctAnswersCount={correctAnswersCount} />
+              <TickPannel correctAnswersCount={correctAnswersCount} />
+              <Typography
+                className="sprint-eng-version"
+                variant="h3"
+                style={{ height: '40px' }}
+              >
+                {englishVersion}
+              </Typography>
+              <Typography
+                className="sprint-rus-version"
+                variant="h4"
+                style={{ height: '40px' }}
+              >
+                {russianVersion}
+              </Typography>
+              <div className="sprint-answer-btns-wrapper">
+                <Button
+                  variant="contained"
+                  className="sprint-btn-wrong"
+                  disabled={!isPlay}
+                  onClick={handleWrongBtnClick}
+                >
+                  <Typography variant="h3">Неверно</Typography>
+                </Button>
+                <Button
+                  className="sprint-btn-correct"
+                  variant="contained"
+                  disabled={!isPlay}
+                  onClick={handleCorrectBtnClick}
+                >
+                  <Typography variant="h3">Верно</Typography>
+                </Button>
+              </div>
               <button
                 type="button"
-                className="cancel-sprint-game-btn"
-                onClick={handleCloseGame}
+                onClick={handleIsSound}
+                className="sprint-sound-btn"
+                style={{
+                  backgroundImage: `url(/assets/img/${
+                    isSound ? 'unmute' : 'mute'
+                  }.png`,
+                }}
               >
-                <Typography variant="h4">❌</Typography>
+                {}
               </button>
             </div>
-          </div>
-          <div
-            className={`sprint-game-main-wrapper ${
-              isCorrectAnswer ? 'correct' : ''
-            } ${isWrongAnswer ? 'wrong' : ''}`}
-          >
-            <Typography
-              variant="h6"
-              className="sprint-addition-points"
-              style={{ height: '30px' }}
-            >
-              {extraPoints}
-            </Typography>
-            <Parrots correctAnswersCount={correctAnswersCount} />
-            <TickPannel correctAnswersCount={correctAnswersCount} />
-            <Typography
-              className="sprint-eng-version"
-              variant="h3"
-              style={{ height: '40px' }}
-            >
-              {englishVersion}
-            </Typography>
-            <Typography
-              className="sprint-rus-version"
-              variant="h4"
-              style={{ height: '40px' }}
-            >
-              {russianVersion}
-            </Typography>
-            <div className="sprint-answer-btns-wrapper">
-              <Button
-                variant="contained"
-                className="sprint-btn-wrong"
-                disabled={!isPlay}
-                onClick={handleWrongBtnClick}
-              >
-                <Typography variant="h3">Неверно</Typography>
-              </Button>
-              <Button
-                className="sprint-btn-correct"
-                variant="contained"
-                disabled={!isPlay}
-                onClick={handleCorrectBtnClick}
-              >
-                <Typography variant="h3">Верно</Typography>
-              </Button>
-            </div>
-            <button
-              type="button"
-              onClick={handleIsSound}
-              className="sprint-sound-btn"
-              style={{
-                backgroundImage: `url(/assets/img/${
-                  isSound ? 'unmute' : 'mute'
-                }.png`,
-              }}
-            >
-              {}
-            </button>
-          </div>
-          <div className="sprint-game-btns-wrapper">
-            {/* <Button variant="contained" onClick={increaseCorrectCount}>
+            <div className="sprint-game-btns-wrapper">
+              {/* <Button variant="contained" onClick={increaseCorrectCount}>
               +
             </Button>
             <Button variant="contained" onClick={setAnswerAsCorrect}>
@@ -326,48 +351,49 @@ const GameSprintLevel = () => {
               openModal
             </Button>
             <Button variant="contained">{gameWords.length}</Button> */}
-            <Button
-              disabled={isPlay || gameWords.length === 0}
-              className="sprint-btn-play"
-              variant="contained"
-              color="success"
-              onClick={handlePlay}
-              style={{ borderRadius: '10px' }}
-            >
-              <Typography variant="h4">Играть</Typography>
-            </Button>
-          </div>
-        </div>
-        <div
-          className={`sprint-game-results-wrapper ${
-            isResultsModalOpen ? 'active' : ''
-          }`}
-        >
-          <Card>
-            <div className="results-inner-wrapper">
-              <button
-                type="button"
-                className="results-inner-wrapper-close-btn"
-                onClick={handleCloseResults}
+              <Button
+                disabled={isPlay || gameWords.length === 0}
+                className="sprint-btn-play"
+                variant="contained"
+                color="success"
+                onClick={handlePlay}
+                style={{ borderRadius: '10px' }}
               >
-                <Typography variant="h4">❌</Typography>
-              </button>
-              <GameResults
-                correctCount={correctAnswersCountTotal}
-                wrongCount={wrongAnswersCountTotal}
-                correctWords={correctWords}
-                wrongWords={wrongWords}
-              />
+                <Typography variant="h4">Играть</Typography>
+              </Button>
             </div>
-          </Card>
+          </div>
+          <div
+            className={`sprint-game-results-wrapper ${
+              isResultsModalOpen ? 'active' : ''
+            }`}
+          >
+            <Card>
+              <div className="results-inner-wrapper">
+                <button
+                  type="button"
+                  className="results-inner-wrapper-close-btn"
+                  onClick={handleCloseResults}
+                >
+                  <Typography variant="h4">❌</Typography>
+                </button>
+                <GameResults
+                  correctCount={correctAnswersCountTotal}
+                  wrongCount={wrongAnswersCountTotal}
+                  correctWords={correctWords}
+                  wrongWords={wrongWords}
+                />
+              </div>
+            </Card>
+          </div>
+          <div
+            className={`game-results-background ${
+              isResultsModalOpen ? 'active' : ''
+            }`}
+            onClick={handleCloseResults}
+          />
         </div>
-        <div
-          className={`game-results-background ${
-            isResultsModalOpen ? 'active' : ''
-          }`}
-          onClick={handleCloseResults}
-        />
-      </div>
+      </Hotkeys>
     </div>
   );
 };
