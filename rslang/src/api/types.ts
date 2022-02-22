@@ -68,10 +68,12 @@ export type TStatistic = {
 export type TOptionalStatistic = {
   bestSeries?: number;
   audioCall?: {
+    bestSeries?: number;
     rightAnswers?: number;
     wrongAnswers?: number;
   };
   sprint?: {
+    bestSeries?: number;
     rightAnswers?: number;
     wrongAnswers?: number;
   };

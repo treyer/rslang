@@ -69,6 +69,7 @@ const Login = () => {
                 data.userId,
                 data.name,
               );
+              navigate('/', { replace: true });
             }
           }
         });

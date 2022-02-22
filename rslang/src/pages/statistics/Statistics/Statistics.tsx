@@ -2,19 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
 import StatisticsTableContainer from '../StatisticsTableContainer/StatisticsTableContainer';
 import UsersStatisticAPI from '../../../api/usersStatisticAPI';
-import { TStatistic } from '../../../api/types';
+import { TOptionalStatistic, TStatistic } from '../../../api/types';
 
 import './Statistics.scss';
+import { TStatisticType } from '../../../General/types';
 
 const Statistics = () => {
   const [learnedCounterWord, setLearnedCounterWord] = useState(0);
+  const [optional, setOptional] = useState<TOptionalStatistic>({});
 
   useEffect(() => {
     const userId = `${localStorage.getItem('userId')}`;
     const token = `${localStorage.getItem('token')}`;
-    UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) =>
-      setLearnedCounterWord(data.learnedWords),
-    );
+    UsersStatisticAPI.getStatistics(userId, token, (data: TStatistic) => {
+      setLearnedCounterWord(data.learnedWords);
+      if (data.optional) setOptional(data.optional);
+    });
   }, []);
 
   return (
@@ -23,7 +26,11 @@ const Statistics = () => {
         <Typography variant="h4" component="h3" marginBottom="15px">
           Общая статистика за день
         </Typography>
-        <StatisticsTableContainer learnedCounterWord={learnedCounterWord} />
+        <StatisticsTableContainer
+          learnedCounterWord={learnedCounterWord}
+          optional={optional}
+          statisticType={TStatisticType.common}
+        />
         <Typography
           variant="h4"
           component="h3"
@@ -35,7 +42,11 @@ const Statistics = () => {
         <Typography variant="h5" component="h3" marginBottom="15px">
           Аудиовызов
         </Typography>
-        <StatisticsTableContainer learnedCounterWord={learnedCounterWord} />
+        <StatisticsTableContainer
+          learnedCounterWord={learnedCounterWord}
+          optional={optional}
+          statisticType={TStatisticType.audio}
+        />
         <Typography
           variant="h5"
           component="h3"
@@ -44,7 +55,11 @@ const Statistics = () => {
         >
           Спринт
         </Typography>
-        <StatisticsTableContainer learnedCounterWord={learnedCounterWord} />
+        <StatisticsTableContainer
+          learnedCounterWord={learnedCounterWord}
+          optional={optional}
+          statisticType={TStatisticType.sprint}
+        />
       </div>
     </div>
   );

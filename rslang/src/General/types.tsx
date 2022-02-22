@@ -68,3 +68,16 @@ export type TGameResults = {
   correctWords: TWord[];
   wrongWords: TWord[];
 };
+
+// eslint-disable-next-line no-shadow
+export enum GameType {
+  sprint = 'sprint',
+  audio = 'audio',
+}
+
+// eslint-disable-next-line no-shadow
+export enum TStatisticType {
+  common,
+  sprint,
+  audio,
+}
