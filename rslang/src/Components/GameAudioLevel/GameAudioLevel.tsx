@@ -1,34 +1,32 @@
 import * as React from 'react';
+import Hotkeys from 'react-hot-keys';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
-import { TWord } from '../../api/types';
+import { Card, Typography } from '@mui/material';
 import { AppContext } from '../../Context/audio-context';
 import Question from '../GameAudioQuestion/Question';
-import WordsAPI from '../../api/wordsAPI';
 import './GameAudioLevel.scss';
 import { LoginContext } from '../../Context/login-context';
 import { getGameWords } from '../../General/game-utils';
 import { WORDS_COUNT_FOR_AUDIO_GAME } from '../../General/constants';
+import GameResults from '../GameResults/GameResults';
 
 const GameAudioLevel = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const lengthLocation = location.pathname.split('/').length;
-  const groupLevel = +location.pathname.split('/')[lengthLocation - 1];
   const { userLoginData, setUserLogin } = useContext(LoginContext);
-  const [currPage] = useState(1);
+  const [isResultsModalOpen, setIsResultsModalOpen] = useState(false);
   const { state, dispatch } = React.useContext(AppContext);
-  const { currentQuestionIndex, questions, correctAnswerCount, showResults } =
-    state;
+  const {
+    currentQuestionIndex,
+    questions,
+    correctAnswerCount,
+    showResults,
+    correctWords,
+    wrongWords,
+  } = state;
   const scoreQuestion = currentQuestionIndex + 1;
   const allQuestions = questions.length;
-  useEffect(() => {
-    const page = currPage - 1;
-    WordsAPI.getWords(page, groupLevel, (data: TWord[]) =>
-      dispatch({ type: 'LOADING_BASE', payload: data }),
-    );
-  }, [currPage, location.pathname, groupLevel, dispatch]);
 
   useEffect(() => {
     const pathArr = location.pathname.split('/');
@@ -61,76 +59,102 @@ const GameAudioLevel = () => {
     navigate('/textbook/words/0', { replace: true });
   };
 
+  const handleCloseResults = () => {
+    setIsResultsModalOpen(false);
+    dispatch({ type: 'RESTART', payload: '' });
+    window.location.reload();
+  };
+
+  const handleKeyPress = (keyName: string, event: Event) => {
+    event.preventDefault();
+    if (keyName === 'right') {
+      dispatch({ type: 'NEXT_QUESTION', payload: '' });
+      NextQuestion();
+    }
+  };
+
   return (
     <div className="App-games">
-      <div className="games-audio-container">
-        <div className="game-audio_quiz">
-          {state.showResults && (
-            <div className="game-audio_results">
-              <div className="results-congratulations">Результаты</div>
-              <div className="results-info">
-                <h4>Вы закончили игру с результатом:</h4>
-                <p>
-                  правильныx ответов {correctAnswerCount} из {questions.length}
-                </p>
-              </div>
+      <Hotkeys
+        keyName="right"
+        onKeyDown={(keyName, event) => {
+          handleKeyPress(keyName, event);
+        }}
+      >
+        <div className="games-audio-container">
+          <div className="game-audio_quiz">
+            {state.showResults && (
               <div
-                className="audio-restart_button"
-                onClick={() => dispatch({ type: 'RESTART', payload: '' })}
+                className={`sprint-game-results-wrapper ${
+                  isResultsModalOpen ? 'active' : ''
+                }`}
               >
-                Начать заново.
+                <Card>
+                  <div className="results-inner-wrapper">
+                    <button
+                      type="button"
+                      className="results-inner-wrapper-close-btn"
+                      onClick={handleCloseResults}
+                    >
+                      <Typography variant="h4">❌</Typography>
+                    </button>
+                    <GameResults
+                      correctCount={correctAnswerCount}
+                      wrongCount={correctAnswerCount}
+                      correctWords={correctWords}
+                      wrongWords={wrongWords}
+                    />
+                  </div>
+                </Card>
               </div>
-            </div>
-          )}
-          {!showResults && questions.length > 0 && (
-            <div>
-              <div className="audio-cancel-wrapper">
+            )}
+            {!showResults && questions.length > 0 && (
+              <div>
+                <div className="audio-cancel-wrapper">
+                  <div className="audio-game_score">
+                    {scoreQuestion} / {allQuestions}
+                  </div>
+                  <div className="audio-games-btn">
+                    <div
+                      className="audio-parrot-one"
+                      style={{
+                        backgroundImage: `url(/assets/img/parrot-1.png)`,
+                      }}
+                    />
+                    <div className="cancel-audio-game-btn">
+                      <button
+                        type="button"
+                        className="cancel-game-btn"
+                        onClick={handleReturnGames}
+                      >
+                        <Typography variant="h5">Игры</Typography>
+                      </button>
+                      <button
+                        type="button"
+                        className="cancel-game-btn"
+                        onClick={handleReturnWords}
+                      >
+                        <Typography variant="h5">Учебник</Typography>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <Question />
                 <div
-                  className="audio-branch"
-                  style={{
-                    backgroundImage: `url(/assets/img/branch.png)`,
+                  className="audio-btn_next"
+                  onClick={() => {
+                    dispatch({ type: 'NEXT_QUESTION', payload: '' });
+                    NextQuestion();
                   }}
-                />
-                <div
-                  className="audio-parrot-one"
-                  style={{
-                    backgroundImage: `url(/assets/img/parrot-1.png)`,
-                  }}
-                />
-                <div className="cancel-audio-game-btn">
-                  <button
-                    type="button"
-                    className="cancel-game-btn"
-                    onClick={handleReturnGames}
-                  >
-                    <Typography variant="h5">Игры</Typography>
-                  </button>
-                  <button
-                    type="button"
-                    className="cancel-game-btn"
-                    onClick={handleReturnWords}
-                  >
-                    <Typography variant="h5">Учебник</Typography>
-                  </button>
+                >
+                  Следующее слово
                 </div>
               </div>
-              <div className="audio-game_score">
-                {scoreQuestion} / {allQuestions}
-              </div>
-              <Question />
-              <div
-                className="audio-btn_next"
-                onClick={() => {
-                  dispatch({ type: 'NEXT_QUESTION', payload: '' });
-                  NextQuestion();
-                }}
-              >
-                Следующее слово
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      </Hotkeys>
     </div>
   );
 };

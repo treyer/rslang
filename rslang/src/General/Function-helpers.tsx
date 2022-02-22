@@ -46,9 +46,21 @@ export const normalQuestions = (backendQuestions: TBackendQuestion[]) => {
         }
       }
       return {
+        word: backendQuestion.word,
         correctAnswer: backendQuestion.wordTranslate,
         question: backendQuestion.audio,
         incorrectAnswers,
+        audioExample: backendQuestion.audioExample,
+        audioMeaning: backendQuestion.audioMeaning,
+        group: backendQuestion.group,
+        id: backendQuestion.id,
+        image: backendQuestion.image,
+        page: backendQuestion.page,
+        textExample: backendQuestion.textExample,
+        textExampleTranslate: backendQuestion.textExampleTranslate,
+        textMeaning: backendQuestion.textMeaning,
+        textMeaningTranslate: backendQuestion.textMeaningTranslate,
+        transcription: backendQuestion.transcription,
       };
     });
 };
