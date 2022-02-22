@@ -13,7 +13,7 @@ export const DICTIONARY_CATEGORIES = {
     id: '1',
     name: 'Изучаемые',
     filter:
-      '{"$and":[{"userWord.difficulty":"difficult", "userWord.optional.isDifficult":true}]}',
+      '{"$or":[{"$and":[{"userWord.difficulty":"difficult", "userWord.optional.isDifficult":true}]},{"userWord.optional.failCounter": 1}]}',
     message: 'У Вас нет изучаемых слов в словаре.',
     activeBtn: true,
     tooltipAddMessage: 'Добавить в изученные слова',

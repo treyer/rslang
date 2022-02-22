@@ -13,12 +13,14 @@ import {
 } from '../../../../General/utils';
 import {
   getGameWords,
+  setGameStats,
   setPlayedWordStatus,
 } from '../../../../General/game-utils';
 import { TWord } from '../../../../api/types';
 import { WORDS_COUNT_FOR_SPRINT_GAME } from '../../../../General/constants';
 import { LoginContext } from '../../../../Context/login-context';
 import GameResults from '../../../../Components/GameResults/GameResults';
+import { GameType } from '../../../../General/types';
 
 const GameSprintLevel = () => {
   const location = useLocation();
@@ -43,6 +45,8 @@ const GameSprintLevel = () => {
   const [wrongWords, setWrongWords] = useState<TWord[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [pageForGames, setPageForGames] = useState(-1);
+  const [currentSeries, setCurrentSeries] = useState(0);
+  const [maxSeries, setMaxSeries] = useState(0);
 
   useEffect((): (() => void) => {
     if (isPlay) {
@@ -58,7 +62,17 @@ const GameSprintLevel = () => {
     if (time === 0) {
       setIsPlay(false);
       setIsResultsModalOpen(true);
+      if (currentSeries > maxSeries) setMaxSeries(currentSeries);
+      setGameStats(
+        userLoginData.userId,
+        userLoginData.token,
+        GameType.sprint,
+        maxSeries,
+        correctAnswersCountTotal,
+        wrongAnswersCountTotal,
+      );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
 
   useEffect(() => {
@@ -131,26 +145,21 @@ const GameSprintLevel = () => {
     setIsSound(!isSound);
   };
 
-  // const increaseCorrectCount = () => {
-  //   setCorrectAnswersCount((prev) => prev + 1);
-  // };
-
   const setAnswerAsCorrect = () => {
     setIsCorrectAnswer(true);
     setCorrectAnswersCount((prev) => prev + 1);
     setCorrectAnswersCountTotal((prev) => prev + 1);
     setPoints((prev) => prev + 10 + getExtraPointsByString(extraPoints));
+    setCurrentSeries((prev) => prev + 1);
   };
 
   const setAnswerAsFalse = () => {
     setIsWrongAnswer(true);
     setCorrectAnswersCount(0);
     setWrongAnswersCountTotal((prev) => prev + 1);
+    if (currentSeries > maxSeries) setMaxSeries(currentSeries);
+    setCurrentSeries(0);
   };
-
-  // const handleOpenResults = () => {
-  //   setIsResultsModalOpen((prev) => !prev);
-  // };
 
   const handleCloseGame = () => {
     navigate('/games', { replace: true });
@@ -158,6 +167,7 @@ const GameSprintLevel = () => {
 
   const setCurrentWord = () => {
     if (gameWords.length === 0) {
+      if (currentSeries > maxSeries) setMaxSeries(currentSeries);
       setGameEnded();
     } else {
       const random10 = getRandomInteger(1, 10);
@@ -234,6 +244,8 @@ const GameSprintLevel = () => {
     setIsCorrectAnswer(false);
     setIsWrongAnswer(false);
     setCurrentWordIndex(0);
+    setCurrentSeries(0);
+    setMaxSeries(0);
   };
 
   const getWords = () => {
@@ -249,8 +261,6 @@ const GameSprintLevel = () => {
 
   const setGameEnded = () => {
     setTime(0);
-    setIsPlay(false);
-    setIsResultsModalOpen(true);
   };
 
   const handleKeyPress = (keyName: string, event: Event) => {

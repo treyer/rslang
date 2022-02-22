@@ -36,5 +36,5 @@ export const USER_AGGREGATED_WORDS_API_ERRORS: TAPIErrorsMap = {
 export const USERS_STATISTIC_API_ERRORS: TAPIErrorsMap = {
   [StatusCodes.UNAUTHORIZED]: 'Unauthorized.',
   [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
-  [StatusCodes.NOT_FOUND]: 'Word not found.',
+  [StatusCodes.NOT_FOUND]: 'Statistics not found.',
 };
