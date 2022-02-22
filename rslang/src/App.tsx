@@ -13,7 +13,6 @@ import {
   setUserLoginToLocalStorage,
 } from './General/utils';
 import { AppProvider } from './Context/audio-context';
-import usersStatisticAPI from './api/usersStatisticAPI';
 
 function App() {
   const [userLoginData, setUserLogin] = useState({
@@ -56,12 +55,6 @@ function App() {
             userName,
           );
         }
-      });
-    }
-
-    if (userId && token) {
-      usersStatisticAPI.upsetStatistics(userId, token, {
-        learnedWords: 0,
       });
     }
   }, []);
