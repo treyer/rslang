@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { TUserWord, TWord } from '../api/types';
 import usersStatisticAPI from '../api/usersStatisticAPI';
 import userWordsAPI from '../api/userWordsAPI';
@@ -171,6 +172,7 @@ export const setGameStats = (
   totalCorrectAnswers: number,
   totalWrongAnswers: number,
 ) => {
+  console.log(userId, token, gameType, totalCorrectAnswers, totalWrongAnswers);
   usersStatisticAPI.getStatistics(userId, token, (data) => {
     const newData = {
       optional: {
@@ -187,7 +189,6 @@ export const setGameStats = (
         },
       },
     };
-
     if (data.optional) {
       if (data.optional.bestSeries !== undefined) {
         if (maxSeries > data.optional.bestSeries) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as React from 'react';
 import Hotkeys from 'react-hot-keys';
 import { useContext, useEffect, useState } from 'react';
@@ -7,9 +8,14 @@ import { AppContext } from '../../Context/audio-context';
 import Question from '../GameAudioQuestion/Question';
 import './GameAudioLevel.scss';
 import { LoginContext } from '../../Context/login-context';
-import { getGameWords } from '../../General/game-utils';
+import {
+  getGameWords,
+  setGameStats,
+  setPlayedWordStatus,
+} from '../../General/game-utils';
 import { WORDS_COUNT_FOR_AUDIO_GAME } from '../../General/constants';
 import GameResults from '../GameResults/GameResults';
+import { GameType } from '../../General/types';
 
 const GameAudioLevel = () => {
   const location = useLocation();
@@ -24,9 +30,27 @@ const GameAudioLevel = () => {
     showResults,
     correctWords,
     wrongWords,
+    correctWord,
+    wrongAnswerCount,
   } = state;
+  const [maxSeries, setMaxSeries] = useState(0);
+  const [currentSeries, setCurrentSeries] = useState(0);
   const scoreQuestion = currentQuestionIndex + 1;
   const allQuestions = questions.length;
+  const currentQuestion = questions[currentQuestionIndex];
+
+  const sendAnswerCount = () => {
+    setIsResultsModalOpen(true);
+    if (currentSeries > maxSeries) setMaxSeries(currentSeries);
+    setGameStats(
+      userLoginData.userId,
+      userLoginData.token,
+      GameType.audio,
+      maxSeries + 1,
+      correctAnswerCount,
+      wrongAnswerCount,
+    );
+  };
 
   useEffect(() => {
     const pathArr = location.pathname.split('/');
@@ -70,6 +94,19 @@ const GameAudioLevel = () => {
     if (keyName === 'right') {
       dispatch({ type: 'NEXT_QUESTION', payload: '' });
       NextQuestion();
+      sendAnswerCount();
+      sendAnswer();
+    }
+  };
+
+  const sendAnswer = () => {
+    if (userLoginData.isLogined) {
+      setPlayedWordStatus(
+        userLoginData.userId,
+        currentQuestion.id,
+        userLoginData.token,
+        correctWord,
+      );
     }
   };
 
@@ -100,7 +137,7 @@ const GameAudioLevel = () => {
                     </button>
                     <GameResults
                       correctCount={correctAnswerCount}
-                      wrongCount={correctAnswerCount}
+                      wrongCount={wrongAnswerCount}
                       correctWords={correctWords}
                       wrongWords={wrongWords}
                     />
@@ -146,6 +183,8 @@ const GameAudioLevel = () => {
                   onClick={() => {
                     dispatch({ type: 'NEXT_QUESTION', payload: '' });
                     NextQuestion();
+                    sendAnswerCount();
+                    sendAnswer();
                   }}
                 >
                   Следующее слово
