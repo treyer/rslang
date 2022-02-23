@@ -172,7 +172,14 @@ export const setGameStats = (
   totalCorrectAnswers: number,
   totalWrongAnswers: number,
 ) => {
-  console.log(userId, token, gameType, totalCorrectAnswers, totalWrongAnswers);
+  console.log(
+    userId,
+    token,
+    gameType,
+    totalCorrectAnswers,
+    totalWrongAnswers,
+    maxSeries,
+  );
   usersStatisticAPI.getStatistics(userId, token, (data) => {
     const newData = {
       optional: {

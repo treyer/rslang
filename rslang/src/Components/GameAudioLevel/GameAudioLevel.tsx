@@ -32,21 +32,19 @@ const GameAudioLevel = () => {
     wrongWords,
     correctWord,
     wrongAnswerCount,
+    maxSeries,
   } = state;
-  const [maxSeries, setMaxSeries] = useState(0);
-  const [currentSeries, setCurrentSeries] = useState(0);
   const scoreQuestion = currentQuestionIndex + 1;
   const allQuestions = questions.length;
   const currentQuestion = questions[currentQuestionIndex];
 
   const sendAnswerCount = () => {
     setIsResultsModalOpen(true);
-    if (currentSeries > maxSeries) setMaxSeries(currentSeries);
     setGameStats(
       userLoginData.userId,
       userLoginData.token,
       GameType.audio,
-      maxSeries + 1,
+      maxSeries,
       correctAnswerCount,
       wrongAnswerCount,
     );
