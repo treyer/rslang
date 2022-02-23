@@ -21,6 +21,9 @@ const initialState: TReducerState = {
   correctAnswerCount: 0,
   correctWords: [],
   wrongWords: [],
+  correctWord: false,
+  wrongAnswerCount: 0,
+  maxSeries: 0,
 };
 
 export type TQuestion = {
@@ -50,6 +53,9 @@ export type TReducerState = {
   correctAnswerCount: number;
   correctWords: TWord[];
   wrongWords: TWord[];
+  correctWord: boolean;
+  wrongAnswerCount: number;
+  maxSeries: number;
 };
 
 type TReducerAction =
@@ -99,12 +105,28 @@ const reducer = (state: TReducerState, action: TReducerAction) => {
         state.questions[state.currentQuestionIndex].correctAnswer
           ? state.correctAnswerCount + 1
           : state.correctAnswerCount;
+      const wrongAnswerCount =
+        action.payload ===
+        state.questions[state.currentQuestionIndex].correctAnswer
+          ? state.wrongAnswerCount
+          : state.wrongAnswerCount + 1;
+      const correctWord =
+        action.payload ===
+        state.questions[state.currentQuestionIndex].correctAnswer;
+      const maxSeries =
+        action.payload ===
+        state.questions[state.currentQuestionIndex].correctAnswer
+          ? state.maxSeries + 1
+          : 0;
       return {
         ...state,
         correctWords,
         wrongWords,
         currentAnswer: action.payload,
         correctAnswerCount,
+        correctWord,
+        wrongAnswerCount,
+        maxSeries,
       };
     }
     case 'NEXT_QUESTION': {
