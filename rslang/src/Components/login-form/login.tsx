@@ -16,6 +16,7 @@ import {
 import { LoginContext } from '../../Context/login-context';
 
 import './login.scss';
+import usersStatisticAPI from '../../api/usersStatisticAPI';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -69,6 +70,9 @@ const Login = () => {
                 data.userId,
                 data.name,
               );
+              usersStatisticAPI.upsetStatistics(data.userId, data.token, {
+                learnedWords: 0,
+              });
               navigate('/', { replace: true });
             }
           }
