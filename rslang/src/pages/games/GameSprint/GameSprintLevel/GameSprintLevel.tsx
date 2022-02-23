@@ -67,7 +67,7 @@ const GameSprintLevel = () => {
         userLoginData.userId,
         userLoginData.token,
         GameType.sprint,
-        maxSeries,
+        maxSeries + 1,
         correctAnswersCountTotal,
         wrongAnswersCountTotal,
       );
