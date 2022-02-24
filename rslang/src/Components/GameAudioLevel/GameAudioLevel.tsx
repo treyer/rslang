@@ -38,17 +38,20 @@ const GameAudioLevel = () => {
   const allQuestions = questions.length;
   const currentQuestion = questions[currentQuestionIndex];
 
-  const sendAnswerCount = () => {
-    setIsResultsModalOpen(true);
-    setGameStats(
-      userLoginData.userId,
-      userLoginData.token,
-      GameType.audio,
-      maxSeries,
-      correctAnswerCount,
-      wrongAnswerCount,
-    );
-  };
+  useEffect(() => {
+    if (showResults === true) {
+      setIsResultsModalOpen(true);
+      setGameStats(
+        userLoginData.userId,
+        userLoginData.token,
+        GameType.audio,
+        maxSeries + 1,
+        correctAnswerCount,
+        wrongAnswerCount,
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showResults]);
 
   useEffect(() => {
     const pathArr = location.pathname.split('/');
@@ -92,7 +95,6 @@ const GameAudioLevel = () => {
     if (keyName === 'right') {
       dispatch({ type: 'NEXT_QUESTION', payload: '' });
       NextQuestion();
-      sendAnswerCount();
       sendAnswer();
     }
   };
@@ -129,7 +131,9 @@ const GameAudioLevel = () => {
                     <button
                       type="button"
                       className="results-inner-wrapper-close-btn"
-                      onClick={handleCloseResults}
+                      onClick={() => {
+                        handleCloseResults();
+                      }}
                     >
                       <Typography variant="h4">❌</Typography>
                     </button>
@@ -181,7 +185,6 @@ const GameAudioLevel = () => {
                   onClick={() => {
                     dispatch({ type: 'NEXT_QUESTION', payload: '' });
                     NextQuestion();
-                    sendAnswerCount();
                     sendAnswer();
                   }}
                 >
