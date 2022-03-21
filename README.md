@@ -18,7 +18,7 @@ Following tools and utils are used additionally:
 
 - _[Webpack](https://webpack.js.org/)_ - as an application builder/bundler
 - _[yarn](https://yarnpkg.com/)_ - as package manager
-- _[SCSS](https://sass-lang.com/documentation/js-api)_ - SCSS facilitates you to write clean, easy and less CSS in a programming construct
+- _[SASS](https://sass-lang.com/documentation/js-api)_ - SASS facilitates you to write clean, easy and less CSS in a programming construct
 - _[ESLint](https://eslint.org/)_ - as a TS/JS linter
 - _[Material-UI ]( https://material-ui.com/)_ - as the React UI library
 - _[Prettier ]( https://prettier.io/)_ - as an opinionated code formatter
