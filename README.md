@@ -16,12 +16,15 @@ Current project is built on top of _[TypeScript](https://www.typescriptlang.org/
 
 Following tools and utils are used additionally:
 
-- _[React Router](https://reacttraining.com/react-router/web)_ - as an application router
-- _[Material-UI ]( https://material-ui.com/)_ - as the React UI library
-- _[http-status-codes]( https://github.com/prettymuchbryce/http-status-codes#readme)_ - constants enumerating the HTTP status codes
-- _[Validator]( https://github.com/validatorjs/validator.js)_ - a library of string validators
 - _[Webpack](https://webpack.js.org/)_ - as an application builder/bundler
+- _[yarn](https://yarnpkg.com/)_ - as package manager
 - _[SCSS](https://sass-lang.com/documentation/js-api)_ - SCSS facilitates you to write clean, easy and less CSS in a programming construct
 - _[ESLint](https://eslint.org/)_ - as a TS/JS linter
+- _[Material-UI ]( https://material-ui.com/)_ - as the React UI library
 - _[Prettier ]( https://prettier.io/)_ - as an opinionated code formatter
 - _[Husky](https://github.com/typicode/husky)_ - as a git hook manager
+
+- _[React Router](https://reacttraining.com/react-router/web)_ - as an application router
+- _[http-status-codes]( https://github.com/prettymuchbryce/http-status-codes#readme)_ - constants enumerating the HTTP status codes
+- _[Validator]( https://github.com/validatorjs/validator.js)_ - a library of string validators
+
