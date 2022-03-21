@@ -1,0 +1,130 @@
+$bg-games-btn: #00bcd4;
+$bg-selected: #fffde2;
+$bg-studied: #a4f7a4;
+$bg-studied-page: #d6f5d6;
+$bg-btn0: #b2ebf2;
+$bg-btn1: #80deea;
+$bg-btn2: #4dd0e1;
+$bg-btn3: #26c6da;
+$bg-btn4: #00bcd4;
+$bg-btn5: #00acc1;
+
+.textbook_page {
+  .textbook_games-button-container-title {
+    display: block;
+    padding: 20px 0;
+    font-size: 1.2rem;
+    font-weight: inherit;
+    text-transform: uppercase;
+  }
+
+  .textbook_games-btn {
+    min-width: 150px;
+    background-color: $bg-games-btn;
+    margin-right: 15px;
+  }
+
+  .is-unauthorized {
+    display: none;
+  }
+
+  .textbook_section-button {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    min-width: 50px;
+    gap: 10px;
+    padding-top: 20px;
+
+    .textbook_btn {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .textbook_active-btn {
+      color: #000000;
+    }
+
+    .textbook_button-0 {
+      background-color: $bg-btn0;
+    }
+
+    .textbook_button-1 {
+      background-color: $bg-btn1;
+    }
+
+    .textbook_button-2 {
+      background-color: $bg-btn2;
+    }
+
+    .textbook_button-3 {
+      background-color: $bg-btn3;
+    }
+
+    .textbook_button-4 {
+      background-color: $bg-btn4;
+    }
+
+    .textbook_button-5 {
+      background-color: $bg-btn5;
+    }
+
+    .textbook_code-title {
+      font-size: 3rem;
+      padding-right: 10px;
+    }
+  }
+
+  .textbook_words-container {
+    .circular-progress {
+      position: fixed;
+      bottom: 50%;
+    }
+
+    .textbook_word-card-0 {
+      background-color: $bg-btn0;
+    }
+
+    .textbook_word-card-1 {
+      background-color: $bg-btn1;
+    }
+
+    .textbook_word-card-2 {
+      background-color: $bg-btn2;
+    }
+
+    .textbook_word-card-3 {
+      background-color: $bg-btn3;
+    }
+
+    .textbook_word-card-4 {
+      background-color: $bg-btn4;
+    }
+
+    .textbook_word-card-5 {
+      background-color: $bg-btn5;
+    }
+
+    .is-unauthorized {
+      opacity: 0;
+    }
+
+    .is-studied {
+      background-color: $bg-studied;
+    }
+
+    .is-selected {
+      background-color: $bg-selected;
+    }
+
+    .textbook_pagination {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 15px;
+    }
+  }
+}
+
+.is-studied-page {
+  background-color: $bg-studied-page;
+}

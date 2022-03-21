@@ -1,0 +1,76 @@
+$bg-btn0: #b2ebf2;
+$bg-btn1: #80deea;
+$bg-btn2: #4dd0e1;
+$bg-btn3: #26c6da;
+$bg-btn4: #00bcd4;
+$bg-btn5: #00acc1;
+
+.textbook_level-title {
+  padding: 30px 0;
+}
+
+.textbook_levels-list {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  max-width: 1600px;
+  padding: 50px 20px;
+
+  .textbook_level-list-section-button {
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+
+    .textbook_btn {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 15px;
+    }
+
+    .textbook_button-0 {
+      background-color: $bg-btn0;
+    }
+
+    .textbook_button-1 {
+      background-color: $bg-btn1;
+    }
+
+    .textbook_button-2 {
+      background-color: $bg-btn2;
+    }
+
+    .textbook_button-3 {
+      background-color: $bg-btn3;
+    }
+
+    .textbook_button-4 {
+      background-color: $bg-btn4;
+    }
+
+    .textbook_button-5 {
+      background-color: $bg-btn5;
+    }
+
+    .textbook_code-title {
+      font-size: 3rem;
+      padding-right: 10px;
+    }
+
+    .textbook_level-title {
+      font-size: 1.5rem;
+      text-align: justify;
+    }
+  }
+
+  .textbook_level-list-section-inform {
+    .textbook_img {
+      max-width: 500px;
+    }
+
+    .textbook_level-list-text {
+      font-size: 1.3rem;
+      text-align: justify;
+      padding: 0 10%;
+    }
+  }
+}
